@@ -1,0 +1,4 @@
+#Wed Apr 15 22:17:49 WIB 2026
+base.0=D\:\\Profile\\Study\\coding\\semester 4\\Rekayasa Perangkat Lunak\\Gymbrut\\app\\build\\intermediates\\dex\\debugAndroidTest\\mergeProjectDexDebugAndroidTest\\0\\classes.dex
+path.0=0/classes.dex
+renamed.0=classes.dex

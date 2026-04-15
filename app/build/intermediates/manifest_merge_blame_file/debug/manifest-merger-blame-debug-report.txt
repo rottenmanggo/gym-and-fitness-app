@@ -1,0 +1,223 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.gymbrut.app"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="34" />
+10
+11    <uses-permission android:name="android.permission.CAMERA" />
+11-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:2:5-65
+11-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:2:22-62
+12    <!-- Don't require camera, as this requires a rear camera. This allows it to work on the Nexus 7 -->
+13    <uses-feature
+13-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:25:5-27:36
+14        android:name="android.hardware.camera"
+14-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:26:9-47
+15        android:required="false" />
+15-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:27:9-33
+16    <uses-feature
+16-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:28:5-30:36
+17        android:name="android.hardware.camera.front"
+17-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:29:9-53
+18        android:required="false" /> <!-- TODO replace above two with next line after Android 4.2 -->
+18-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:30:9-33
+19    <!-- <uses-feature android:name="android.hardware.camera.any"/> -->
+20    <uses-feature
+20-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:33:5-35:36
+21        android:name="android.hardware.camera.autofocus"
+21-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:34:9-57
+22        android:required="false" />
+22-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:35:9-33
+23    <uses-feature
+23-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:36:5-38:36
+24        android:name="android.hardware.camera.flash"
+24-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:37:9-53
+25        android:required="false" />
+25-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:38:9-33
+26    <uses-feature
+26-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:39:5-41:36
+27        android:name="android.hardware.screen.landscape"
+27-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:40:9-57
+28        android:required="false" />
+28-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:41:9-33
+29    <uses-feature
+29-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:42:5-44:36
+30        android:name="android.hardware.wifi"
+30-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:43:9-45
+31        android:required="false" />
+31-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:44:9-33
+32
+33    <permission
+33-->[androidx.core:core:1.13.0] D:\GradleHome\caches\9.0-milestone-1\transforms\94c7c466758e5308691bc87a5feb5c48\transformed\core-1.13.0\AndroidManifest.xml:22:5-24:47
+34        android:name="com.gymbrut.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+34-->[androidx.core:core:1.13.0] D:\GradleHome\caches\9.0-milestone-1\transforms\94c7c466758e5308691bc87a5feb5c48\transformed\core-1.13.0\AndroidManifest.xml:23:9-81
+35        android:protectionLevel="signature" />
+35-->[androidx.core:core:1.13.0] D:\GradleHome\caches\9.0-milestone-1\transforms\94c7c466758e5308691bc87a5feb5c48\transformed\core-1.13.0\AndroidManifest.xml:24:9-44
+36
+37    <uses-permission android:name="com.gymbrut.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+37-->[androidx.core:core:1.13.0] D:\GradleHome\caches\9.0-milestone-1\transforms\94c7c466758e5308691bc87a5feb5c48\transformed\core-1.13.0\AndroidManifest.xml:26:5-97
+37-->[androidx.core:core:1.13.0] D:\GradleHome\caches\9.0-milestone-1\transforms\94c7c466758e5308691bc87a5feb5c48\transformed\core-1.13.0\AndroidManifest.xml:26:22-94
+38
+39    <application
+39-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:4:5-40:19
+40        android:allowBackup="true"
+40-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:5:9-35
+41        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+41-->[androidx.core:core:1.13.0] D:\GradleHome\caches\9.0-milestone-1\transforms\94c7c466758e5308691bc87a5feb5c48\transformed\core-1.13.0\AndroidManifest.xml:28:18-86
+42        android:debuggable="true"
+43        android:extractNativeLibs="false"
+44        android:icon="@mipmap/ic_launcher"
+44-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:6:9-43
+45        android:label="Gymbrut"
+45-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:7:9-32
+46        android:roundIcon="@mipmap/ic_launcher_round"
+46-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:8:9-54
+47        android:supportsRtl="true"
+47-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:9:9-35
+48        android:theme="@style/Theme.Gymbrut" >
+48-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:10:9-45
+49        <activity
+49-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:11:9-14:52
+50            android:name="com.gymbrut.app.ui.QrCheckInActivity"
+50-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:12:13-49
+51            android:exported="false"
+51-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:13:13-37
+52            android:screenOrientation="portrait" />
+52-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:14:13-49
+53        <activity
+53-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:15:9-18:52
+54            android:name="com.gymbrut.app.ui.PaymentFlowActivity"
+54-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:16:13-51
+55            android:exported="false"
+55-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:17:13-37
+56            android:screenOrientation="portrait" />
+56-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:18:13-49
+57        <activity
+57-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:19:9-22:52
+58            android:name="com.gymbrut.app.ui.MainActivity"
+58-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:20:13-44
+59            android:exported="false"
+59-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:21:13-37
+60            android:screenOrientation="portrait" />
+60-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:22:13-49
+61        <activity
+61-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:23:9-26:52
+62            android:name="com.gymbrut.app.ui.AuthActivity"
+62-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:24:13-44
+63            android:exported="false"
+63-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:25:13-37
+64            android:screenOrientation="portrait" />
+64-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:26:13-49
+65        <activity
+65-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:27:9-30:52
+66            android:name="com.gymbrut.app.ui.OnboardingActivity"
+66-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:28:13-50
+67            android:exported="false"
+67-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:29:13-37
+68            android:screenOrientation="portrait" />
+68-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:30:13-49
+69        <activity
+69-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:31:9-39:20
+70            android:name="com.gymbrut.app.ui.SplashActivity"
+70-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:32:13-46
+71            android:exported="true"
+71-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:33:13-36
+72            android:theme="@style/Theme.Gymbrut.Splash" >
+72-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:34:13-56
+73            <intent-filter>
+73-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:35:13-38:29
+74                <action android:name="android.intent.action.MAIN" />
+74-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:36:17-69
+74-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:36:25-66
+75
+76                <category android:name="android.intent.category.LAUNCHER" />
+76-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:37:17-77
+76-->D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\src\main\AndroidManifest.xml:37:27-74
+77            </intent-filter>
+78        </activity>
+79        <activity
+79-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:47:9-53:63
+80            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+80-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:48:13-74
+81            android:clearTaskOnLaunch="true"
+81-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:49:13-45
+82            android:screenOrientation="sensorLandscape"
+82-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:50:13-56
+83            android:stateNotNeeded="true"
+83-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:51:13-42
+84            android:theme="@style/zxing_CaptureTheme"
+84-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:52:13-54
+85            android:windowSoftInputMode="stateAlwaysHidden" />
+85-->[com.journeyapps:zxing-android-embedded:4.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\5424163d455b268f699046e24f1ec911\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:53:13-60
+86
+87        <provider
+87-->[androidx.emoji2:emoji2:1.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\fe3084c0db146bbae889754d8876f6f3\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+88            android:name="androidx.startup.InitializationProvider"
+88-->[androidx.emoji2:emoji2:1.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\fe3084c0db146bbae889754d8876f6f3\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+89            android:authorities="com.gymbrut.app.androidx-startup"
+89-->[androidx.emoji2:emoji2:1.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\fe3084c0db146bbae889754d8876f6f3\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+90            android:exported="false" >
+90-->[androidx.emoji2:emoji2:1.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\fe3084c0db146bbae889754d8876f6f3\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+91            <meta-data
+91-->[androidx.emoji2:emoji2:1.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\fe3084c0db146bbae889754d8876f6f3\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+92                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+92-->[androidx.emoji2:emoji2:1.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\fe3084c0db146bbae889754d8876f6f3\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+93                android:value="androidx.startup" />
+93-->[androidx.emoji2:emoji2:1.3.0] D:\GradleHome\caches\9.0-milestone-1\transforms\fe3084c0db146bbae889754d8876f6f3\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+94            <meta-data
+94-->[androidx.lifecycle:lifecycle-process:2.6.2] D:\GradleHome\caches\9.0-milestone-1\transforms\197b27507c263e085ef1ad8f9e8afa3e\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
+95                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+95-->[androidx.lifecycle:lifecycle-process:2.6.2] D:\GradleHome\caches\9.0-milestone-1\transforms\197b27507c263e085ef1ad8f9e8afa3e\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
+96                android:value="androidx.startup" />
+96-->[androidx.lifecycle:lifecycle-process:2.6.2] D:\GradleHome\caches\9.0-milestone-1\transforms\197b27507c263e085ef1ad8f9e8afa3e\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
+97            <meta-data
+97-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+98                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+98-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+99                android:value="androidx.startup" />
+99-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+100        </provider>
+101
+102        <receiver
+102-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+103            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+103-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+104            android:directBootAware="false"
+104-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+105            android:enabled="true"
+105-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+106            android:exported="true"
+106-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+107            android:permission="android.permission.DUMP" >
+107-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+108            <intent-filter>
+108-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+109                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+109-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+109-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+110            </intent-filter>
+111            <intent-filter>
+111-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+112                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+112-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+112-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+113            </intent-filter>
+114            <intent-filter>
+114-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+115                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+115-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+115-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+116            </intent-filter>
+117            <intent-filter>
+117-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+118                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+118-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+118-->[androidx.profileinstaller:profileinstaller:1.3.1] D:\GradleHome\caches\9.0-milestone-1\transforms\8fd31de1cd55b81b5c189b21a1a31ca9\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+119            </intent-filter>
+120        </receiver>
+121    </application>
+122
+123</manifest>

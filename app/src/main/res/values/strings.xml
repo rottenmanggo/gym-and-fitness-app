@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Gymbrut</string>
+    <string name="quick_check_in">Quick Check-In</string>
+    <string name="awaiting_admin_verification">Awaiting Admin Verification</string>
+</resources>

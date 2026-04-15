@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gym_bg">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Membership Renewal" android:textColor="@color/gym_text" android:textSize="32sp" android:textStyle="bold"/>
+
+        <Spinner android:id="@+id/spinnerPackage" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:background="@drawable/bg_outline"/>
+        <Spinner android:id="@+id/spinnerMethod" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:background="@drawable/bg_outline"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_card" android:padding="18dp" android:layout_marginTop="16dp">
+            <TextView android:id="@+id/tvOrderSummary" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/gym_text"/>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton android:id="@+id/btnSubmitPayment" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="16dp" android:backgroundTint="@color/gym_lime" android:text="Submit Proof of Payment" android:textColor="@color/gym_bg"/>
+
+        <LinearLayout android:id="@+id/layoutStatus" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_card" android:padding="18dp" android:layout_marginTop="16dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Payment Status" android:textColor="@color/gym_text" android:textSize="22sp" android:textStyle="bold"/>
+            <TextView android:id="@+id/tvPaymentStatus" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:textColor="@color/gym_warning"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

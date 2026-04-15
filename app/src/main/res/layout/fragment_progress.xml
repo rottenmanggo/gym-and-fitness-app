@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gym_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Progress" android:textColor="@color/gym_text" android:textSize="34sp" android:textStyle="bold"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_card" android:padding="18dp" android:layout_marginTop="16dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Weight Trends" android:textColor="@color/gym_text" android:textSize="22sp" android:textStyle="bold"/>
+            <com.github.mikephil.charting.charts.LineChart android:id="@+id/weightChart" android:layout_width="match_parent" android:layout_height="240dp"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_card" android:padding="18dp" android:layout_marginTop="16dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Target Completion" android:textColor="@color/gym_text" android:textSize="22sp" android:textStyle="bold"/>
+            <com.github.mikephil.charting.charts.PieChart android:id="@+id/completionChart" android:layout_width="match_parent" android:layout_height="240dp"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_card" android:padding="18dp" android:layout_marginTop="16dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Daily Exercise Log" android:textColor="@color/gym_text" android:textSize="22sp" android:textStyle="bold"/>
+            <androidx.recyclerview.widget.RecyclerView android:id="@+id/recyclerLogs" android:layout_width="match_parent" android:layout_height="wrap_content" android:nestedScrollingEnabled="false" android:layout_marginTop="10dp"/>
+            <com.google.android.material.button.MaterialButton android:id="@+id/btnAddLog" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="12dp" android:backgroundTint="@color/gym_lime" android:text="Add Manual Log" android:textColor="@color/gym_bg"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

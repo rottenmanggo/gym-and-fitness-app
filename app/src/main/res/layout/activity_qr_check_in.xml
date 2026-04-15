@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gym_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Gym QR Check-In" android:textColor="@color/gym_text" android:textSize="30sp" android:textStyle="bold"/>
+    <TextView android:id="@+id/tvCheckInStatus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="Tap below to scan the QR code at reception." android:textColor="@color/gym_subtext" android:gravity="center"/>
+    <com.google.android.material.button.MaterialButton android:id="@+id/btnStartScan" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="20dp" android:backgroundTint="@color/gym_lime" android:text="Scan QR" android:textColor="@color/gym_bg"/>
+</LinearLayout>

@@ -1,0 +1,13 @@
+<resources>
+    <color name="black">#000000</color>
+    <color name="gym_bg">#050607</color>
+    <color name="gym_surface">#121416</color>
+    <color name="gym_card">#1A1D21</color>
+    <color name="gym_lime">#D9FF1F</color>
+    <color name="gym_cyan">#11D8FF</color>
+    <color name="gym_text">#F5F5F5</color>
+    <color name="gym_subtext">#A5ABB3</color>
+    <color name="gym_success">#B8FF6C</color>
+    <color name="gym_warning">#FFD166</color>
+    <color name="white">#FFFFFF</color>
+</resources>

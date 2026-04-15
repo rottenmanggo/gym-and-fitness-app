@@ -1,0 +1,62 @@
+[
+    {
+        "merged": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-mergeDebugResources-33:\\layout\\activity_main.xml",
+        "source": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-main-36:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-mergeDebugResources-33:\\layout\\fragment_workout.xml",
+        "source": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-main-36:\\layout\\fragment_workout.xml"
+    },
+    {
+        "merged": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-mergeDebugResources-33:\\layout\\activity_auth.xml",
+        "source": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-main-36:\\layout\\activity_auth.xml"
+    },
+    {
+        "merged": "com.gymbrut.app-mergeDebugResources-33:/layout/item_transaction.xml",
+        "source": "com.gymbrut.app-main-36:/layout/item_transaction.xml"
+    },
+    {
+        "merged": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-mergeDebugResources-33:\\layout\\fragment_membership.xml",
+        "source": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-main-36:\\layout\\fragment_membership.xml"
+    },
+    {
+        "merged": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-mergeDebugResources-33:\\layout\\activity_onboarding.xml",
+        "source": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-main-36:\\layout\\activity_onboarding.xml"
+    },
+    {
+        "merged": "com.gymbrut.app-mergeDebugResources-33:/layout/item_log.xml",
+        "source": "com.gymbrut.app-main-36:/layout/item_log.xml"
+    },
+    {
+        "merged": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-mergeDebugResources-33:\\layout\\fragment_progress.xml",
+        "source": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-main-36:\\layout\\fragment_progress.xml"
+    },
+    {
+        "merged": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-mergeDebugResources-33:\\layout\\fragment_account.xml",
+        "source": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-main-36:\\layout\\fragment_account.xml"
+    },
+    {
+        "merged": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-mergeDebugResources-33:\\layout\\item_onboarding.xml",
+        "source": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-main-36:\\layout\\item_onboarding.xml"
+    },
+    {
+        "merged": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-mergeDebugResources-33:\\layout\\fragment_home.xml",
+        "source": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-main-36:\\layout\\fragment_home.xml"
+    },
+    {
+        "merged": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-mergeDebugResources-33:\\layout\\activity_qr_check_in.xml",
+        "source": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-main-36:\\layout\\activity_qr_check_in.xml"
+    },
+    {
+        "merged": "com.gymbrut.app-mergeDebugResources-33:/layout/item_workout.xml",
+        "source": "com.gymbrut.app-main-36:/layout/item_workout.xml"
+    },
+    {
+        "merged": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-mergeDebugResources-33:\\layout\\activity_payment_flow.xml",
+        "source": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-main-36:\\layout\\activity_payment_flow.xml"
+    },
+    {
+        "merged": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-mergeDebugResources-33:\\layout\\activity_splash.xml",
+        "source": "D:\\GradleHome\\daemon\\9.0-milestone-1\\com.gymbrut.app-main-36:\\layout\\activity_splash.xml"
+    }
+]

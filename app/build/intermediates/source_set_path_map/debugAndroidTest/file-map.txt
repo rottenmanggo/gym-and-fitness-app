@@ -1,0 +1,4 @@
+com.gymbrut.app.test.app-androidTest-0 D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\build\generated\res\resValues\androidTest\debug
+com.gymbrut.app.test.app-mergeDebugAndroidTestResources-1 D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.gymbrut.app.test.app-mergeDebugAndroidTestResources-2 D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.gymbrut.app.test.app-merged_res-3 D:\Profile\Study\coding\semester 4\Rekayasa Perangkat Lunak\Gymbrut\app\build\intermediates\merged_res\debugAndroidTest

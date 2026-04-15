@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="gym_bg">#050607</color>
+    <color name="gym_card">#1A1D21</color>
+    <color name="gym_cyan">#11D8FF</color>
+    <color name="gym_lime">#D9FF1F</color>
+    <color name="gym_subtext">#A5ABB3</color>
+    <color name="gym_success">#B8FF6C</color>
+    <color name="gym_surface">#121416</color>
+    <color name="gym_text">#F5F5F5</color>
+    <color name="gym_warning">#FFD166</color>
+    <color name="white">#FFFFFF</color>
+    <string name="app_name">Gymbrut</string>
+    <string name="awaiting_admin_verification">Awaiting Admin Verification</string>
+    <string name="quick_check_in">Quick Check-In</string>
+    <style name="Theme.Gymbrut" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/gym_lime</item>
+        <item name="colorSecondary">@color/gym_cyan</item>
+        <item name="android:statusBarColor">@color/gym_bg</item>
+        <item name="android:navigationBarColor">@color/gym_bg</item>
+        <item name="android:windowBackground">@color/gym_bg</item>
+        <item name="android:textColor">@color/gym_text</item>
+    </style>
+    <style name="Theme.Gymbrut.Splash" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+</resources>

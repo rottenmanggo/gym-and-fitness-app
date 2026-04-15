@@ -1,0 +1,9 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/gym_bg"/>
+    <item>
+        <shape android:shape="oval">
+            <size android:width="280dp" android:height="280dp"/>
+            <solid android:color="#222A0D"/>
+        </shape>
+    </item>
+</layer-list>
