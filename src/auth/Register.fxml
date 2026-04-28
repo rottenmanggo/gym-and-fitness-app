@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="auth.RegisterController"
+           stylesheets="@auth.css"
+           styleClass="auth-root">
+
+    <HBox styleClass="auth-shell" maxWidth="920" maxHeight="560">
+
+        <VBox styleClass="brand-panel" alignment="CENTER_LEFT" spacing="18">
+            <Label text="⚡" styleClass="brand-icon"/>
+            <Label text="GYMBRUT" styleClass="brand-title"/>
+            <Label text="Create Member Account" styleClass="brand-subtitle"/>
+            <Label text="Daftar sebagai member untuk mengakses membership dan payment."
+                   wrapText="true"
+                   styleClass="brand-desc"/>
+        </VBox>
+
+        <VBox styleClass="login-panel" alignment="CENTER" spacing="18">
+
+            <VBox alignment="CENTER" spacing="6">
+                <Label text="Register Member" styleClass="login-title"/>
+                <Label text="Buat akun member baru" styleClass="login-subtitle"/>
+            </VBox>
+
+            <VBox spacing="10" maxWidth="330">
+                <Label text="Nama Lengkap" styleClass="field-label"/>
+                <TextField fx:id="nameField"
+                           promptText="Masukkan nama"
+                           styleClass="input"/>
+
+                <Label text="Email" styleClass="field-label"/>
+                <TextField fx:id="emailField"
+                           promptText="member@gym.com"
+                           styleClass="input"/>
+
+                <Label text="Password" styleClass="field-label"/>
+                <PasswordField fx:id="passwordField"
+                               promptText="Masukkan password"
+                               styleClass="input"/>
+
+                <Button text="Register"
+                        onAction="#handleRegister"
+                        styleClass="btn-primary"
+                        maxWidth="Infinity"/>
+
+                <Button text="Kembali ke Login"
+                        onAction="#goToLogin"
+                        styleClass="btn-link"
+                        maxWidth="Infinity"/>
+
+                <Label fx:id="messageLabel"
+                       styleClass="error-text"
+                       wrapText="true"/>
+            </VBox>
+
+        </VBox>
+
+    </HBox>
+</StackPane>
