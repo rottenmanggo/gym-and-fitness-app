@@ -11,6 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import shared.Session;
+
 
 public class MainLayoutController {
 
@@ -121,6 +123,7 @@ public class MainLayoutController {
 
         logoutBtn.setOnMouseEntered(e -> logoutBtn.setStyle(logoutHoverStyle()));
         logoutBtn.setOnMouseExited(e -> logoutBtn.setStyle(logoutStyle()));
+        logoutBtn.setOnAction(e -> handleLogout());
 
         HBox logoutWrapper = new HBox(logoutBtn);
         logoutWrapper.setAlignment(javafx.geometry.Pos.CENTER);
@@ -136,6 +139,19 @@ public class MainLayoutController {
 
         return sidebar;
     }
+
+    // LOGOUT
+    private void handleLogout() {
+    // hapus session
+    Session.logout();
+
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/auth/Login.fxml"));
+        root.getScene().setRoot(loader.load());
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 
     private Button activeButton = null;
 
