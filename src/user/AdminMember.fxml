@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="user.AdminMemberController"
+            style="-fx-background-color: #f5f6fa;">
+
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20;">
+
+            <!-- ================= CARD 1 (TOPBAR + MEMBERS) ================= -->
+            <VBox spacing="10"
+                  style="-fx-background-color: white; -fx-padding: 20;
+                         -fx-background-radius: 12;
+                         -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 2);">
+
+                <!-- TOPBAR -->
+            <HBox alignment="CENTER_LEFT" spacing="10">
+
+                <!-- KIRI: MEMBERS -->
+                <VBox spacing="5">
+                    <Label text="Members"
+                        style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+                    <Label text="Kelola seluruh data member gym secara rapi dan terstruktur."
+                        style="-fx-text-fill: gray;"/>
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <!-- KANAN: TOPBAR -->
+                <HBox spacing="10" alignment="CENTER_RIGHT">
+
+                    <TextField promptText="Cari nama member atau email..."
+                            prefWidth="250"
+                            style="-fx-background-radius: 20; -fx-border-radius: 20;"/>
+
+                    <Button text="🔔" style="-fx-background-radius: 50;"/>
+
+                    <HBox spacing="8" alignment="CENTER">
+                        <Label text="O"
+                            style="-fx-background-color: orange; -fx-text-fill: white;
+                                    -fx-padding: 5 10; -fx-background-radius: 50;"/>
+                        <VBox>
+                            <Label text="obama"/>
+                            <Label text="Admin"
+                                style="-fx-font-size: 10px; -fx-text-fill: gray;"/>
+                        </VBox>
+                    </HBox>
+
+                </HBox>
+
+            </HBox>
+
+        </VBox>
+
+            <!-- ================= CARD 2 (DATA MEMBER) ================= -->
+            <VBox spacing="15"
+                  style="-fx-background-color: white; -fx-padding: 20;
+                         -fx-background-radius: 12;
+                         -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);">
+
+                <!-- HEADER -->
+                <HBox alignment="CENTER_LEFT">
+
+                    <VBox>
+                        <Label fx:id="lblHeaderTitle"
+                                text="Data Member"
+                                style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+                        <Label fx:id="lblHeaderDesc"
+                                text="Daftar member aktif, pending, dan nonaktif."
+                                style="-fx-text-fill: gray;"/>
+                    </VBox>
+
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <Button fx:id="btnAddMember"
+                            text="+ Tambah Member"
+                            onAction="#handleAdd"
+                            style="-fx-background-color: orange; -fx-text-fill: white;
+                                   -fx-background-radius: 20;"/>
+                </HBox>
+
+                <!-- TABLE -->
+                <StackPane fx:id="contentPane">
+
+    <TableView fx:id="tableMembers"
+               style="-fx-background-color: transparent;">
+
+        <columns>
+            <TableColumn text="Nama" fx:id="colName"/>
+            <TableColumn text="Email" fx:id="colEmail"/>
+            <TableColumn text="No HP" fx:id="colPhone"/>
+            <TableColumn text="Paket" fx:id="colMembership"/>
+            <TableColumn text="Join Date" fx:id="colJoinDate"/>
+            <TableColumn text="Status" fx:id="colStatus"/>
+            <TableColumn text="Action" fx:id="colAction"/>
+        </columns>
+
+    </TableView>
+
+</StackPane>
+
+            </VBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>
