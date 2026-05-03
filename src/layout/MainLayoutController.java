@@ -191,7 +191,7 @@ public class MainLayoutController {
         return btn;
     }
 
-    private void loadPage(String page) {
+    public void loadPage(String page) {
         try {
             String fxmlFile;
 
@@ -199,6 +199,8 @@ public class MainLayoutController {
                 case "Dashboard" -> fxmlFile = "/dashboard/Dashboard.fxml";
                 case "Membership" -> fxmlFile = "/payment/Membership.fxml";
                 case "Payment" -> fxmlFile = "/payment/Payment.fxml";
+                case "Members" -> fxmlFile = "/user/AdminMember.fxml";
+                case "AddMember" -> fxmlFile = "/user/AddMember.fxml";
                 default -> {
                     root.setCenter(buildPlaceholder(page + " Page"));
                     return;
