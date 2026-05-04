@@ -1,6 +1,6 @@
 package shared;
 
-import auth.User;
+import admin.auth.User;
 
 public class Session {
     private static User currentUser;

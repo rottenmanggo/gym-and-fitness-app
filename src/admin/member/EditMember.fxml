@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="user.AddMemberController"
+      spacing="20"
+      style="-fx-padding: 20; -fx-background-color: #f5f6fa;">
+
+    <!-- HEADER -->
+    <HBox alignment="CENTER_LEFT">
+
+        <Label fx:id="lblTitle"
+               text="Edit Member"
+               style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <!-- 🔥 TOMBOL KEMBALI -->
+        <Button text="← Kembali"
+                onAction="#handleBack"
+                style="-fx-background-color: #eeeeee;
+                       -fx-background-radius: 20;"/>
+    </HBox>
+
+    <!-- FORM CARD -->
+    <VBox spacing="15"
+          style="-fx-background-color: white;
+                 -fx-padding: 20;
+                 -fx-background-radius: 10;">
+
+        <HBox spacing="20">
+            <TextField fx:id="txtName" promptText="Nama" HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="txtEmail" promptText="Email" HBox.hgrow="ALWAYS"/>
+        </HBox>
+
+        <HBox spacing="20">
+            <TextField fx:id="txtPhone" promptText="No HP" HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="txtMembership" promptText="Paket" HBox.hgrow="ALWAYS"/>
+        </HBox>
+
+        <HBox spacing="20">
+            <TextField fx:id="txtJoinDate" promptText="Tanggal Mulai" HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="txtStatus" promptText="Status" HBox.hgrow="ALWAYS"/>
+        </HBox>
+
+        <!-- 🔥 SIMPAN FULL WIDTH -->
+        <Button fx:id="btnSave"
+                text="Simpan"
+                onAction="#handleSave"
+                maxWidth="Infinity"
+                style="-fx-background-color: orange;
+                       -fx-text-fill: white;
+                       -fx-pref-height: 45;
+                       -fx-background-radius: 10;"/>
+
+    </VBox>
+
+</VBox>

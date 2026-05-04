@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="payment.MembershipController"
+      styleClass="page-root"
+      stylesheets="@membership.css"
+      spacing="0">
+
+    <!-- TOP BAR -->
+    <HBox styleClass="topbar" alignment="CENTER_LEFT" spacing="16">
+        <VBox spacing="2" HBox.hgrow="ALWAYS">
+            <Label text="Memberships" styleClass="page-title"/>
+            <Label text="Atur paket membership gym dengan benefit yang jelas dan modern." styleClass="page-subtitle"/>
+        </VBox>
+        <TextField fx:id="searchField" promptText="🔍  Cari paket membership..." styleClass="search-field" prefWidth="280"/>
+        <HBox styleClass="avatar-box" alignment="CENTER">
+            <Label text="O" styleClass="avatar-label"/>
+        </HBox>
+        <VBox spacing="1">
+            <Label text="obama" styleClass="user-name"/>
+            <Label text="Admin" styleClass="user-role"/>
+        </VBox>
+    </HBox>
+
+    <!-- CONTENT -->
+    <ScrollPane styleClass="content-scroll" fitToWidth="true" VBox.vgrow="ALWAYS">
+        <VBox spacing="24" styleClass="content-body">
+
+            <!-- SECTION HEADER -->
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Paket Membership" styleClass="section-title"/>
+                    <Label text="Pilih dan kelola paket yang tersedia untuk member." styleClass="section-sub"/>
+                </VBox>
+                <Button text="+ Tambah Paket" styleClass="btn-primary" onAction="#handleTambahPaket"/>
+            </HBox>
+
+            <!-- CARD GRID — diisi programatically oleh Controller -->
+            <GridPane fx:id="cardGrid" hgap="20" vgap="20" styleClass="card-grid">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+            </GridPane>
+
+        </VBox>
+    </ScrollPane>
+
+</VBox>

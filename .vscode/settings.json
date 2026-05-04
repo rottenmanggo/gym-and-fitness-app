@@ -1,13 +1,5 @@
 {
   "java.project.sourcePaths": ["src"],
-  "java.project.referencedLibraries": ["C:/javafx-sdk-21.0.11/lib/*.jar"],
-  "java.jdt.ls.java.home": "C:/Program Files/Java/jdk-21.0.10+7",
-  "java.configuration.runtimes": [
-    {
-      "name": "JavaSE-21",
-      "path": "C:/Program Files/Java/jdk-21.0.10+7",
-      "default": true
-    }
-  ],
-  "java.debug.settings.onBuildFailureProceed": true
+  "java.project.outputPath": "bin",
+  "java.project.referencedLibraries": ["C:\\javafx-sdk-21.0.11\\lib\\*.jar"]
 }
