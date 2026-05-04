@@ -1,109 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="user.AdminMemberController"
-            style="-fx-background-color: #f5f6fa;">
+            fx:controller="admin.member.MemberController"
+            stylesheets="@member.css"
+            prefWidth="1280"
+            prefHeight="760"
+            styleClass="app-shell">
 
-    <center>
-        <VBox spacing="20" style="-fx-padding: 20;">
+    <left>
+        <VBox styleClass="sidebar">
 
-            <!-- ================= CARD 1 (TOPBAR + MEMBERS) ================= -->
-            <VBox spacing="10"
-                  style="-fx-background-color: white; -fx-padding: 20;
-                         -fx-background-radius: 12;
-                         -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 2);">
-
-                <!-- TOPBAR -->
-            <HBox alignment="CENTER_LEFT" spacing="10">
-
-                <!-- KIRI: MEMBERS -->
-                <VBox spacing="5">
-                    <Label text="Members"
-                        style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
-
-                    <Label text="Kelola seluruh data member gym secara rapi dan terstruktur."
-                        style="-fx-text-fill: gray;"/>
+            <HBox styleClass="sidebar-brand">
+                <Label text="⚡" styleClass="sidebar-brand-logo" />
+                <VBox>
+                    <Label text="GYMBRUT" styleClass="brand-title" />
+                    <Label text="ADMIN PANEL" styleClass="brand-subtitle" />
                 </VBox>
-
-                <Region HBox.hgrow="ALWAYS"/>
-
-                <!-- KANAN: TOPBAR -->
-                <HBox spacing="10" alignment="CENTER_RIGHT">
-
-                    <TextField promptText="Cari nama member atau email..."
-                            prefWidth="250"
-                            style="-fx-background-radius: 20; -fx-border-radius: 20;"/>
-
-                    <Button text="🔔" style="-fx-background-radius: 50;"/>
-
-                    <HBox spacing="8" alignment="CENTER">
-                        <Label text="O"
-                            style="-fx-background-color: orange; -fx-text-fill: white;
-                                    -fx-padding: 5 10; -fx-background-radius: 50;"/>
-                        <VBox>
-                            <Label text="obama"/>
-                            <Label text="Admin"
-                                style="-fx-font-size: 10px; -fx-text-fill: gray;"/>
-                        </VBox>
-                    </HBox>
-
-                </HBox>
-
             </HBox>
 
+            <Label text="MAIN MENU" styleClass="sidebar-title" />
+
+            <VBox styleClass="sidebar-nav">
+                <Button text="▦   Dashboard" onAction="#openDashboard" styleClass="sidebar-link" />
+                <Button text="👥  Members" styleClass="sidebar-link-active" />
+                <Button text="▤   Memberships" styleClass="sidebar-link" />
+                <Button text="💳  Payments" styleClass="sidebar-link" />
+                <Button text="📊  Reports" styleClass="sidebar-link" />
+                <Button text="🔥  Workouts" styleClass="sidebar-link" />
+            </VBox>
+
+            <VBox styleClass="sidebar-footer">
+                <Label text="Admin" styleClass="sidebar-user-name" />
+                <Button text="↪  Logout" onAction="#handleLogout" styleClass="logout-btn" />
+            </VBox>
+
         </VBox>
+    </left>
 
-            <!-- ================= CARD 2 (DATA MEMBER) ================= -->
-            <VBox spacing="15"
-                  style="-fx-background-color: white; -fx-padding: 20;
-                         -fx-background-radius: 12;
-                         -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);">
+    <center>
+        <VBox styleClass="main-content">
 
-                <!-- HEADER -->
-                <HBox alignment="CENTER_LEFT">
+            <HBox styleClass="topbar">
+                <VBox>
+                    <Label text="Data Members" styleClass="topbar-title" />
+                    <Label text="Kelola data member GYMBRUT." styleClass="topbar-subtitle" />
+                </VBox>
+            </HBox>
 
-                    <VBox>
-                        <Label fx:id="lblHeaderTitle"
-                                text="Data Member"
-                                style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            <HBox styleClass="page-hero">
+                <VBox styleClass="hero-left">
+                    <Label text="👥  Member Management" styleClass="banner-pill" />
+                    <Label text="Kelola semua member gym." styleClass="hero-title" />
+                    <Label text="Tambah, ubah, hapus, dan pantau status membership member."
+                           wrapText="true"
+                           styleClass="hero-desc" />
+                </VBox>
 
-                        <Label fx:id="lblHeaderDesc"
-                                text="Daftar member aktif, pending, dan nonaktif."
-                                style="-fx-text-fill: gray;"/>
-                    </VBox>
+                <Button text="+ Tambah Member"
+                        onAction="#openAddMember"
+                        styleClass="primary-btn" />
+            </HBox>
 
-                    <Region HBox.hgrow="ALWAYS"/>
+            <HBox styleClass="toolbar">
+                <TextField fx:id="searchField"
+                           promptText="Cari nama, email, atau membership..."
+                           styleClass="search-input" />
 
-                    <Button fx:id="btnAddMember"
-                            text="+ Tambah Member"
-                            onAction="#handleAdd"
-                            style="-fx-background-color: orange; -fx-text-fill: white;
-                                   -fx-background-radius: 20;"/>
+                <Button text="Cari"
+                        onAction="#handleSearch"
+                        styleClass="secondary-btn" />
+
+                <Button text="Reset"
+                        onAction="#handleReset"
+                        styleClass="light-btn" />
+            </HBox>
+
+            <VBox styleClass="table-card">
+                <HBox styleClass="table-header">
+                    <Label text="Daftar Member" styleClass="section-title" />
+                    <Label fx:id="totalDataLabel" text="0 data" styleClass="data-count" />
                 </HBox>
 
-                <!-- TABLE -->
-                <StackPane fx:id="contentPane">
+                <TableView fx:id="memberTable" prefHeight="430" styleClass="member-table">
+                    <columns>
+                        <TableColumn fx:id="idColumn" text="ID" prefWidth="70" />
+                        <TableColumn fx:id="nameColumn" text="Nama" prefWidth="220" />
+                        <TableColumn fx:id="emailColumn" text="Email" prefWidth="250" />
+                        <TableColumn fx:id="phoneColumn" text="No HP" prefWidth="160" />
+                        <TableColumn fx:id="membershipColumn" text="Membership" prefWidth="160" />
+                        <TableColumn fx:id="statusColumn" text="Status" prefWidth="130" />
+                    </columns>
+                </TableView>
 
-    <TableView fx:id="tableMembers"
-               style="-fx-background-color: transparent;">
+                <HBox styleClass="action-row">
+                    <Button text="Edit Member"
+                            onAction="#openEditMember"
+                            styleClass="warning-btn" />
 
-        <columns>
-            <TableColumn text="Nama" fx:id="colName"/>
-            <TableColumn text="Email" fx:id="colEmail"/>
-            <TableColumn text="No HP" fx:id="colPhone"/>
-            <TableColumn text="Paket" fx:id="colMembership"/>
-            <TableColumn text="Join Date" fx:id="colJoinDate"/>
-            <TableColumn text="Status" fx:id="colStatus"/>
-            <TableColumn text="Action" fx:id="colAction"/>
-        </columns>
-
-    </TableView>
-
-</StackPane>
-
+                    <Button text="Hapus Member"
+                            onAction="#handleDeleteMember"
+                            styleClass="danger-btn" />
+                </HBox>
             </VBox>
 
         </VBox>

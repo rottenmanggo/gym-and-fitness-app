@@ -2,143 +2,169 @@ package admin.member;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import shared.AlertHelper;
+import shared.SceneManager;
+import shared.Session;
 
 public class MemberController {
 
     @FXML
-    private StackPane contentPane;
-    @FXML
-    private TableView<Member> tableMembers;
-    @FXML
-    private TableColumn<Member, String> colName;
-    @FXML
-    private TableColumn<Member, String> colEmail;
-    @FXML
-    private TableColumn<Member, String> colPhone;
-    @FXML
-    private TableColumn<Member, String> colMembership;
-    @FXML
-    private TableColumn<Member, String> colJoinDate;
-    @FXML
-    private TableColumn<Member, String> colStatus;
-    @FXML
-    private TableColumn<Member, Void> colAction;
-    @FXML
-    private Label lblHeaderTitle;
-    @FXML
-    private Label lblHeaderDesc;
+    private TextField searchField;
 
     @FXML
-    private Button btnAddMember;
+    private Label totalDataLabel;
 
-    private ObservableList<Member> memberList;
+    @FXML
+    private TableView<Member> memberTable;
+
+    @FXML
+    private TableColumn<Member, Integer> idColumn;
+
+    @FXML
+    private TableColumn<Member, String> nameColumn;
+
+    @FXML
+    private TableColumn<Member, String> emailColumn;
+
+    @FXML
+    private TableColumn<Member, String> phoneColumn;
+
+    @FXML
+    private TableColumn<Member, String> membershipColumn;
+
+    @FXML
+    private TableColumn<Member, String> statusColumn;
+
+    private final MemberService memberService = new MemberService();
 
     @FXML
     public void initialize() {
-
-        memberList = FXCollections.observableArrayList(MemberService.getAllMembers());
-
-        colName.setCellValueFactory(data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getName()));
-        colEmail.setCellValueFactory(
-                data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getEmail()));
-        colPhone.setCellValueFactory(
-                data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getPhone()));
-        colMembership.setCellValueFactory(
-                data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getMembership()));
-        colJoinDate.setCellValueFactory(
-                data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getJoinDate()));
-        colStatus.setCellValueFactory(
-                data -> new javafx.beans.property.SimpleStringProperty(data.getValue().getStatus()));
-
-        colAction.setCellFactory(param -> new TableCell<>() {
-
-            private final Button btnEdit = new Button("Edit");
-            private final Button btnDelete = new Button("Hapus");
-
-            {
-                btnEdit.setOnAction(e -> {
-                    Member member = getTableView().getItems().get(getIndex());
-                    openEditForm(member);
-                });
-
-                btnDelete.setOnAction(e -> {
-                    Member member = getTableView().getItems().get(getIndex());
-                    MemberService.deleteMember(member);
-                    memberList.remove(member);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                setGraphic(empty ? null : new HBox(5, btnEdit, btnDelete));
-            }
-        });
-
-        tableMembers.setItems(memberList);
-
-        // 🔥 INI KUNCI FIX
-        contentPane.getChildren().setAll(tableMembers);
+        setupTable();
+        loadMembers();
     }
 
-    // 🔥 TAMBAH
+    private void setupTable() {
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        membershipColumn.setCellValueFactory(new PropertyValueFactory<>("membership"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+    }
+
+    private void loadMembers() {
+        memberTable.setItems(memberService.getAllMembers());
+        totalDataLabel.setText(memberTable.getItems().size() + " data");
+    }
+
     @FXML
-    private void handleAdd() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/user/AddMember.fxml"));
-            Parent node = loader.load();
+    private void handleSearch() {
+        String keyword = searchField.getText().trim().toLowerCase();
 
-            AddMemberController controller = loader.getController();
-            controller.setParentController(this);
+        if (keyword.isEmpty()) {
+            loadMembers();
+            return;
+        }
 
-            lblHeaderTitle.setText("Tambah Member");
-            lblHeaderDesc.setText("Isi data member baru.");
+        ObservableList<Member> filtered = FXCollections.observableArrayList();
 
-            btnAddMember.setVisible(false);
+        for (Member member : memberService.getAllMembers()) {
+            boolean match = member.getName().toLowerCase().contains(keyword)
+                    || member.getEmail().toLowerCase().contains(keyword)
+                    || member.getMembership().toLowerCase().contains(keyword)
+                    || member.getStatus().toLowerCase().contains(keyword);
 
-            contentPane.getChildren().setAll(node);
+            if (match) {
+                filtered.add(member);
+            }
+        }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        memberTable.setItems(filtered);
+        totalDataLabel.setText(filtered.size() + " data");
+    }
+
+    @FXML
+    private void handleReset() {
+        searchField.clear();
+        loadMembers();
+    }
+
+    @FXML
+    private void openAddMember(ActionEvent event) {
+        SceneManager.changeScene(
+                (Node) event.getSource(),
+                "/admin/member/AddMember.fxml",
+                "GYMBRUT - Tambah Member",
+                1280,
+                760);
+    }
+
+    @FXML
+    private void openEditMember(ActionEvent event) {
+        Member selectedMember = memberTable.getSelectionModel().getSelectedItem();
+
+        if (selectedMember == null) {
+            AlertHelper.showWarning("Pilih Member", "Pilih member yang ingin diedit terlebih dahulu.");
+            return;
+        }
+
+        EditMemberController.setSelectedMember(selectedMember);
+
+        SceneManager.changeScene(
+                (Node) event.getSource(),
+                "/admin/member/EditMember.fxml",
+                "GYMBRUT - Edit Member",
+                1280,
+                760);
+    }
+
+    @FXML
+    private void handleDeleteMember() {
+        Member selectedMember = memberTable.getSelectionModel().getSelectedItem();
+
+        if (selectedMember == null) {
+            AlertHelper.showWarning("Pilih Member", "Pilih member yang ingin dihapus terlebih dahulu.");
+            return;
+        }
+
+        boolean confirm = AlertHelper.showConfirm(
+                "Hapus Member",
+                "Yakin ingin menghapus member " + selectedMember.getName() + "?");
+
+        if (confirm) {
+            memberService.deleteMember(selectedMember);
+            loadMembers();
+            AlertHelper.showInfo("Berhasil", "Member berhasil dihapus.");
         }
     }
 
-    // 🔥 EDIT
-    private void openEditForm(Member member) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/user/EditMember.fxml"));
-            Parent node = loader.load();
-
-            AddMemberController controller = loader.getController();
-            controller.setParentController(this);
-            controller.setEditData(member);
-
-            lblHeaderTitle.setText("Edit Member");
-            lblHeaderDesc.setText("Ubah data member yang sudah ada.");
-
-            btnAddMember.setVisible(false);
-
-            contentPane.getChildren().setAll(node);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @FXML
+    private void openDashboard(ActionEvent event) {
+        SceneManager.changeScene(
+                (Node) event.getSource(),
+                "/admin/dashboard/Dashboard.fxml",
+                "GYMBRUT - Dashboard Admin",
+                1280,
+                760);
     }
 
-    // 🔥 BALIK KE TABEL
-    public void showTable() {
-        contentPane.getChildren().setAll(tableMembers);
-        memberList.setAll(MemberService.getAllMembers());
+    @FXML
+    private void handleLogout(ActionEvent event) {
+        Session.clear();
 
-        btnAddMember.setVisible(true);
-
-        lblHeaderTitle.setText("Data Member");
-        lblHeaderDesc.setText("Daftar member aktif, pending, dan nonaktif.");
+        SceneManager.changeScene(
+                (Node) event.getSource(),
+                "/auth/Login.fxml",
+                "GYMBRUT - Login",
+                1100,
+                720);
     }
 }

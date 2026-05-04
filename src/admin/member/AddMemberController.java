@@ -1,71 +1,70 @@
 package admin.member;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import shared.AlertHelper;
+import shared.SceneManager;
 
 public class AddMemberController {
 
     @FXML
-    private TextField txtName;
-    @FXML
-    private TextField txtEmail;
-    @FXML
-    private TextField txtPhone;
-    @FXML
-    private TextField txtMembership;
-    @FXML
-    private TextField txtJoinDate;
-    @FXML
-    private TextField txtStatus;
+    private TextField nameField;
 
-    private MemberController parentController;
-    private Member selectedMember;
+    @FXML
+    private TextField emailField;
 
-    public void setParentController(MemberController controller) {
-        this.parentController = controller;
-    }
+    @FXML
+    private TextField phoneField;
 
-    public void setEditData(Member member) {
-        this.selectedMember = member;
+    @FXML
+    private ComboBox<String> membershipCombo;
 
-        txtName.setText(member.getName());
-        txtEmail.setText(member.getEmail());
-        txtPhone.setText(member.getPhone());
-        txtMembership.setText(member.getMembership());
-        txtJoinDate.setText(member.getJoinDate());
-        txtStatus.setText(member.getStatus());
+    @FXML
+    private ComboBox<String> statusCombo;
+
+    private final MemberService memberService = new MemberService();
+
+    @FXML
+    public void initialize() {
+        membershipCombo.getItems().addAll("Bronze", "Silver", "Gold", "Platinum");
+        statusCombo.getItems().addAll("Aktif", "Pending", "Nonaktif");
     }
 
     @FXML
-    private void handleSave() {
+    private void handleSave(ActionEvent event) {
+        String name = nameField.getText().trim();
+        String email = emailField.getText().trim();
+        String phone = phoneField.getText().trim();
+        String membership = membershipCombo.getValue();
+        String status = statusCombo.getValue();
 
-        if (selectedMember != null) {
-            // EDIT
-            selectedMember.setName(txtName.getText());
-            selectedMember.setEmail(txtEmail.getText());
-            selectedMember.setPhone(txtPhone.getText());
-            selectedMember.setMembership(txtMembership.getText());
-            selectedMember.setJoinDate(txtJoinDate.getText());
-            selectedMember.setStatus(txtStatus.getText());
-        } else {
-            // TAMBAH
-            Member member = new Member(
-                    MemberService.generateId(),
-                    txtName.getText(),
-                    txtEmail.getText(),
-                    txtPhone.getText(),
-                    txtMembership.getText(),
-                    txtJoinDate.getText(),
-                    txtStatus.getText());
-
-            MemberService.addMember(member);
+        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || membership == null || status == null) {
+            AlertHelper.showWarning("Validasi", "Semua field wajib diisi.");
+            return;
         }
 
-        parentController.showTable();
+        memberService.addMember(name, email, phone, membership, status);
+
+        AlertHelper.showInfo("Berhasil", "Member berhasil ditambahkan.");
+
+        SceneManager.changeScene(
+                (Node) event.getSource(),
+                "/admin/member/Member.fxml",
+                "GYMBRUT - Data Member",
+                1280,
+                760);
     }
 
     @FXML
-    private void handleBack() {
-        parentController.showTable();
+    private void handleBack(ActionEvent event) {
+        SceneManager.changeScene(
+                (Node) event.getSource(),
+                "/admin/member/Member.fxml",
+                "GYMBRUT - Data Member",
+                1280,
+                760);
     }
 }

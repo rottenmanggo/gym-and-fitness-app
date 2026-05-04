@@ -6,7 +6,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="payment.PaymentController"
+      fx:controller="admin.payments.PaymentController"
       styleClass="page-root"
       stylesheets="@payment.css"
       spacing="0">

@@ -7,7 +7,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="payment.MembershipController"
+      fx:controller="admin.membership.MembershipController"
       styleClass="page-root"
       stylesheets="@membership.css"
       spacing="0">
