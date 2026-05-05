@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import config.Database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -18,7 +19,7 @@ public class UploadPaymentController {
 
     private FileChooser fileChooser = new FileChooser();
 
-    private Connection connection = DatabaseConnection.getConnection(); // sesuaikan jika beda
+ // sesuaikan jika beda
 
     // =========================
     // PILIH FILE
@@ -43,29 +44,39 @@ public class UploadPaymentController {
                 return;
             }
 
-            // 1. Nama file unik
+            // =========================
+            // 1. SIMPAN FILE DULU (PASTI JALAN)
+            // =========================
             String fileName = System.currentTimeMillis() + "_" + selectedFile.getName();
-
-            // 2. Path tujuan
             Path targetPath = Paths.get("src/uploads/payments/" + fileName);
 
-            // 3. Copy file
             Files.copy(selectedFile.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
 
-            // 4. Simpan ke database
-            String query = "INSERT INTO payments (membership_id, amount, status, proof_image_path) VALUES (?, ?, 'pending', ?)";
+            System.out.println("File berhasil disimpan!");
+
+            // =========================
+            // 2. BARU COBA DATABASE
+            // =========================
+            Connection connection = Database.getConnection();
+
+            if (connection == null) {
+                System.out.println("DB gagal, tapi file tetap tersimpan.");
+                return;
+            }
+
+            String query = "INSERT INTO payments (membership_id, amount, payment_date, payment_method, status, proof_image_path) VALUES (?, ?, NOW(), 'transfer', 'pending', ?)";
 
             PreparedStatement ps = connection.prepareStatement(query);
 
-            ps.setInt(1, 1); // sementara (membership_id)
-            ps.setDouble(2, 100000); // sementara (amount)
+            ps.setInt(1, 1);
+            ps.setDouble(2, 100000);
             ps.setString(3, targetPath.toString());
 
-            ps.executeUpdate();
-
-            System.out.println("Upload berhasil!");
+            int result = ps.executeUpdate();
+            System.out.println("Rows inserted: " + result);
 
         } catch (Exception e) {
+            System.out.println("ERROR:");
             e.printStackTrace();
         }
     }
