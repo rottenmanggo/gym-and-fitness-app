@@ -35,16 +35,8 @@ public class EditMemberController {
 
     @FXML
     public void initialize() {
-        membershipCombo.getItems().addAll("Bronze", "Silver", "Gold", "Platinum");
+        membershipCombo.getItems().addAll("Harian", "Mingguan", "Bulanan", "Tahunan");
         statusCombo.getItems().addAll("Aktif", "Pending", "Nonaktif");
-
-        if (selectedMember != null) {
-            nameField.setText(selectedMember.getName());
-            emailField.setText(selectedMember.getEmail());
-            phoneField.setText(selectedMember.getPhone());
-            membershipCombo.setValue(selectedMember.getMembership());
-            statusCombo.setValue(selectedMember.getStatus());
-        }
     }
 
     @FXML
@@ -65,7 +57,27 @@ public class EditMemberController {
             return;
         }
 
-        memberService.updateMember(selectedMember, name, email, phone, membership, status);
+        if (name.length() < 3) {
+            AlertHelper.showWarning("Validasi", "Nama minimal 3 karakter.");
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            AlertHelper.showWarning("Validasi", "Format email tidak valid.");
+            return;
+        }
+
+        if (!isValidPhone(phone)) {
+            AlertHelper.showWarning("Validasi", "No HP harus angka dan terdiri dari 10-15 digit.");
+            return;
+        }
+
+        boolean success = memberService.updateMember(selectedMember, name, email, phone, membership, status);
+
+        if (!success) {
+            AlertHelper.showWarning("Gagal", "Data member gagal diperbarui. Email mungkin sudah digunakan.");
+            return;
+        }
 
         AlertHelper.showInfo("Berhasil", "Data member berhasil diperbarui.");
 
@@ -86,4 +98,13 @@ public class EditMemberController {
                 1280,
                 760);
     }
+
+    private boolean isValidEmail(String email) {
+        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+    }
+
+    private boolean isValidPhone(String phone) {
+        return phone.matches("\\d{10,15}");
+    }
+
 }

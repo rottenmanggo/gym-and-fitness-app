@@ -29,7 +29,7 @@ public class AddMemberController {
 
     @FXML
     public void initialize() {
-        membershipCombo.getItems().addAll("Bronze", "Silver", "Gold", "Platinum");
+        membershipCombo.getItems().addAll("Harian", "Mingguan", "Bulanan", "Tahunan");
         statusCombo.getItems().addAll("Aktif", "Pending", "Nonaktif");
     }
 
@@ -46,7 +46,27 @@ public class AddMemberController {
             return;
         }
 
-        memberService.addMember(name, email, phone, membership, status);
+        if (name.length() < 3) {
+            AlertHelper.showWarning("Validasi", "Nama minimal 3 karakter.");
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            AlertHelper.showWarning("Validasi", "Format email tidak valid.");
+            return;
+        }
+
+        if (!isValidPhone(phone)) {
+            AlertHelper.showWarning("Validasi", "No HP harus angka dan terdiri dari 10-15 digit.");
+            return;
+        }
+
+        boolean success = memberService.addMember(name, email, phone, membership, status);
+
+        if (!success) {
+            AlertHelper.showWarning("Gagal", "Member gagal ditambahkan. Email mungkin sudah digunakan.");
+            return;
+        }
 
         AlertHelper.showInfo("Berhasil", "Member berhasil ditambahkan.");
 
@@ -67,4 +87,13 @@ public class AddMemberController {
                 1280,
                 760);
     }
+
+    private boolean isValidEmail(String email) {
+        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+    }
+
+    private boolean isValidPhone(String phone) {
+        return phone.matches("\\d{10,15}");
+    }
+
 }

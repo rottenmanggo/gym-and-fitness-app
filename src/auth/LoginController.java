@@ -40,17 +40,23 @@ public class LoginController {
 
         Session.setUser(user);
 
-        if (!AuthAdmin.check()) {
-            showAlert("Akun ini bukan admin.", "danger");
-            return;
-        }
-
-        SceneManager.changeScene(
-                emailField,
-                "/admin/dashboard/Dashboard.fxml",
-                "GYMBRUT - Dashboard Admin",
-                1280,
-                760);
+if (user.getRole().equalsIgnoreCase("admin")) {
+    SceneManager.changeScene(
+            emailField,
+            "/admin/dashboard/Dashboard.fxml",
+            "GYMBRUT - Dashboard Admin",
+            1280,
+            760);
+} else if (user.getRole().equalsIgnoreCase("member")) {
+    SceneManager.changeScene(
+            emailField,
+            "/member/dashboard/MemberDashboard.fxml",
+            "GYMBRUT - Dashboard Member",
+            1280,
+            760);
+} else {
+    showAlert("Role akun tidak dikenali.", "danger");
+}
     }
 
     @FXML

@@ -315,3 +315,17 @@
   -fx-border-color: #d8dee9;
   -fx-text-fill: #475569;
 }
+
+.member-table .table-row-cell:selected {
+    -fx-background-color: #fff3e8;
+}
+
+.member-table .table-row-cell:selected .table-cell {
+    -fx-text-fill: #0f172a;
+    -fx-border-color: transparent transparent #ff7a1a transparent;
+    -fx-border-width: 0 0 2px 0;
+}
+
+.member-table .table-row-cell:hover {
+    -fx-background-color: #fff7f0;
+}

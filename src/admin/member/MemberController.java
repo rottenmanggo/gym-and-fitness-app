@@ -46,10 +46,14 @@ public class MemberController {
     private final MemberService memberService = new MemberService();
 
     @FXML
-    public void initialize() {
-        setupTable();
-        loadMembers();
-    }
+public void initialize() {
+    setupTable();
+    loadMembers();
+
+    searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+        handleSearch();
+    });
+}
 
     private void setupTable() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -140,7 +144,13 @@ public class MemberController {
                 "Yakin ingin menghapus member " + selectedMember.getName() + "?");
 
         if (confirm) {
-            memberService.deleteMember(selectedMember);
+            boolean success = memberService.deleteMember(selectedMember);
+
+            if (!success) {
+                AlertHelper.showWarning("Gagal", "Member gagal dihapus.");
+                return;
+            }
+
             loadMembers();
             AlertHelper.showInfo("Berhasil", "Member berhasil dihapus.");
         }
