@@ -1,5 +1,8 @@
 {
   "java.project.sourcePaths": ["src"],
   "java.project.outputPath": "bin",
-  "java.project.referencedLibraries": ["C:\\javafx-sdk-21.0.11\\lib\\*.jar"]
+  "java.project.referencedLibraries": [
+    "C:\\javafx-sdk-21.0.11\\lib\\*.jar",
+    "c:\\Users\\SONI\\Downloads\\mysql-connector-j-9.7.0\\mysql-connector-j-9.7.0\\mysql-connector-j-9.7.0.jar"
+  ]
 }

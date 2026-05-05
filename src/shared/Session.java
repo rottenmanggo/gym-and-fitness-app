@@ -3,7 +3,6 @@ package shared;
 import auth.User;
 
 public class Session {
-
     private static User currentUser;
 
     public static void setUser(User user) {
