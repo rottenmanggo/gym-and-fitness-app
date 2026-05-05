@@ -21,37 +21,76 @@ public class LoginController {
 
     private final AuthService authService = new AuthService();
 
+    // @FXML
+    // private void handleLogin() {
+    //     String email = emailField.getText().trim();
+    //     String password = passwordField.getText().trim();
+
+    //     if (email.isEmpty() || password.isEmpty()) {
+    //         showAlert("Email dan password wajib diisi.", "danger");
+    //         return;
+    //     }
+
+    //     User user = authService.login(email, password);
+
+    //     if (user == null) {
+    //         showAlert("Email atau password salah.", "danger");
+    //         return;
+    //     }
+
+    //     Session.setUser(user);
+
+    //     if (!AuthAdmin.check()) {
+    //         showAlert("Akun ini bukan admin.", "danger");
+    //         return;
+    //     }
+
+    //     SceneManager.changeScene(
+    //             emailField,
+    //             "/admin/dashboard/Dashboard.fxml",
+    //             "GYMBRUT - Dashboard Admin",
+    //             1280,
+    //             760);
+    // }
+
     @FXML
-    private void handleLogin() {
-        String email = emailField.getText().trim();
-        String password = passwordField.getText().trim();
+private void handleLogin() {
+    String email = emailField.getText().trim();
+    String password = passwordField.getText().trim();
 
-        if (email.isEmpty() || password.isEmpty()) {
-            showAlert("Email dan password wajib diisi.", "danger");
-            return;
-        }
+    if (email.isEmpty() || password.isEmpty()) {
+        showAlert("Email dan password wajib diisi.", "danger");
+        return;
+    }
 
-        User user = authService.login(email, password);
+    User user = authService.login(email, password);
 
-        if (user == null) {
-            showAlert("Email atau password salah.", "danger");
-            return;
-        }
+    if (user == null) {
+        showAlert("Email atau password salah.", "danger");
+        return;
+    }
 
-        Session.setUser(user);
+    Session.setUser(user);
 
-        if (!AuthAdmin.check()) {
-            showAlert("Akun ini bukan admin.", "danger");
-            return;
-        }
-
+    // 🔥 CEK ROLE
+    if (AuthAdmin.check()) {
+        // ADMIN
         SceneManager.changeScene(
                 emailField,
                 "/admin/dashboard/Dashboard.fxml",
                 "GYMBRUT - Dashboard Admin",
                 1280,
                 760);
+    } else {
+        // MEMBER
+        SceneManager.changeScene(
+            emailField,
+            "/member/payments/MemberPayments.fxml",
+            "GYMBRUT - Member Payments",
+            800,
+            600);
     }
+}
 
     @FXML
     private void handleRegisterLink() {

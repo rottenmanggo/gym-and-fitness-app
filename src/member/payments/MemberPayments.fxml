@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<VBox spacing="20" alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="member.payments.UploadPaymentController">
+
+    <Label text="Member Payments Page" style="-fx-font-size: 20px;"/>
+
+    <Button text="Pilih File" onAction="#handleChooseFile"/>
+    <Button text="Upload Payment" onAction="#handleUpload"/>
+
+</VBox>
