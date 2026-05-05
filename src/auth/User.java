@@ -6,12 +6,14 @@ public class User {
     private String name;
     private String email;
     private String role;
+    private String phone;
 
-    public User(int id, String name, String email, String role) {
+    public User(int id, String name, String email, String role, String phone) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.role = role;
+        this.phone = phone;
     }
 
     public int getId() {
@@ -28,6 +30,10 @@ public class User {
 
     public String getRole() {
         return role;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     public boolean isAdmin() {
