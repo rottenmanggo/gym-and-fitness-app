@@ -1,0 +1,32 @@
+# Ignore compiled files
+*.class
+*.jar
+*.war
+
+# Ignore build folders
+target/
+bin/
+out/
+
+# Ignore IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# Ignore generated files
+.classpath
+.project
+.settings/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore dependencies
+lib/
+
+# Ignore uploaded files
+src/uploads/
+uploads/

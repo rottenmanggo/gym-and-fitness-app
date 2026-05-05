@@ -1,0 +1,83 @@
+package com.gymbrut.auth;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import com.gymbrut.shared.SceneManager;
+import com.gymbrut.shared.Session;
+
+public class LoginController {
+
+    @FXML
+    private TextField emailField;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private Label alertLabel;
+
+    private final AuthService authService = new AuthService();
+
+    @FXML
+    private void handleLogin() {
+        String email = emailField.getText().trim();
+        String password = passwordField.getText().trim();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            showAlert("Email dan password wajib diisi", "danger");
+            return;
+        }
+
+        // Login ke database
+        User user = authService.login(email, password);
+
+        if (user == null) {
+            showAlert("Gagal login: Email atau password salah", "danger");
+            return;
+        }
+
+        // ⚡ set session user
+        Session.setUser(user);
+
+        // ⚡ redirect sesuai role
+        if (user.isAdmin()) {
+            SceneManager.changeScene(
+                    emailField,
+                    "/com/gymbrut/resources/fxml/admin/dashboard/Dashboard.fxml",
+                    "Dashboard Admin",
+                    1280,
+                    760);
+        } else if (user.isMember()) {
+            SceneManager.changeScene(
+                    emailField,
+                    "/com/gymbrut/resources/fxml/member/dashboard/MemberDashboard.fxml",
+                    "Dashboard Member",
+                    1280,
+                    760);
+        } else {
+            showAlert("Role user tidak dikenali", "danger");
+        }
+    }
+
+    @FXML
+    private void handleRegisterLink() {
+        SceneManager.changeScene(
+                emailField,
+                "/com/gymbrut/resources/fxml/auth/Register.fxml",
+                "Register",
+                1100,
+                720);
+    }
+
+    private void showAlert(String message, String type) {
+        if (alertLabel == null)
+            return;
+
+        alertLabel.setText(message);
+        alertLabel.setVisible(true);
+        alertLabel.setManaged(true);
+
+        alertLabel.getStyleClass().removeAll("auth-alert-success", "auth-alert-danger");
+        alertLabel.getStyleClass().add("success".equals(type) ? "auth-alert-success" : "auth-alert-danger");
+    }
+}
