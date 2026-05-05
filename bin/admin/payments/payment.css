@@ -1,0 +1,131 @@
+@import "../member/member.css";
+
+.page-root {
+  -fx-background-color: #f6f7fb;
+  -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.content-body {
+  -fx-padding: 18px;
+  -fx-background-color: #f6f7fb;
+}
+
+.page-title {
+  -fx-font-size: 24px;
+  -fx-font-weight: 900;
+  -fx-text-fill: #18212f;
+}
+
+.page-subtitle,
+.section-sub {
+  -fx-font-size: 14px;
+  -fx-text-fill: #6b7280;
+}
+
+.search-field {
+  -fx-pref-height: 44px;
+  -fx-background-color: #ffffff;
+  -fx-border-color: #d8dee9;
+  -fx-background-radius: 14px;
+  -fx-border-radius: 14px;
+  -fx-padding: 0 14px;
+  -fx-font-size: 14px;
+}
+
+.search-field:focused {
+  -fx-border-color: #ff7a00;
+}
+
+.avatar-box {
+  -fx-min-width: 46px;
+  -fx-min-height: 46px;
+  -fx-background-color: #fff3e8;
+  -fx-background-radius: 14px;
+}
+
+.avatar-label {
+  -fx-font-weight: 900;
+  -fx-text-fill: #e86600;
+  -fx-font-size: 16px;
+}
+
+.user-name {
+  -fx-font-size: 14px;
+  -fx-font-weight: 900;
+  -fx-text-fill: #18212f;
+}
+
+.user-role {
+  -fx-font-size: 12px;
+  -fx-text-fill: #94a3b8;
+}
+
+.btn-export,
+.btn-approve,
+.btn-reject {
+  -fx-pref-height: 42px;
+  -fx-background-radius: 14px;
+  -fx-border-radius: 14px;
+  -fx-padding: 0 18px;
+  -fx-font-size: 14px;
+  -fx-font-weight: 900;
+  -fx-cursor: hand;
+}
+
+.btn-export {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #d8dee9;
+  -fx-text-fill: #475569;
+}
+
+.btn-approve {
+  -fx-background-color: #eaf9ef;
+  -fx-border-color: #c9ebd3;
+  -fx-text-fill: #16a34a;
+}
+
+.btn-reject {
+  -fx-background-color: #fdecec;
+  -fx-border-color: #f8caca;
+  -fx-text-fill: #dc2626;
+}
+
+.status-info {
+  -fx-text-fill: #6b7280;
+  -fx-font-size: 13px;
+  -fx-font-weight: 700;
+}
+
+.payment-table {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #e7ebf3;
+  -fx-background-radius: 18px;
+  -fx-border-radius: 18px;
+  -fx-padding: 10px;
+  -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.05), 22, 0, 0, 8);
+}
+
+.payment-table .column-header-background {
+  -fx-background-color: #fff7ef;
+  -fx-background-radius: 14px 14px 0 0;
+}
+
+.payment-table .column-header {
+  -fx-background-color: transparent;
+  -fx-font-weight: 900;
+  -fx-size: 44px;
+}
+
+.payment-table .table-row-cell {
+  -fx-cell-size: 44px;
+}
+
+.payment-table .table-row-cell:selected {
+  -fx-background-color: #fff3e8;
+  -fx-text-fill: #18212f;
+}
+
+.empty-label {
+  -fx-text-fill: #94a3b8;
+  -fx-font-weight: 700;
+}

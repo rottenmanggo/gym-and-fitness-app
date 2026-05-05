@@ -17,6 +17,8 @@
 
     <VBox styleClass="auth-card">
 
+        <Label text="🏋" styleClass="auth-logo" />
+
         <Label text="GYMBRUT" styleClass="auth-title" />
 
         <Label text="Login ke sistem fitness &amp; gym management"
@@ -24,11 +26,12 @@
                styleClass="auth-subtitle" />
 
         <Label fx:id="alertLabel"
-               text=""
-               visible="false"
-               managed="false"
-               wrapText="true"
-               styleClass="auth-alert" />
+       text=""
+       wrapText="true"
+       maxWidth="380"
+       visible="false"
+       managed="false"
+       styleClass="auth-alert" />
 
         <VBox styleClass="auth-form">
 
@@ -46,16 +49,21 @@
                                styleClass="form-control" />
             </VBox>
 
-            <Button text="Login"
-                    onAction="#handleLogin"
-                    styleClass="gradient-btn" />
-
+            <VBox alignment="CENTER">
+    <Button text="Login"
+            onAction="#handleLogin"
+            styleClass="gradient-btn"
+            minWidth="220"
+            prefWidth="220"
+            minHeight="48"
+            prefHeight="48" />
+</VBox>
         </VBox>
 
-        <Label text="Akun demo admin: admin@gmail.com / admin123"
-               styleClass="auth-helper" />
+        <Label text="Belum punya akun?"
+               styleClass="auth-links-text" />
 
-        <Hyperlink text="Belum punya akun? Register sekarang"
+        <Hyperlink text="Register sekarang"
                    onAction="#handleRegisterLink"
                    styleClass="auth-link" />
 
