@@ -2,64 +2,84 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="admin.member.EditMemberController"
-            stylesheets="@member.css"
-            prefWidth="1280"
-            prefHeight="760"
-            styleClass="app-shell">
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="admin.member.EditMemberController"
+      stylesheets="@member.css"
+      styleClass="form-page"
+      spacing="18">
 
-    <center>
-        <VBox styleClass="form-page">
+    <VBox styleClass="topbar" spacing="6">
+        <Label text="Edit Member" styleClass="topbar-title"/>
+        <Label text="Ubah data member, paket membership, tanggal mulai, dan status."
+               styleClass="topbar-subtitle"/>
+    </VBox>
 
-            <HBox styleClass="topbar">
-                <VBox>
-                    <Label text="Edit Member" styleClass="topbar-title" />
-                    <Label text="Ubah data member yang dipilih." styleClass="topbar-subtitle" />
-                </VBox>
-            </HBox>
+    <VBox styleClass="form-card" spacing="16">
 
-            <VBox styleClass="form-card">
-                <Label text="Form Edit Member" styleClass="section-title" />
-
-                <VBox styleClass="form-group">
-                    <Label text="Nama Member" styleClass="form-label" />
-                    <TextField fx:id="nameField" promptText="Masukkan nama member" styleClass="form-control" />
-                </VBox>
-
-                <VBox styleClass="form-group">
-                    <Label text="Email" styleClass="form-label" />
-                    <TextField fx:id="emailField" promptText="Masukkan email" styleClass="form-control" />
-                </VBox>
-
-                <VBox styleClass="form-group">
-                    <Label text="No HP" styleClass="form-label" />
-                    <TextField fx:id="phoneField" promptText="Masukkan nomor HP" styleClass="form-control" />
-                </VBox>
-
-                <VBox styleClass="form-group">
-                    <Label text="Membership" styleClass="form-label" />
-                    <ComboBox fx:id="membershipCombo" promptText="Pilih membership" styleClass="form-control" />
-                </VBox>
-
-                <VBox styleClass="form-group">
-                    <Label text="Status" styleClass="form-label" />
-                    <ComboBox fx:id="statusCombo" promptText="Pilih status" styleClass="form-control" />
-                </VBox>
-
-                <HBox styleClass="action-row">
-                    <Button text="Update" onAction="#handleUpdate" styleClass="primary-btn" />
-                    <Button text="Kembali" onAction="#handleBack" styleClass="light-btn" />
-                </HBox>
-            </VBox>
-
+        <VBox styleClass="form-group">
+            <Label text="Nama" styleClass="form-label"/>
+            <TextField fx:id="nameField"
+                       promptText="Masukkan nama member"
+                       styleClass="form-control"/>
         </VBox>
-    </center>
 
-</BorderPane>
+        <VBox styleClass="form-group">
+            <Label text="Email" styleClass="form-label"/>
+            <TextField fx:id="emailField"
+                       promptText="Masukkan email"
+                       styleClass="form-control"/>
+        </VBox>
+
+        <VBox styleClass="form-group">
+            <Label text="No HP" styleClass="form-label"/>
+            <TextField fx:id="phoneField"
+                       promptText="Masukkan nomor HP"
+                       styleClass="form-control"/>
+        </VBox>
+
+        <VBox styleClass="form-group">
+            <Label text="Password Baru" styleClass="form-label"/>
+            <PasswordField fx:id="passwordField"
+                           promptText="Kosongkan jika tidak diubah"
+                           styleClass="form-control"/>
+        </VBox>
+
+        <VBox styleClass="form-group">
+            <Label text="Paket Membership" styleClass="form-label"/>
+            <ComboBox fx:id="membershipCombo"
+                      maxWidth="Infinity"
+                      styleClass="form-control"/>
+        </VBox>
+
+        <VBox styleClass="form-group">
+            <Label text="Tanggal Mulai" styleClass="form-label"/>
+            <DatePicker fx:id="startDatePicker"
+                        maxWidth="Infinity"
+                        styleClass="form-control"/>
+        </VBox>
+
+        <VBox styleClass="form-group">
+            <Label text="Status" styleClass="form-label"/>
+            <ComboBox fx:id="statusCombo"
+                      maxWidth="Infinity"
+                      styleClass="form-control"/>
+        </VBox>
+
+        <HBox spacing="12">
+            <Button text="Update"
+                    onAction="#handleUpdate"
+                    styleClass="primary-btn"/>
+
+            <Button text="Batal"
+                    onAction="#handleCancel"
+                    styleClass="light-btn"/>
+        </HBox>
+    </VBox>
+</VBox>

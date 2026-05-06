@@ -6,62 +6,81 @@ import javafx.stage.Stage;
 
 public class EditMembershipController {
 
-    @FXML private TextField tfNama;
-    @FXML private TextField tfDurasi;
-    @FXML private TextField tfHarga;
-    @FXML private TextArea  taDeskripsi;
+    @FXML
+    private TextField tfNama;
+    @FXML
+    private TextField tfDurasi;
+    @FXML
+    private TextField tfHarga;
+    @FXML
+    private TextArea taDeskripsi;
 
     private Membership currentMembership;
     private MembershipController parentController;
     private final MembershipService service = new MembershipService();
 
-    public void setData(Membership m, MembershipController ctrl) {
-        this.currentMembership  = m;
-        this.parentController   = ctrl;
+    public void setData(Membership membership, MembershipController parentController) {
+        this.currentMembership = membership;
+        this.parentController = parentController;
 
-        tfNama.setText(m.getPackageName());
-        tfDurasi.setText(String.valueOf(m.getDurationDays()));
-        tfHarga.setText(String.format("%.2f", m.getPrice()));
-        taDeskripsi.setText(m.getDescription() != null ? m.getDescription() : "");
+        tfNama.setText(membership.getPackageName());
+        tfDurasi.setText(String.valueOf(membership.getDurationDays()));
+        tfHarga.setText(String.valueOf((int) membership.getPrice()));
+        taDeskripsi.setText(membership.getDescription() == null ? "" : membership.getDescription());
     }
 
     @FXML
-    public void handleUpdate() {
-        String nama     = tfNama.getText().trim();
-        String durasi   = tfDurasi.getText().trim();
-        String harga    = tfHarga.getText().trim();
-        String deskripsi = taDeskripsi.getText().trim();
+    private void handleUpdate() {
+        if (currentMembership == null) {
+            showAlert(Alert.AlertType.ERROR, "Gagal", "Data paket tidak ditemukan.");
+            return;
+        }
+
+        String nama = tfNama.getText() == null ? "" : tfNama.getText().trim();
+        String durasi = tfDurasi.getText() == null ? "" : tfDurasi.getText().trim();
+        String harga = tfHarga.getText() == null ? "" : tfHarga.getText().trim();
+        String deskripsi = taDeskripsi.getText() == null ? "" : taDeskripsi.getText().trim();
 
         if (nama.isEmpty() || durasi.isEmpty() || harga.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Nama, Durasi, dan Harga wajib diisi!");
+            showAlert(Alert.AlertType.WARNING, "Validasi", "Nama paket, durasi, dan harga wajib diisi.");
             return;
         }
 
         try {
-            int    durasiInt   = Integer.parseInt(durasi);
+            int durasiInt = Integer.parseInt(durasi);
             double hargaDouble = Double.parseDouble(harga);
+
+            if (durasiInt <= 0 || hargaDouble <= 0) {
+                showAlert(Alert.AlertType.WARNING, "Validasi", "Durasi dan harga harus lebih dari 0.");
+                return;
+            }
 
             currentMembership.setPackageName(nama);
             currentMembership.setDurationDays(durasiInt);
             currentMembership.setPrice(hargaDouble);
             currentMembership.setDescription(deskripsi);
 
-            boolean ok = service.update(currentMembership);
-            if (ok) {
-                showAlert(Alert.AlertType.INFORMATION, "Paket berhasil diupdate!");
-                if (parentController != null) parentController.refreshData();
+            boolean success = service.update(currentMembership);
+
+            if (success) {
+                showAlert(Alert.AlertType.INFORMATION, "Berhasil", "Paket membership berhasil diperbarui.");
+
+                if (parentController != null) {
+                    parentController.refreshData();
+                }
+
                 closeWindow();
             } else {
-                showAlert(Alert.AlertType.ERROR, "Gagal mengupdate paket.");
+                showAlert(Alert.AlertType.ERROR, "Gagal", "Paket membership gagal diperbarui.");
             }
 
         } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR, "Durasi harus angka bulat, Harga harus angka.");
+            showAlert(Alert.AlertType.ERROR, "Format Salah", "Durasi dan harga harus berupa angka.");
         }
     }
 
     @FXML
-    public void handleKembali() {
+    private void handleKembali() {
         closeWindow();
     }
 
@@ -70,10 +89,11 @@ public class EditMembershipController {
         stage.close();
     }
 
-    private void showAlert(Alert.AlertType type, String msg) {
+    private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
+        alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText(msg);
+        alert.setContentText(content);
         alert.showAndWait();
     }
 }

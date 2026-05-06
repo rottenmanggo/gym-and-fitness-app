@@ -6,26 +6,20 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<!--
-  Member.fxml - Konten halaman Data Member (Admin).
-  CONTENT-ONLY: tidak mengandung sidebar atau topbar.
-  Di-load ke dalam LayoutTop.fxml contentArea secara dinamis.
--->
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="admin.member.MemberController"
       stylesheets="@member.css"
-      styleClass="main-content"
+      styleClass="member-root"
       spacing="18">
 
-    <!-- Hero Banner -->
-    <HBox styleClass="page-hero">
-        <VBox styleClass="hero-left">
-            <Label text="👥  Member Management" styleClass="banner-pill" />
-            <Label text="Kelola semua member gym." styleClass="hero-title" />
-            <Label text="Tambah, ubah, hapus, dan pantau status membership member."
+    <HBox styleClass="member-hero">
+        <VBox spacing="8" HBox.hgrow="ALWAYS">
+            <Label text="👥 MEMBER MANAGEMENT" styleClass="banner-pill" />
+            <Label text="Kelola Data Member" styleClass="hero-title" />
+            <Label text="Tambah, ubah, hapus, dan pantau status membership seluruh member gym."
                    wrapText="true"
                    styleClass="hero-desc" />
         </VBox>
@@ -35,8 +29,34 @@
                 styleClass="primary-btn" />
     </HBox>
 
-    <!-- Table Card -->
-    <VBox styleClass="table-card">
+    <HBox spacing="16">
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+            <Label text="Total Member" styleClass="stat-label" />
+            <Label fx:id="statTotalMember" text="0" styleClass="stat-value" />
+            <Label text="Semua akun member" styleClass="stat-meta" />
+        </VBox>
+
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+            <Label text="Member Aktif" styleClass="stat-label" />
+            <Label fx:id="statActiveMember" text="0" styleClass="stat-value" />
+            <Label text="Membership aktif" styleClass="stat-meta" />
+        </VBox>
+
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+            <Label text="Pending" styleClass="stat-label" />
+            <Label fx:id="statPendingMember" text="0" styleClass="stat-value" />
+            <Label text="Menunggu pembayaran" styleClass="stat-meta" />
+        </VBox>
+
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+            <Label text="Expired" styleClass="stat-label" />
+            <Label fx:id="statExpiredMember" text="0" styleClass="stat-value" />
+            <Label text="Membership berakhir" styleClass="stat-meta" />
+        </VBox>
+    </HBox>
+
+    <VBox styleClass="table-card" spacing="16" VBox.vgrow="ALWAYS">
+
         <HBox styleClass="table-header">
             <HBox alignment="CENTER_LEFT" spacing="14">
                 <Label text="Daftar Member" styleClass="section-title" />
@@ -49,12 +69,8 @@
 
             <HBox spacing="10" alignment="CENTER_RIGHT">
                 <TextField fx:id="searchField"
-                           promptText="Cari nama, email, membership..."
+                           promptText="Cari nama, email, paket, status..."
                            styleClass="search-input" />
-
-                <Button text="Cari"
-                        onAction="#handleSearch"
-                        styleClass="secondary-btn" />
 
                 <Button text="Reset"
                         onAction="#handleReset"
@@ -62,25 +78,19 @@
             </HBox>
         </HBox>
 
-        <TableView fx:id="memberTable" prefHeight="520" styleClass="member-table">
+        <TableView fx:id="memberTable"
+                   prefHeight="520"
+                   styleClass="member-table"
+                   VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="idColumn" text="ID" prefWidth="60" />
-                <TableColumn fx:id="nameColumn" text="Nama" prefWidth="220" />
-                <TableColumn fx:id="emailColumn" text="Email" prefWidth="260" />
-                <TableColumn fx:id="phoneColumn" text="No HP" prefWidth="180" />
-                <TableColumn fx:id="membershipColumn" text="Membership" prefWidth="170" />
-                <TableColumn fx:id="statusColumn" text="Status" prefWidth="150" />
+                <TableColumn fx:id="nameColumn" text="Nama" prefWidth="190" />
+                <TableColumn fx:id="emailColumn" text="Email" prefWidth="230" />
+                <TableColumn fx:id="phoneColumn" text="No HP" prefWidth="150" />
+                <TableColumn fx:id="membershipColumn" text="Paket" prefWidth="150" />
+                <TableColumn fx:id="joinDateColumn" text="Join Date" prefWidth="140" />
+                <TableColumn fx:id="statusColumn" text="Status" prefWidth="130" />
+                <TableColumn fx:id="actionColumn" text="Action" prefWidth="170" />
             </columns>
         </TableView>
-
-        <HBox styleClass="action-row">
-            <Button text="Edit Member"
-                    onAction="#openEditMember"
-                    styleClass="warning-btn" />
-
-            <Button text="Hapus Member"
-                    onAction="#handleDeleteMember"
-                    styleClass="danger-btn" />
-        </HBox>
     </VBox>
 </VBox>
