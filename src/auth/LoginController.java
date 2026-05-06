@@ -59,6 +59,11 @@ public class LoginController {
     }
 
     @FXML
+    private void focusPassword() {
+        passwordField.requestFocus();
+    }
+
+    @FXML
     private void handleRegisterLink() {
         try {
             System.out.println("Register link clicked");
@@ -76,14 +81,23 @@ public class LoginController {
     }
 
     private void showAlert(String message, String type) {
-        if (alertLabel == null)
-            return;
 
         alertLabel.setText(message);
+
         alertLabel.setVisible(true);
         alertLabel.setManaged(true);
 
-        alertLabel.getStyleClass().removeAll("auth-alert-success", "auth-alert-danger");
-        alertLabel.getStyleClass().add("success".equals(type) ? "auth-alert-success" : "auth-alert-danger");
+        // Tengah
+        alertLabel.setMaxWidth(Double.MAX_VALUE);
+        alertLabel.setStyle("-fx-alignment: center; -fx-text-alignment: center;");
+
+        alertLabel.getStyleClass().removeAll(
+                "auth-alert-success",
+                "auth-alert-danger");
+
+        alertLabel.getStyleClass().add(
+                "success".equals(type)
+                        ? "auth-alert-success"
+                        : "auth-alert-danger");
     }
 }

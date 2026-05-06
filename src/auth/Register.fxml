@@ -9,24 +9,24 @@
 <StackPane xmlns="http://javafx.com/javafx/21"
            xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="auth.RegisterController"
-           stylesheets="@../assets/css/auth.css"
-           prefWidth="1100"
-           prefHeight="720"
+           stylesheets="@auth.css"
            styleClass="auth-page">
 
     <VBox alignment="CENTER"
-          spacing="12"
-          maxWidth="480"
-          styleClass="auth-card">
+      spacing="10"
+      maxWidth="520"
+      maxHeight="660"
+      styleClass="auth-card register-card">
 
         <!-- Logo -->
-        <StackPane styleClass="logo-wrapper">
-            <ImageView fitWidth="72" fitHeight="72" preserveRatio="true">
-                <image>
-                    <Image url="@../assets/img/logo-g.png"/>
-                </image>
-            </ImageView>
-        </StackPane>
+        <ImageView fitWidth="74"
+           fitHeight="74"
+           preserveRatio="true"
+           styleClass="auth-logo-img">
+    <image>
+        <Image url="@../assets/image/logo-gymbrut.png"/>
+    </image>
+</ImageView>
 
         <!-- Title -->
         <Label text="Create Account" styleClass="auth-title"/>
@@ -38,68 +38,77 @@
                 <Insets top="12" right="0" bottom="8" left="0"/>
             </padding>
 
-            <TextField fx:id="nameField"
-                       promptText="Nama Lengkap"
-                       GridPane.rowIndex="0"
-                       GridPane.columnIndex="0"
-                       GridPane.columnSpan="2"
-                       styleClass="auth-input"/>
+           <TextField fx:id="nameField"
+           promptText="Nama Lengkap"
+           onAction="#focusEmail"
+           GridPane.rowIndex="0"
+           GridPane.columnIndex="0"
+           GridPane.columnSpan="2"
+           styleClass="auth-input"/>
 
-            <TextField fx:id="emailField"
-                       promptText="Email"
-                       GridPane.rowIndex="1"
-                       GridPane.columnIndex="0"
-                       GridPane.columnSpan="2"
-                       styleClass="auth-input"/>
+<TextField fx:id="emailField"
+           promptText="Email"
+           onAction="#focusPassword"
+           GridPane.rowIndex="1"
+           GridPane.columnIndex="0"
+           GridPane.columnSpan="2"
+           styleClass="auth-input"/>
 
-            <PasswordField fx:id="passwordField"
-                           promptText="Password"
-                           GridPane.rowIndex="2"
-                           GridPane.columnIndex="0"
-                           GridPane.columnSpan="2"
-                           styleClass="auth-input"/>
+<PasswordField fx:id="passwordField"
+               promptText="Password"
+               onAction="#focusPhone"
+               GridPane.rowIndex="2"
+               GridPane.columnIndex="0"
+               GridPane.columnSpan="2"
+               styleClass="auth-input"/>
 
-            <TextField fx:id="phoneField"
-                       promptText="No HP"
-                       GridPane.rowIndex="3"
-                       GridPane.columnIndex="0"
-                       GridPane.columnSpan="2"
-                       styleClass="auth-input"/>
+<TextField fx:id="phoneField"
+           promptText="No HP"
+           onAction="#focusGender"
+           GridPane.rowIndex="3"
+           GridPane.columnIndex="0"
+           GridPane.columnSpan="2"
+           styleClass="auth-input"/>
 
-            <ComboBox fx:id="genderBox"
-                      promptText="Gender"
-                      GridPane.rowIndex="4"
-                      GridPane.columnIndex="0"
-                      styleClass="auth-input"
-                      prefWidth="190"/>
+<ComboBox fx:id="genderBox"
+          promptText="Gender"
+          onAction="#focusAge"
+          GridPane.rowIndex="4"
+          GridPane.columnIndex="0"
+          styleClass="auth-input"
+          prefWidth="190"/>
 
-            <TextField fx:id="ageField"
-                       promptText="Umur"
-                       GridPane.rowIndex="4"
-                       GridPane.columnIndex="1"
-                       styleClass="auth-input"
-                       prefWidth="190"/>
+<TextField fx:id="ageField"
+           promptText="Umur"
+           onAction="#focusHeight"
+           GridPane.rowIndex="4"
+           GridPane.columnIndex="1"
+           styleClass="auth-input"
+           prefWidth="190"/>
 
-            <TextField fx:id="heightField"
-                       promptText="Tinggi (cm)"
-                       GridPane.rowIndex="5"
-                       GridPane.columnIndex="0"
-                       styleClass="auth-input"
-                       prefWidth="190"/>
+<TextField fx:id="heightField"
+           promptText="Tinggi (cm)"
+           onAction="#focusWeight"
+           GridPane.rowIndex="5"
+           GridPane.columnIndex="0"
+           styleClass="auth-input"
+           prefWidth="190"/>
 
-            <TextField fx:id="weightField"
-                       promptText="Berat (kg)"
-                       GridPane.rowIndex="5"
-                       GridPane.columnIndex="1"
-                       styleClass="auth-input"
-                       prefWidth="190"/>
+<TextField fx:id="weightField"
+           promptText="Berat (kg)"
+           onAction="#focusTarget"
+           GridPane.rowIndex="5"
+           GridPane.columnIndex="1"
+           styleClass="auth-input"
+           prefWidth="190"/>
 
-            <TextField fx:id="targetField"
-                       promptText="Target Fitness"
-                       GridPane.rowIndex="6"
-                       GridPane.columnIndex="0"
-                       GridPane.columnSpan="2"
-                       styleClass="auth-input"/>
+<TextField fx:id="targetField"
+           promptText="Target Fitness"
+           onAction="#handleRegister"
+           GridPane.rowIndex="6"
+           GridPane.columnIndex="0"
+           GridPane.columnSpan="2"
+           styleClass="auth-input"/>
 
             <Button text="Register"
                     onAction="#handleRegister"

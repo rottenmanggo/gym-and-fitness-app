@@ -36,34 +36,10 @@
   -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.1), 60, 0, 0, 20);
 }
 
-.auth-card:hover {
-  -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.15), 80, 0, 0, 25);
-  -fx-translate-y: -5;
-}
-
 .logo-wrapper {
   -fx-background-color: #fff4eb;
   -fx-background-radius: 20px;
   -fx-padding: 10px;
-}
-
-.auth-logo {
-  -fx-min-width: 80px;
-  -fx-min-height: 80px;
-  -fx-pref-width: 80px;
-  -fx-pref-height: 80px;
-  -fx-alignment: center;
-  -fx-font-size: 32px;
-  -fx-font-weight: 900;
-  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 8, 0, 0, 4);
-  -fx-background-color: linear-gradient(45deg, #ff7a00, #ff9f45);
-  -fx-background-radius: 50%;
-  -fx-text-fill: white;
-}
-
-.auth-logo:hover {
-  -fx-scale-x: 1.1;
-  -fx-scale-y: 1.1;
 }
 
 .auth-title {
