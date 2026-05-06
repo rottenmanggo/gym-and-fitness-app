@@ -1,0 +1,12 @@
+<VBox spacing="10" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="member.profile.MemberProfileController">
+
+    <Label text="Profile Member" />
+
+    <TextField fx:id="nameField" promptText="Nama"/>
+    <TextField fx:id="emailField" promptText="Email"/>
+    <PasswordField fx:id="passwordField" promptText="Password"/>
+
+    <Button text="Update Profile" onAction="#handleUpdate"/>
+
+</VBox>
