@@ -5,127 +5,204 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class MembershipController implements Initializable {
+public class MembershipController {
 
-    @FXML private GridPane  cardGrid;
-    @FXML private TextField searchField;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Label totalDataLabel;
+    @FXML
+    private GridPane cardGrid;
 
     private final MembershipService service = new MembershipService();
     private final ObservableList<Membership> membershipList = FXCollections.observableArrayList();
     private FilteredList<Membership> filteredList;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    @FXML
+    public void initialize() {
+        setupGrid();
         loadFromDatabase();
-        filteredList = new FilteredList<>(membershipList, p -> true);
 
-        searchField.textProperty().addListener((obs, oldVal, newVal) -> {
-            filteredList.setPredicate(m -> {
-                if (newVal == null || newVal.isBlank()) return true;
-                String lower = newVal.toLowerCase();
-                return m.getPackageName().toLowerCase().contains(lower)
-                    || m.getDescription().toLowerCase().contains(lower);
-            });
-            renderCards();
+        filteredList = new FilteredList<>(membershipList, membership -> true);
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            handleSearch(newValue);
         });
 
         renderCards();
     }
 
+    private void setupGrid() {
+        cardGrid.getColumnConstraints().clear();
+
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPercentWidth(50);
+        col1.setHgrow(Priority.ALWAYS);
+        col1.setFillWidth(true);
+
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setPercentWidth(50);
+        col2.setHgrow(Priority.ALWAYS);
+        col2.setFillWidth(true);
+
+        cardGrid.getColumnConstraints().addAll(col1, col2);
+    }
+
     private void loadFromDatabase() {
         membershipList.clear();
+
         List<Membership> data = service.getAll();
         membershipList.addAll(data);
+
+        updateTotalLabel(membershipList.size());
     }
 
     public void refreshData() {
         loadFromDatabase();
-        filteredList = new FilteredList<>(membershipList, p -> true);
+
+        filteredList = new FilteredList<>(membershipList, membership -> true);
+
+        if (searchField != null) {
+            searchField.clear();
+        }
+
         renderCards();
     }
 
-    // ─── Render kartu ke GridPane ─────────────────────────────────
-    private void renderCards() {
-        cardGrid.getChildren().clear();
-        int col = 0, row = 0;
-        for (Membership m : filteredList) {
-            cardGrid.add(buildCard(m), col, row);
-            col++;
-            if (col > 1) { col = 0; row++; }
-        }
+    private void handleSearch(String keyword) {
+        String search = keyword == null ? "" : keyword.toLowerCase().trim();
+
+        filteredList.setPredicate(membership -> {
+            if (search.isEmpty()) {
+                return true;
+            }
+
+            return safe(membership.getPackageName()).toLowerCase().contains(search)
+                    || safe(membership.getDescription()).toLowerCase().contains(search)
+                    || String.valueOf(membership.getDurationDays()).contains(search)
+                    || membership.getPriceFormatted().toLowerCase().contains(search);
+        });
+
+        renderCards();
     }
 
-    private VBox buildCard(Membership m) {
-        VBox card = new VBox(12);
-        card.getStyleClass().add("membership-card");
-        card.setPadding(new Insets(20));
+    private void renderCards() {
+        cardGrid.getChildren().clear();
 
-        // Header: judul + badge Active
-        HBox header = new HBox();
+        if (filteredList == null || filteredList.isEmpty()) {
+            VBox emptyBox = new VBox(8);
+            emptyBox.setAlignment(Pos.CENTER_LEFT);
+            emptyBox.getStyleClass().add("empty-card");
+
+            Label title = new Label("Belum ada paket membership.");
+            title.getStyleClass().add("empty-title");
+
+            Label subtitle = new Label("Tambahkan paket membership baru agar bisa dipilih oleh member.");
+            subtitle.getStyleClass().add("empty-subtitle");
+
+            emptyBox.getChildren().addAll(title, subtitle);
+
+            cardGrid.add(emptyBox, 0, 0, 2, 1);
+            updateTotalLabel(0);
+            return;
+        }
+
+        int col = 0;
+        int row = 0;
+
+        for (Membership membership : filteredList) {
+            VBox card = buildCard(membership);
+
+            GridPane.setHgrow(card, Priority.ALWAYS);
+            GridPane.setFillWidth(card, true);
+
+            cardGrid.add(card, col, row);
+
+            col++;
+
+            if (col > 1) {
+                col = 0;
+                row++;
+            }
+        }
+
+        updateTotalLabel(filteredList.size());
+    }
+
+    private VBox buildCard(Membership membership) {
+        VBox card = new VBox(16);
+        card.getStyleClass().add("membership-card");
+        card.setMaxWidth(Double.MAX_VALUE);
+
+        HBox header = new HBox(12);
         header.setAlignment(Pos.CENTER_LEFT);
 
-        VBox titleBox = new VBox(4);
-        Label title = new Label(m.getPackageName());
-        title.getStyleClass().add("card-title");
-        Label meta = new Label(m.getDurationDays() + " Hari  •  " + m.getPriceFormatted());
-        meta.getStyleClass().add("card-meta");
-        titleBox.getChildren().addAll(title, meta);
+        VBox titleBox = new VBox(5);
+        titleBox.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(titleBox, Priority.ALWAYS);
 
+        Label title = new Label(membership.getPackageName());
+        title.getStyleClass().add("card-title");
+
+        Label meta = new Label(membership.getDurationDays() + " Hari • " + membership.getPriceFormatted());
+        meta.getStyleClass().add("card-meta");
+
+        titleBox.getChildren().addAll(title, meta);
+
         Label badge = new Label("Active");
-        badge.getStyleClass().addAll("status-badge", "status-aktif");
+        badge.getStyleClass().addAll("badge-soft", "badge-active");
+
         header.getChildren().addAll(titleBox, badge);
 
-        // Benefit / Deskripsi
+        VBox benefitBox = new VBox(6);
+        benefitBox.getStyleClass().add("card-list");
+
         Label benefitTitle = new Label("Benefit Paket");
-        benefitTitle.getStyleClass().add("card-benefit-title");
-        Text benefitText = new Text(m.getDescription() != null ? m.getDescription() : "-");
-        benefitText.getStyleClass().add("card-benefit-text");
-        benefitText.setWrappingWidth(320);
+        benefitTitle.getStyleClass().add("list-row-title");
 
-        // Tombol aksi
-        HBox actions = new HBox(10);
-        actions.setAlignment(Pos.CENTER_LEFT);
+        Label benefitText = new Label(membership.getDescriptionText());
+        benefitText.setWrapText(true);
+        benefitText.getStyleClass().add("list-row-subtitle");
 
-        Button btnEdit = new Button("✏  Edit");
-        btnEdit.getStyleClass().addAll("card-btn", "btn-edit");
-        btnEdit.setOnAction(e -> openEditDialog(m));
+        benefitBox.getChildren().addAll(benefitTitle, benefitText);
 
-        Button btnHapus = new Button("🗑  Hapus");
-        btnHapus.getStyleClass().addAll("card-btn", "btn-hapus");
-        btnHapus.setOnAction(e -> handleHapus(m));
+        HBox actionBox = new HBox(10);
+        actionBox.setAlignment(Pos.CENTER_LEFT);
 
-        actions.getChildren().addAll(btnEdit, btnHapus);
-        card.getChildren().addAll(header, new Separator(), benefitTitle, benefitText, actions);
+        Button editButton = new Button("Edit");
+        editButton.getStyleClass().add("btn-outline-soft");
+        editButton.setOnAction(event -> openEditDialog(membership));
+
+        Button deleteButton = new Button("Hapus");
+        deleteButton.getStyleClass().add("btn-outline-soft");
+        deleteButton.setOnAction(event -> handleDelete(membership));
+
+        actionBox.getChildren().addAll(editButton, deleteButton);
+
+        card.getChildren().addAll(header, benefitBox, actionBox);
+
         return card;
     }
 
-    // ─── Tambah Paket ─────────────────────────────────────────────
     @FXML
-    public void handleTambahPaket() {
+    private void handleTambahPaket() {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/admin/membership/AddMembership.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin/membership/AddMembership.fxml"));
             Parent root = loader.load();
 
-            AddMembershipController ctrl = loader.getController();
-            ctrl.setParentController(this);
+            AddMembershipController controller = loader.getController();
+            controller.setParentController(this);
 
             Stage stage = new Stage();
             stage.setTitle("Tambah Paket Membership");
@@ -135,19 +212,17 @@ public class MembershipController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Gagal membuka form tambah paket.");
+            showAlert(Alert.AlertType.ERROR, "Gagal", "Form tambah paket tidak bisa dibuka.");
         }
     }
 
-    // ─── Edit Paket ───────────────────────────────────────────────
-    private void openEditDialog(Membership m) {
+    private void openEditDialog(Membership membership) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/admin/membership/EditMembership.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/admin/membership/EditMembership.fxml"));
             Parent root = loader.load();
 
-            EditMembershipController ctrl = loader.getController();
-            ctrl.setData(m, this);
+            EditMembershipController controller = loader.getController();
+            controller.setData(membership, this);
 
             Stage stage = new Stage();
             stage.setTitle("Edit Paket Membership");
@@ -157,32 +232,45 @@ public class MembershipController implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Gagal membuka form edit paket.");
+            showAlert(Alert.AlertType.ERROR, "Gagal", "Form edit paket tidak bisa dibuka.");
         }
     }
 
-    // ─── Hapus Paket ──────────────────────────────────────────────
-    private void handleHapus(Membership m) {
+    private void handleDelete(Membership membership) {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Hapus Paket");
-        confirm.setHeaderText("Hapus paket \"" + m.getPackageName() + "\"?");
-        confirm.setContentText("Tindakan ini tidak dapat dibatalkan.");
-        confirm.showAndWait().ifPresent(btn -> {
-            if (btn == ButtonType.OK) {
-                boolean ok = service.delete(m.getPackageId());
-                if (ok) {
+        confirm.setHeaderText("Hapus paket \"" + membership.getPackageName() + "\"?");
+        confirm.setContentText("Paket hanya bisa dihapus kalau belum dipakai oleh data membership member.");
+
+        confirm.showAndWait().ifPresent(button -> {
+            if (button == ButtonType.OK) {
+                boolean success = service.delete(membership.getPackageId());
+
+                if (success) {
+                    showAlert(Alert.AlertType.INFORMATION, "Berhasil", "Paket berhasil dihapus.");
                     refreshData();
                 } else {
-                    showAlert(Alert.AlertType.ERROR, "Gagal menghapus paket. Mungkin masih dipakai oleh member.");
+                    showAlert(Alert.AlertType.ERROR, "Gagal", "Paket gagal dihapus karena masih dipakai oleh member.");
                 }
             }
         });
     }
 
-    private void showAlert(Alert.AlertType type, String msg) {
+    private void updateTotalLabel(int total) {
+        if (totalDataLabel != null) {
+            totalDataLabel.setText(total + " paket");
+        }
+    }
+
+    private String safe(String value) {
+        return value == null ? "" : value;
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
+        alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText(msg);
+        alert.setContentText(content);
         alert.showAndWait();
     }
 }

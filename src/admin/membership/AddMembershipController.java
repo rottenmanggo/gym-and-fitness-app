@@ -6,52 +6,65 @@ import javafx.stage.Stage;
 
 public class AddMembershipController {
 
-    @FXML private TextField tfNama;
-    @FXML private TextField tfDurasi;
-    @FXML private TextField tfHarga;
-    @FXML private TextArea  taDeskripsi;
+    @FXML
+    private TextField tfNama;
+    @FXML
+    private TextField tfDurasi;
+    @FXML
+    private TextField tfHarga;
+    @FXML
+    private TextArea taDeskripsi;
 
     private MembershipController parentController;
     private final MembershipService service = new MembershipService();
 
-    public void setParentController(MembershipController ctrl) {
-        this.parentController = ctrl;
+    public void setParentController(MembershipController parentController) {
+        this.parentController = parentController;
     }
 
     @FXML
-    public void handleSimpan() {
-        String nama    = tfNama.getText().trim();
-        String durasi  = tfDurasi.getText().trim();
-        String harga   = tfHarga.getText().trim();
-        String deskripsi = taDeskripsi.getText().trim();
+    private void handleSimpan() {
+        String nama = tfNama.getText() == null ? "" : tfNama.getText().trim();
+        String durasi = tfDurasi.getText() == null ? "" : tfDurasi.getText().trim();
+        String harga = tfHarga.getText() == null ? "" : tfHarga.getText().trim();
+        String deskripsi = taDeskripsi.getText() == null ? "" : taDeskripsi.getText().trim();
 
         if (nama.isEmpty() || durasi.isEmpty() || harga.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Nama, Durasi, dan Harga wajib diisi!");
+            showAlert(Alert.AlertType.WARNING, "Validasi", "Nama paket, durasi, dan harga wajib diisi.");
             return;
         }
 
         try {
-            int    durasiInt  = Integer.parseInt(durasi);
+            int durasiInt = Integer.parseInt(durasi);
             double hargaDouble = Double.parseDouble(harga);
 
-            Membership m = new Membership(0, nama, durasiInt, hargaDouble, deskripsi);
-            boolean ok = service.insert(m);
+            if (durasiInt <= 0 || hargaDouble <= 0) {
+                showAlert(Alert.AlertType.WARNING, "Validasi", "Durasi dan harga harus lebih dari 0.");
+                return;
+            }
 
-            if (ok) {
-                showAlert(Alert.AlertType.INFORMATION, "Paket berhasil ditambahkan!");
-                if (parentController != null) parentController.refreshData();
+            Membership membership = new Membership(0, nama, durasiInt, hargaDouble, deskripsi);
+            boolean success = service.insert(membership);
+
+            if (success) {
+                showAlert(Alert.AlertType.INFORMATION, "Berhasil", "Paket membership berhasil ditambahkan.");
+
+                if (parentController != null) {
+                    parentController.refreshData();
+                }
+
                 closeWindow();
             } else {
-                showAlert(Alert.AlertType.ERROR, "Gagal menyimpan paket ke database.");
+                showAlert(Alert.AlertType.ERROR, "Gagal", "Paket membership gagal ditambahkan.");
             }
 
         } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR, "Durasi harus angka bulat, Harga harus angka.");
+            showAlert(Alert.AlertType.ERROR, "Format Salah", "Durasi dan harga harus berupa angka.");
         }
     }
 
     @FXML
-    public void handleKembali() {
+    private void handleKembali() {
         closeWindow();
     }
 
@@ -60,10 +73,11 @@ public class AddMembershipController {
         stage.close();
     }
 
-    private void showAlert(Alert.AlertType type, String msg) {
+    private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
+        alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText(msg);
+        alert.setContentText(content);
         alert.showAndWait();
     }
 }

@@ -1,104 +1,124 @@
 package admin.payments;
 
-import javafx.beans.property.*;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Payment {
 
-    public enum Status {
-        PAID, PENDING, FAILED
+    private int paymentId;
+    private int membershipId;
+    private int userId;
+    private int durationDays;
+
+    private String invoice;
+    private String memberName;
+    private String email;
+    private String packageName;
+    private double amount;
+    private String status;
+    private LocalDate paymentDate;
+    private String proofFile;
+
+    public Payment(
+            int paymentId,
+            int membershipId,
+            int userId,
+            int durationDays,
+            String memberName,
+            String email,
+            String packageName,
+            double amount,
+            String status,
+            LocalDate paymentDate,
+            String proofFile) {
+        this.paymentId = paymentId;
+        this.membershipId = membershipId;
+        this.userId = userId;
+        this.durationDays = durationDays;
+        this.invoice = String.format("INV-%05d", paymentId);
+        this.memberName = memberName;
+        this.email = email;
+        this.packageName = packageName;
+        this.amount = amount;
+        this.status = status;
+        this.paymentDate = paymentDate;
+        this.proofFile = proofFile;
     }
 
-    private final StringProperty invoice;
-    private final StringProperty namaMember;
-    private final DoubleProperty nominal;
-    private final StringProperty paket;
-    private final ObjectProperty<Status> status;
-    private final ObjectProperty<LocalDate> tanggal;
-    private final StringProperty proofFile;  
-
-
-    public Payment(String invoice, String namaMember, double nominal, String paket,
-            Status status, LocalDate tanggal, String proofFile) {
-        this.invoice = new SimpleStringProperty(invoice);
-        this.namaMember = new SimpleStringProperty(namaMember);
-        this.nominal = new SimpleDoubleProperty(nominal);
-        this.paket = new SimpleStringProperty(paket);
-        this.status = new SimpleObjectProperty<>(status);
-        this.tanggal = new SimpleObjectProperty<>(tanggal);
-        this.proofFile = new SimpleStringProperty(proofFile);
+    public int getPaymentId() {
+        return paymentId;
     }
 
-    // --- Property getters ---
-    public StringProperty invoiceProperty() {
+    public int getMembershipId() {
+        return membershipId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public int getDurationDays() {
+        return durationDays;
+    }
+
+    public String getInvoice() {
         return invoice;
     }
 
-    public StringProperty namaMemberProperty() {
-        return namaMember;
+    public String getMemberName() {
+        return memberName;
     }
 
-    public DoubleProperty nominalProperty() {
-        return nominal;
+    public String getEmail() {
+        return email;
     }
 
-    public StringProperty paketProperty() {
-        return paket;
+    public String getPackageName() {
+        return packageName;
     }
 
-    public ObjectProperty<Status> statusProperty() {
+    public double getAmount() {
+        return amount;
+    }
+
+    public String getStatus() {
         return status;
     }
 
-    public ObjectProperty<LocalDate> tanggalProperty() {
-        return tanggal;
-    }
-
-    public StringProperty proofFileProperty() {
-        return proofFile;
-    }
-
-    // --- Plain getters ---
-    public String getInvoice() {
-        return invoice.get();
-    }
-
-    public String getNamaMember() {
-        return namaMember.get();
-    }
-
-    public double getNominal() {
-        return nominal.get();
-    }
-
-    public String getPaket() {
-        return paket.get();
-    }
-
-    public Status getStatus() {
-        return status.get();
-    }
-
-    public LocalDate getTanggal() {
-        return tanggal.get();
+    public LocalDate getPaymentDate() {
+        return paymentDate;
     }
 
     public String getProofFile() {
-        return proofFile.get();
+        return proofFile;
     }
 
-    // --- Setter ---
-    public void setStatus(Status v) {
-        status.set(v);
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    // --- Format helpers ---
-    public String getNominalFormatted() {
-        return String.format("Rp %,.0f", nominal.get());
+    public String getAmountFormatted() {
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        format.setMaximumFractionDigits(0);
+        return format.format(amount);
     }
 
-    public String getTanggalFormatted() {
-        return tanggal.get().format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
+    public String getPaymentDateFormatted() {
+        if (paymentDate == null) {
+            return "-";
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH);
+        return paymentDate.format(formatter);
+    }
+
+    public String getStatusLabel() {
+        if (status == null) {
+            return "-";
+        }
+
+        return status.substring(0, 1).toUpperCase() + status.substring(1).toLowerCase();
     }
 }

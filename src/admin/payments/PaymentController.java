@@ -1,327 +1,201 @@
 package admin.payments;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import config.Database;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.io.File;
+
 import java.awt.Desktop;
+import java.io.File;
+import java.util.List;
+import java.util.Optional;
 
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ResourceBundle;
-
-import admin.payments.Payment.Status;
-
-public class PaymentController implements Initializable {
+public class PaymentController {
 
     @FXML
     private TableView<Payment> paymentTable;
+
     @FXML
     private TableColumn<Payment, String> colInvoice;
     @FXML
     private TableColumn<Payment, String> colNama;
     @FXML
-    private TableColumn<Payment, Double> colNominal;
-    @FXML
     private TableColumn<Payment, String> colPaket;
+    @FXML
+    private TableColumn<Payment, String> colNominal;
+    @FXML
+    private TableColumn<Payment, String> colStatus;
+    @FXML
+    private TableColumn<Payment, String> colTanggal;
     @FXML
     private TableColumn<Payment, String> colBukti;
     @FXML
     private TableColumn<Payment, Void> colAksi;
-    @FXML
-    private TableColumn<Payment, Status> colStatus;
-    @FXML
-    private TableColumn<Payment, LocalDate> colTanggal;
+
     @FXML
     private TextField searchField;
     @FXML
+    private Label totalDataLabel;
+    @FXML
     private Label statusInfo;
+
+    private final PaymentsService service = new PaymentsService();
 
     private final ObservableList<Payment> paymentList = FXCollections.observableArrayList();
     private FilteredList<Payment> filteredList;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        loadPaymentData();
-        setupColumns();
+    @FXML
+    public void initialize() {
+        setupTable();
+        loadPayments();
 
-        filteredList = new FilteredList<>(paymentList, p -> true);
-        searchField.textProperty().addListener((obs, o, newVal) -> filteredList.setPredicate(p -> {
-            if (newVal == null || newVal.isBlank())
-                return true;
-            String lower = newVal.toLowerCase();
-            return p.getInvoice().toLowerCase().contains(lower)
-                    || p.getNamaMember().toLowerCase().contains(lower)
-                    || p.getPaket().toLowerCase().contains(lower);
-        }));
-
+        filteredList = new FilteredList<>(paymentList, payment -> true);
         paymentTable.setItems(filteredList);
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> handleSearch(newValue));
     }
 
-    private void loadPaymentData() {
-        paymentList.clear();
+    private void setupTable() {
+        paymentTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        try {
-            Connection conn = Database.getConnection();
+        colInvoice.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getInvoice()));
+        colPaket.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getPackageName())));
+        colNominal.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAmountFormatted()));
+        colTanggal.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPaymentDateFormatted()));
 
-            String query = """
-                    SELECT 
-                        p.payment_id,
-                        p.amount,
-                        p.payment_date,
-                        p.status,
-                        p.proof_file,
-                        u.name,
-                        pkg.package_name AS package_name
-                    FROM payments p
-                    JOIN memberships m ON p.membership_id = m.membership_id
-                    JOIN users u ON m.user_id = u.user_id
-                    JOIN membership_packages pkg ON m.package_id = pkg.package_id
-                    """;
-
-            PreparedStatement ps = conn.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                String invoice = "INV-" + rs.getInt("payment_id");
-                String nama = rs.getString("name");
-                double nominal = rs.getDouble("amount");
-
-                String paket = rs.getString("package_name");
-                String bukti = rs.getString("proof_file");
-
-                String dbStatus = rs.getString("status");
-
-                Payment.Status status;
-
-                switch (dbStatus.toLowerCase()) {
-                    case "verified":
-                        status = Payment.Status.PAID;
-                        break;
-
-                    case "pending":
-                        status = Payment.Status.PENDING;
-                        break;
-
-                    default:
-                        status = Payment.Status.FAILED;
-                        break;
-                }
-
-                LocalDate tanggal = rs.getTimestamp("payment_date")
-                        .toLocalDateTime()
-                        .toLocalDate();
-
-                paymentList.add(new Payment(
-                    invoice,
-                    nama,
-                    nominal,
-                    paket,
-                    status,
-                    tanggal,
-                    bukti));
-            }
-
-        } catch (Exception e) {
-            System.out.println("ERROR LOAD PAYMENT:");
-            e.printStackTrace();
-        }
-    }
-
-    // ─── Dummy Data ──────────────────────────────────────────────
-    private void loadDummyData() {
-        paymentList.addAll(
-                new Payment("INV-24081", "Andi Saputra", 650000, "Transfer Bank", Status.PAID,
-                        LocalDate.of(2026, 4, 21), "M002"),
-                new Payment("INV-24082", "Rina Permata", 500000, "QRIS", Status.PAID, LocalDate.of(2026, 4, 21),
-                        "M003"),
-                new Payment("INV-24083", "Dimas Pratama", 250000, "Cash", Status.PENDING, LocalDate.of(2026, 4, 20),
-                        "M001"),
-                new Payment("INV-24084", "Salsa Putri", 650000, "Transfer Bank", Status.FAILED,
-                        LocalDate.of(2026, 4, 20), "M002"),
-                new Payment("INV-24085", "Fikri Ramadhan", 250000, "Debit Card", Status.PAID, LocalDate.of(2026, 4, 19),
-                        "M001"),
-                new Payment("INV-24086", "Hana Kusuma", 180000, "QRIS", Status.PENDING, LocalDate.of(2026, 4, 18),
-                        "M004"),
-                new Payment("INV-24087", "Budi Santoso", 500000, "Cash", Status.FAILED, LocalDate.of(2026, 4, 17),
-                        "M003"));
-    }
-
-    // ─── Setup Kolom ─────────────────────────────────────────────
-    private void setupColumns() {
-        // Invoice — bold
-        colInvoice.setCellValueFactory(new PropertyValueFactory<>("invoice"));
-        colInvoice.setCellFactory(col -> new TableCell<>() {
+        colInvoice.setCellFactory(column -> new TableCell<>() {
             @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty || item == null ? null : item);
-                setStyle(empty ? "" : "-fx-font-weight: bold; -fx-text-fill: #1a1a2e;");
+            protected void updateItem(String invoice, boolean empty) {
+                super.updateItem(invoice, empty);
 
-                
-            }
-        });
-
-        // Nama Member
-        colNama.setCellValueFactory(new PropertyValueFactory<>("namaMember"));
-
-        // Nominal — format Rp
-        colNominal.setCellValueFactory(new PropertyValueFactory<>("nominal"));
-        colNominal.setCellFactory(col -> new TableCell<>() {
-            @Override
-            protected void updateItem(Double item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty || item == null ? null : String.format("Rp %,.0f", item));
-            }
-        });
-
-        // Paket
-        colPaket.setCellValueFactory(new PropertyValueFactory<>("paket"));
-
-        // Status — badge berwarna
-        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        colStatus.setCellFactory(col -> new TableCell<>() {
-            @Override
-            protected void updateItem(Status item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
+                if (empty || invoice == null) {
+                    setText(null);
                     setGraphic(null);
                     return;
                 }
 
-                String statusText = switch (item) {
-                    case PAID -> "Verified";
-                    case PENDING -> "Pending";
-                    case FAILED -> "Rejected";
-                };
+                Label label = new Label(invoice);
+                label.getStyleClass().add("invoice-text");
 
-                Label badge = new Label(statusText);
-                badge.setAlignment(Pos.CENTER);
-                badge.setMinWidth(72);
-                badge.setStyle(
-                        "-fx-background-radius: 20;" +
-                                "-fx-padding: 4 12 4 12;" +
-                                "-fx-font-size: 11px;" +
-                                "-fx-font-weight: bold;" +
-                                switch (item) {
-                                    case PAID -> "-fx-background-color: #d1fae5; -fx-text-fill: #065f46;";
-                                    case PENDING -> "-fx-background-color: #fef3c7; -fx-text-fill: #92400e;";
-                                    case FAILED -> "-fx-background-color: #fee2e2; -fx-text-fill: #991b1b;";
-                                });
-
-                HBox wrapper = new HBox(badge);
-                wrapper.setAlignment(Pos.CENTER_LEFT);
-                setGraphic(wrapper);
                 setText(null);
+                setGraphic(label);
             }
         });
 
-        // Tanggal — format dd MMM yyyy
-        colTanggal.setCellValueFactory(new PropertyValueFactory<>("tanggal"));
-        colTanggal.setCellFactory(col -> new TableCell<>() {
-            private final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        colNama.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getMemberName())));
 
+        colNama.setCellFactory(column -> new TableCell<>() {
             @Override
-            protected void updateItem(LocalDate item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty || item == null ? null : item.format(fmt));
+            protected void updateItem(String name, boolean empty) {
+                super.updateItem(name, empty);
+
+                if (empty || name == null) {
+                    setText(null);
+                    setGraphic(null);
+                    return;
+                }
+
+                Payment payment = getTableView().getItems().get(getIndex());
+
+                Label nameLabel = new Label(payment.getMemberName());
+                nameLabel.getStyleClass().add("member-name");
+
+                Label emailLabel = new Label(payment.getEmail());
+                emailLabel.getStyleClass().add("member-email");
+
+                javafx.scene.layout.VBox box = new javafx.scene.layout.VBox(4, nameLabel, emailLabel);
+
+                setText(null);
+                setGraphic(box);
             }
         });
 
-        // Bukti
-        colBukti.setCellValueFactory(new PropertyValueFactory<>("proofFile"));
-        colBukti.setCellFactory(col -> new TableCell<Payment, String>() {
+        colStatus.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getStatus())));
 
-            private final Button btnLihat = new Button("Lihat");
+        colStatus.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(String status, boolean empty) {
+                super.updateItem(status, empty);
+
+                if (empty || status == null) {
+                    setText(null);
+                    setGraphic(null);
+                    return;
+                }
+
+                Label badge = new Label(capitalize(status));
+                badge.getStyleClass().add("status-badge");
+
+                switch (status.toLowerCase()) {
+                    case "verified" -> badge.getStyleClass().add("status-verified");
+                    case "pending" -> badge.getStyleClass().add("status-pending");
+                    case "rejected" -> badge.getStyleClass().add("status-rejected");
+                    default -> badge.getStyleClass().add("status-default");
+                }
+
+                setText(null);
+                setGraphic(badge);
+            }
+        });
+
+        colBukti.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getProofFile())));
+
+        colBukti.setCellFactory(column -> new TableCell<>() {
+            private final Button lihatButton = new Button("Lihat");
 
             {
-                btnLihat.getStyleClass().add("btn-lihat");
-
-                btnLihat.setOnAction(e -> {
+                lihatButton.getStyleClass().add("table-soft-btn");
+                lihatButton.setOnAction(event -> {
                     Payment payment = getTableView().getItems().get(getIndex());
-
-                    if (payment.getProofFile() == null || payment.getProofFile().isBlank()) {
-                        showWarn("File bukti tidak tersedia.");
-                        return;
-                    }
-
-                    try {
-
-                        File file = new File(payment.getProofFile());
-
-                        if (file.exists()) {
-                            Desktop.getDesktop().open(file);
-                        } else {
-                            showWarn("File bukti tidak ditemukan.");
-                        }
-
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                        showWarn("Gagal membuka file bukti.");
-                    }
+                    openProofFile(payment);
                 });
             }
 
             @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
+            protected void updateItem(String proofFile, boolean empty) {
+                super.updateItem(proofFile, empty);
 
                 if (empty) {
+                    setText(null);
                     setGraphic(null);
-                } else {
-                    Payment payment = getTableView().getItems().get(getIndex());
+                    return;
+                }
 
-                    if (payment.getProofFile() == null || payment.getProofFile().equalsIgnoreCase("null")) {
-                        setGraphic(new Label("-"));
-                    } else {
-                        setGraphic(btnLihat);
-                    }
+                if (proofFile == null || proofFile.isBlank() || proofFile.equalsIgnoreCase("null")) {
+                    Label dash = new Label("-");
+                    dash.getStyleClass().add("text-soft");
+                    setText(null);
+                    setGraphic(dash);
+                } else {
+                    setText(null);
+                    setGraphic(lihatButton);
                 }
             }
         });
 
-        colAksi.setCellFactory(col -> new TableCell<Payment, Void>() {
-
-            private final Button btnVerify = new Button("Verify");
-            private final Button btnReject = new Button("Reject");
-
-            private final HBox pane = new HBox(10, btnVerify, btnReject);
+        colAksi.setCellFactory(column -> new TableCell<>() {
+            private final Button verifyButton = new Button("Verify");
+            private final Button rejectButton = new Button("Reject");
+            private final HBox actionBox = new HBox(8, verifyButton, rejectButton);
 
             {
-                btnVerify.getStyleClass().add("btn-verify-row");
-                btnReject.getStyleClass().add("btn-reject-row");
+                verifyButton.getStyleClass().add("table-soft-btn");
+                rejectButton.getStyleClass().add("table-danger-btn");
 
-                pane.setAlignment(Pos.CENTER_LEFT);
+                actionBox.setAlignment(Pos.CENTER_LEFT);
 
-                btnVerify.setOnAction(e -> {
+                verifyButton.setOnAction(event -> {
                     Payment payment = getTableView().getItems().get(getIndex());
-
-                    payment.setStatus(Status.PAID);
-                    paymentTable.refresh();
-
-                    setInfo("✓ " + payment.getInvoice() + " berhasil diverifikasi.", "#16a34a");
+                    handleVerify(payment);
                 });
 
-                btnReject.setOnAction(e -> {
+                rejectButton.setOnAction(event -> {
                     Payment payment = getTableView().getItems().get(getIndex());
-
-                    payment.setStatus(Status.FAILED);
-                    paymentTable.refresh();
-
-                    setInfo("✗ " + payment.getInvoice() + " berhasil ditolak.", "#dc2626");
+                    handleReject(payment);
                 });
             }
 
@@ -330,113 +204,190 @@ public class PaymentController implements Initializable {
                 super.updateItem(item, empty);
 
                 if (empty) {
+                    setText(null);
                     setGraphic(null);
                     return;
                 }
 
                 Payment payment = getTableView().getItems().get(getIndex());
 
-                if (payment.getStatus() == Status.PENDING) {
-                    setGraphic(pane);
+                if ("pending".equalsIgnoreCase(payment.getStatus())) {
+                    setText(null);
+                    setGraphic(actionBox);
                 } else {
-                    setGraphic(new Label("Selesai"));
+                    Label done = new Label("Selesai");
+                    done.getStyleClass().add("text-soft");
+                    setText(null);
+                    setGraphic(done);
                 }
             }
         });
     }
 
-    // ─── Action Handlers ─────────────────────────────────────────
+    private void loadPayments() {
+        paymentList.clear();
 
-    @FXML
-    public void handleApprove() {
-        approvePayment();
+        List<Payment> data = service.getAllPayments();
+        paymentList.addAll(data);
+
+        updateTotalLabel(paymentList.size());
+        statusInfo.setText("");
     }
 
-    @FXML
-    public void handleReject() {
-        rejectPayment();
-    }
+    private void handleSearch(String keyword) {
+        String search = keyword == null ? "" : keyword.toLowerCase().trim();
 
-    @FXML
-    public void handleExport() {
-        showInfo("Export", "Fitur export akan mengunduh data pembayaran sebagai CSV.");
-    }
+        filteredList.setPredicate(payment -> {
+            if (search.isEmpty()) {
+                return true;
+            }
 
-    public void approvePayment() {
-        Payment sel = paymentTable.getSelectionModel().getSelectedItem();
-        if (sel == null) {
-            showWarn("Pilih transaksi yang ingin di-approve.");
-            return;
-        }
-        if (sel.getStatus() == Status.PAID) {
-            showWarn("Transaksi ini sudah berstatus PAID.");
-            return;
-        }
-
-        confirm("Approve " + sel.getInvoice() + "?",
-                "Member: " + sel.getNamaMember() + "\nNominal: " + sel.getNominalFormatted(),
-                () -> {
-                    sel.setStatus(Status.PAID);
-                    paymentTable.refresh();
-                    setInfo("✓ " + sel.getInvoice() + " berhasil di-approve.", "#065f46");
-                });
-    }
-
-    public void rejectPayment() {
-        Payment sel = paymentTable.getSelectionModel().getSelectedItem();
-        if (sel == null) {
-            showWarn("Pilih transaksi yang ingin di-reject.");
-            return;
-        }
-        if (sel.getStatus() == Status.FAILED) {
-            showWarn("Transaksi ini sudah berstatus FAILED.");
-            return;
-        }
-
-        confirm("Reject " + sel.getInvoice() + "?",
-                "Member: " + sel.getNamaMember() + "\nNominal: " + sel.getNominalFormatted(),
-                () -> {
-                    sel.setStatus(Status.FAILED);
-                    paymentTable.refresh();
-                    setInfo("✗ " + sel.getInvoice() + " berhasil di-reject.", "#991b1b");
-                });
-    }
-
-    // ─── Helpers ─────────────────────────────────────────────────
-
-    private void confirm(String header, String content, Runnable onOk) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Konfirmasi");
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.showAndWait().ifPresent(btn -> {
-            if (btn == ButtonType.OK)
-                onOk.run();
+            return safe(payment.getInvoice()).toLowerCase().contains(search)
+                    || safe(payment.getMemberName()).toLowerCase().contains(search)
+                    || safe(payment.getEmail()).toLowerCase().contains(search)
+                    || safe(payment.getPackageName()).toLowerCase().contains(search)
+                    || safe(payment.getStatus()).toLowerCase().contains(search)
+                    || payment.getAmountFormatted().toLowerCase().contains(search);
         });
+
+        updateTotalLabel(filteredList.size());
     }
 
-    private void showWarn(String msg) {
-        Alert a = new Alert(Alert.AlertType.WARNING);
-        a.setHeaderText(null);
-        a.setContentText(msg);
-        a.showAndWait();
+    @FXML
+    private void handleReset() {
+        searchField.clear();
+
+        if (filteredList != null) {
+            filteredList.setPredicate(payment -> true);
+            updateTotalLabel(filteredList.size());
+        }
     }
 
-    private void showInfo(String title, String msg) {
-        Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setTitle(title);
-        a.setHeaderText(null);
-        a.setContentText(msg);
-        a.showAndWait();
+    private void handleVerify(Payment payment) {
+        if (payment == null) {
+            showAlert(Alert.AlertType.WARNING, "Pilih Payment", "Pilih pembayaran yang ingin diverifikasi.");
+            return;
+        }
+
+        if (!"pending".equalsIgnoreCase(payment.getStatus())) {
+            showAlert(Alert.AlertType.WARNING, "Tidak Bisa", "Pembayaran ini sudah selesai diproses.");
+            return;
+        }
+
+        if (payment.getProofFile() == null || payment.getProofFile().isBlank()) {
+            showAlert(Alert.AlertType.WARNING, "Tidak Bisa", "Payment belum memiliki bukti pembayaran.");
+            return;
+        }
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Verifikasi Pembayaran");
+        confirm.setHeaderText("Verifikasi " + payment.getInvoice() + "?");
+        confirm.setContentText("Member: " + payment.getMemberName() + "\nNominal: " + payment.getAmountFormatted());
+
+        Optional<ButtonType> result = confirm.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            boolean success = service.verifyPayment(payment);
+
+            if (success) {
+                setInfo("Payment berhasil diverifikasi.", "success");
+                loadPayments();
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Gagal",
+                        "Payment gagal diverifikasi. Pastikan bukti pembayaran tersedia.");
+            }
+        }
     }
 
-    private void setInfo(String text, String color) {
-        statusInfo.setText(text);
-        statusInfo.setStyle("-fx-text-fill: " + color + "; -fx-font-weight: bold;");
+    private void handleReject(Payment payment) {
+        if (payment == null) {
+            showAlert(Alert.AlertType.WARNING, "Pilih Payment", "Pilih pembayaran yang ingin ditolak.");
+            return;
+        }
+
+        if (!"pending".equalsIgnoreCase(payment.getStatus())) {
+            showAlert(Alert.AlertType.WARNING, "Tidak Bisa", "Pembayaran ini sudah selesai diproses.");
+            return;
+        }
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Tolak Pembayaran");
+        confirm.setHeaderText("Tolak " + payment.getInvoice() + "?");
+        confirm.setContentText("Member: " + payment.getMemberName() + "\nNominal: " + payment.getAmountFormatted());
+
+        Optional<ButtonType> result = confirm.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            boolean success = service.rejectPayment(payment);
+
+            if (success) {
+                setInfo("Payment berhasil ditolak.", "danger");
+                loadPayments();
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Gagal", "Payment gagal ditolak.");
+            }
+        }
     }
 
-    // Navigasi sidebar & logout ditangani oleh SidebarAdminController
-    // via LayoutTopController (single-shell architecture).
-    
+    private void openProofFile(Payment payment) {
+        if (payment == null || payment.getProofFile() == null || payment.getProofFile().isBlank()) {
+            showAlert(Alert.AlertType.WARNING, "Bukti Kosong", "File bukti pembayaran tidak tersedia.");
+            return;
+        }
+
+        try {
+            File file = new File("uploads/payments/" + payment.getProofFile());
+
+            if (!file.exists()) {
+                file = new File(payment.getProofFile());
+            }
+
+            if (!file.exists()) {
+                showAlert(Alert.AlertType.WARNING, "File Tidak Ditemukan", "File bukti tidak ditemukan.");
+                return;
+            }
+
+            Desktop.getDesktop().open(file);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Gagal", "Gagal membuka file bukti pembayaran.");
+        }
+    }
+
+    private void updateTotalLabel(int total) {
+        totalDataLabel.setText(total + " data");
+    }
+
+    private void setInfo(String message, String type) {
+        statusInfo.setText(message);
+
+        if ("success".equalsIgnoreCase(type)) {
+            statusInfo.getStyleClass().removeAll("status-info-danger");
+            statusInfo.getStyleClass().add("status-info-success");
+        } else {
+            statusInfo.getStyleClass().removeAll("status-info-success");
+            statusInfo.getStyleClass().add("status-info-danger");
+        }
+    }
+
+    private String safe(String value) {
+        return value == null ? "" : value;
+    }
+
+    private String capitalize(String value) {
+        if (value == null || value.isBlank()) {
+            return "-";
+        }
+
+        return value.substring(0, 1).toUpperCase() + value.substring(1).toLowerCase();
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 }
-

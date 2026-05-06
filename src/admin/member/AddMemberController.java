@@ -1,99 +1,83 @@
 package admin.member;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import shared.AlertHelper;
-import shared.SceneManager;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+
+import java.time.LocalDate;
 
 public class AddMemberController {
 
     @FXML
     private TextField nameField;
-
     @FXML
     private TextField emailField;
-
     @FXML
     private TextField phoneField;
-
+    @FXML
+    private PasswordField passwordField;
     @FXML
     private ComboBox<String> membershipCombo;
-
     @FXML
-    private ComboBox<String> statusCombo;
+    private DatePicker startDatePicker;
 
     private final MemberService memberService = new MemberService();
 
     @FXML
     public void initialize() {
-        membershipCombo.getItems().addAll("Harian", "Mingguan", "Bulanan", "Tahunan");
-        statusCombo.getItems().addAll("Aktif", "Pending", "Nonaktif");
+        membershipCombo.setItems(memberService.getPackageNames());
+        startDatePicker.setValue(LocalDate.now());
+
+        if (!membershipCombo.getItems().isEmpty()) {
+            membershipCombo.getSelectionModel().selectFirst();
+        }
     }
 
     @FXML
-    private void handleSave(ActionEvent event) {
-        String name = nameField.getText().trim();
-        String email = emailField.getText().trim();
-        String phone = phoneField.getText().trim();
+    private void handleSave() {
+        String name = nameField.getText() == null ? "" : nameField.getText().trim();
+        String email = emailField.getText() == null ? "" : emailField.getText().trim();
+        String phone = phoneField.getText() == null ? "" : phoneField.getText().trim();
+        String password = passwordField.getText() == null ? "" : passwordField.getText().trim();
         String membership = membershipCombo.getValue();
-        String status = statusCombo.getValue();
 
-        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || membership == null || status == null) {
-            AlertHelper.showWarning("Validasi", "Semua field wajib diisi.");
+        if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty() || membership == null
+                || startDatePicker.getValue() == null) {
+            showAlert(Alert.AlertType.WARNING, "Validasi", "Semua field wajib diisi.");
             return;
         }
 
-        if (name.length() < 3) {
-            AlertHelper.showWarning("Validasi", "Nama minimal 3 karakter.");
-            return;
+        boolean success = memberService.addMember(
+                name,
+                email,
+                phone,
+                password,
+                membership,
+                startDatePicker.getValue().toString());
+
+        if (success) {
+            showAlert(Alert.AlertType.INFORMATION, "Berhasil", "Member berhasil ditambahkan.");
+            closeWindow();
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Gagal", "Member gagal ditambahkan. Email mungkin sudah digunakan.");
         }
-
-        if (!isValidEmail(email)) {
-            AlertHelper.showWarning("Validasi", "Format email tidak valid.");
-            return;
-        }
-
-        if (!isValidPhone(phone)) {
-            AlertHelper.showWarning("Validasi", "No HP harus angka dan terdiri dari 10-15 digit.");
-            return;
-        }
-
-        boolean success = memberService.addMember(name, email, phone, membership, status);
-
-        if (!success) {
-            AlertHelper.showWarning("Gagal", "Member gagal ditambahkan. Email mungkin sudah digunakan.");
-            return;
-        }
-
-        AlertHelper.showInfo("Berhasil", "Member berhasil ditambahkan.");
-
-        SceneManager.changeScene(
-                (Node) event.getSource(),
-                "/admin/member/Member.fxml",
-                "GYMBRUT - Data Member",
-                1280,
-                760);
     }
 
     @FXML
-    private void handleBack(ActionEvent event) {
-        SceneManager.changeScene(
-                (Node) event.getSource(),
-                "/admin/member/Member.fxml",
-                "GYMBRUT - Data Member",
-                1280,
-                760);
+    private void handleCancel() {
+        closeWindow();
     }
 
-    private boolean isValidEmail(String email) {
-        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+    private void closeWindow() {
+        Stage stage = (Stage) nameField.getScene().getWindow();
+        stage.close();
     }
 
-    private boolean isValidPhone(String phone) {
-        return phone.matches("\\d{10,15}");
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
-
 }

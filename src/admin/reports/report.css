@@ -2,7 +2,7 @@
   -fx-font-family: "Segoe UI", Arial, sans-serif;
 }
 
-.payment-root {
+.reports-root {
   -fx-background-color:
     radial-gradient(
       center 5% 0%,
@@ -21,7 +21,7 @@
 }
 
 /* HERO */
-.payment-hero {
+.reports-hero {
   -fx-background-color: linear-gradient(to right, #111827, #1f2937);
   -fx-background-radius: 26;
   -fx-padding: 26;
@@ -40,7 +40,7 @@
 
 .hero-title {
   -fx-text-fill: #ffffff;
-  -fx-font-size: 28;
+  -fx-font-size: 27;
   -fx-font-weight: 900;
 }
 
@@ -49,7 +49,79 @@
   -fx-font-size: 14;
 }
 
-/* TABLE CARD */
+.hero-card {
+  -fx-background-color: rgba(255, 255, 255, 0.98);
+  -fx-background-radius: 22;
+  -fx-border-radius: 22;
+  -fx-border-color: rgba(255, 255, 255, 0.65);
+  -fx-border-width: 1;
+  -fx-padding: 20;
+  -fx-min-width: 270;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.16), 18, 0.12, 0, 8);
+}
+
+.hero-card-label {
+  -fx-text-fill: #64748b;
+  -fx-font-size: 13;
+  -fx-font-weight: 700;
+}
+
+.hero-card-value {
+  -fx-text-fill: #ff7a00;
+  -fx-font-size: 26;
+  -fx-font-weight: 900;
+}
+
+.hero-card-sub {
+  -fx-text-fill: #94a3b8;
+  -fx-font-size: 12;
+  -fx-font-weight: 600;
+}
+
+/* STAT */
+.stat-card {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 22;
+  -fx-border-radius: 22;
+  -fx-border-color: #e5e7eb;
+  -fx-border-width: 1;
+  -fx-padding: 20;
+  -fx-min-width: 220;
+  -fx-min-height: 120;
+  -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.08), 18, 0.12, 0, 8);
+}
+
+.stat-card:hover {
+  -fx-translate-y: -2;
+  -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.14), 22, 0.16, 0, 10);
+}
+
+.stat-label {
+  -fx-text-fill: #64748b;
+  -fx-font-size: 13;
+  -fx-font-weight: 700;
+}
+
+.stat-value {
+  -fx-text-fill: #111827;
+  -fx-font-size: 28;
+  -fx-font-weight: 900;
+}
+
+.stat-value-small {
+  -fx-text-fill: #111827;
+  -fx-font-size: 22;
+  -fx-font-weight: 900;
+}
+
+.stat-meta {
+  -fx-text-fill: #94a3b8;
+  -fx-font-size: 12;
+  -fx-font-weight: 600;
+}
+
+/* CARDS */
+.premium-card,
 .table-card {
   -fx-background-color: #ffffff;
   -fx-background-radius: 22;
@@ -60,13 +132,9 @@
   -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.08), 18, 0.12, 0, 8);
 }
 
-.table-header {
-  -fx-alignment: center-left;
-}
-
 .section-title {
   -fx-text-fill: #111827;
-  -fx-font-size: 20;
+  -fx-font-size: 19;
   -fx-font-weight: 900;
 }
 
@@ -76,18 +144,27 @@
   -fx-font-weight: 600;
 }
 
-.data-count {
-  -fx-background-color: #fff3e8;
+.data-count,
+.badge-info {
   -fx-background-radius: 999;
   -fx-padding: 7 13;
-  -fx-text-fill: #e86600;
   -fx-font-size: 12;
   -fx-font-weight: 900;
 }
 
-/* SEARCH */
+.data-count {
+  -fx-background-color: #fff3e8;
+  -fx-text-fill: #e86600;
+}
+
+.badge-info {
+  -fx-background-color: #e0f2fe;
+  -fx-text-fill: #0284c7;
+}
+
+/* SEARCH + BUTTON */
 .search-input {
-  -fx-pref-width: 360;
+  -fx-pref-width: 260;
   -fx-pref-height: 42;
   -fx-background-color: #ffffff;
   -fx-background-radius: 14;
@@ -105,72 +182,83 @@
   -fx-effect: dropshadow(gaussian, rgba(255, 122, 0, 0.18), 12, 0.2, 0, 2);
 }
 
-/* BUTTON */
-.light-btn,
-.table-soft-btn,
-.table-danger-btn {
-  -fx-background-radius: 999;
-  -fx-border-radius: 999;
+.primary-btn,
+.light-btn {
+  -fx-pref-height: 42;
+  -fx-background-radius: 14;
+  -fx-border-radius: 14;
+  -fx-padding: 0 18;
+  -fx-font-size: 14;
   -fx-font-weight: 900;
   -fx-cursor: hand;
 }
 
+.primary-btn {
+  -fx-background-color: linear-gradient(to right, #ff7a00, #ff9f45);
+  -fx-text-fill: white;
+  -fx-effect: dropshadow(gaussian, rgba(255, 122, 0, 0.25), 12, 0.1, 0, 4);
+}
+
+.primary-btn:hover {
+  -fx-background-color: linear-gradient(to right, #e86f00, #ff8f25);
+}
+
 .light-btn {
-  -fx-pref-height: 42;
-  -fx-padding: 0 18;
   -fx-background-color: white;
   -fx-border-color: #d8dee9;
   -fx-border-width: 1;
   -fx-text-fill: #475569;
-  -fx-font-size: 14;
 }
 
 .light-btn:hover {
   -fx-background-color: #f8fafc;
 }
 
-.table-soft-btn {
-  -fx-background-color: white;
-  -fx-border-color: #fed7aa;
-  -fx-border-width: 1;
-  -fx-text-fill: #f97316;
-  -fx-padding: 7 14;
+/* CHART */
+.chart {
+  -fx-background-color: transparent;
+  -fx-padding: 10 0 0 0;
+}
+
+.chart-plot-background {
+  -fx-background-color: transparent;
+}
+
+.chart-vertical-grid-lines {
+  -fx-stroke: transparent;
+}
+
+.chart-horizontal-grid-lines {
+  -fx-stroke: rgba(148, 163, 184, 0.18);
+}
+
+.axis {
+  -fx-tick-label-fill: #64748b;
   -fx-font-size: 12;
 }
 
-.table-soft-btn:hover {
-  -fx-background-color: #fff7ed;
+.axis-label {
+  -fx-text-fill: #64748b;
+  -fx-font-weight: 700;
 }
 
-.table-danger-btn {
-  -fx-background-color: #fff1f2;
-  -fx-border-color: #fda4af;
-  -fx-border-width: 1;
-  -fx-text-fill: #e11d48;
-  -fx-padding: 7 14;
-  -fx-font-size: 12;
+.default-color0.chart-series-line {
+  -fx-stroke: #ff7a00;
+  -fx-stroke-width: 3px;
 }
 
-.table-danger-btn:hover {
-  -fx-background-color: #ffe4e6;
+.default-color0.chart-line-symbol {
+  -fx-background-color: #ff7a00, #ffffff;
+  -fx-background-radius: 7px;
+  -fx-padding: 5px;
 }
 
-/* STATUS INFO */
-.status-info {
-  -fx-font-size: 13;
-  -fx-font-weight: 800;
-}
-
-.status-info-success {
-  -fx-text-fill: #16a34a;
-}
-
-.status-info-danger {
-  -fx-text-fill: #dc2626;
+.default-color0.chart-bar {
+  -fx-bar-fill: #ff7a00;
 }
 
 /* TABLE */
-.payment-table {
+.report-table {
   -fx-background-color: #ffffff;
   -fx-background-radius: 18;
   -fx-border-radius: 18;
@@ -179,25 +267,25 @@
   -fx-table-cell-border-color: transparent;
 }
 
-.payment-table .column-header-background {
+.report-table .column-header-background {
   -fx-background-color: #fff7ef;
   -fx-background-radius: 14 14 0 0;
   -fx-padding: 6 0;
 }
 
-.payment-table .filler {
+.report-table .filler {
   -fx-background-color: #fff7ef;
   -fx-border-color: transparent;
 }
 
-.payment-table .column-header {
+.report-table .column-header {
   -fx-background-color: transparent;
   -fx-border-color: transparent;
   -fx-pref-height: 48;
   -fx-alignment: CENTER-LEFT;
 }
 
-.payment-table .column-header .label {
+.report-table .column-header .label {
   -fx-text-fill: #475569;
   -fx-font-size: 12;
   -fx-font-weight: 900;
@@ -207,27 +295,27 @@
   -fx-padding: 0 0 0 12;
 }
 
-.payment-table .table-row-cell {
+.report-table .table-row-cell {
   -fx-background-color: #ffffff;
   -fx-border-color: transparent transparent #eef2f7 transparent;
   -fx-border-width: 0 0 1 0;
-  -fx-cell-size: 64;
+  -fx-cell-size: 58;
 }
 
-.payment-table .table-row-cell:hover {
+.report-table .table-row-cell:hover {
   -fx-background-color: #fffaf5;
 }
 
-.payment-table .table-row-cell:selected {
+.report-table .table-row-cell:selected {
   -fx-background-color: #fff3e8;
 }
 
-.payment-table .table-row-cell:selected .table-cell {
+.report-table .table-row-cell:selected .table-cell {
   -fx-text-fill: #111827;
   -fx-font-weight: 700;
 }
 
-.payment-table .table-cell {
+.report-table .table-cell {
   -fx-border-color: transparent;
   -fx-font-size: 13;
   -fx-text-fill: #334155;
@@ -235,74 +323,24 @@
   -fx-padding: 0 12;
 }
 
-/* CELL TEXT */
-.invoice-text {
-  -fx-text-fill: #0f172a;
-  -fx-font-weight: 900;
-}
-
-.member-name {
-  -fx-text-fill: #0f172a;
+.month-text {
+  -fx-text-fill: #111827;
   -fx-font-size: 13;
   -fx-font-weight: 900;
 }
 
-.member-email {
-  -fx-text-fill: #64748b;
-  -fx-font-size: 12;
-  -fx-font-weight: 500;
-}
-
-.text-soft {
-  -fx-text-fill: #94a3b8;
-  -fx-font-size: 13;
-  -fx-font-weight: 700;
-}
-
-/* BADGE STATUS */
-.status-badge {
-  -fx-background-radius: 999;
-  -fx-padding: 6 16;
-  -fx-font-size: 12;
-  -fx-font-weight: 900;
-  -fx-min-width: 86;
-  -fx-alignment: center;
-}
-
-.status-verified {
-  -fx-background-color: #dcfce7;
-  -fx-text-fill: #16a34a;
-}
-
-.status-pending {
-  -fx-background-color: #fef3c7;
-  -fx-text-fill: #f59e0b;
-}
-
-.status-rejected {
-  -fx-background-color: #fee2e2;
-  -fx-text-fill: #ef4444;
-}
-
-.status-default {
-  -fx-background-color: #e5e7eb;
-  -fx-text-fill: #475569;
-}
-
-/* EMPTY */
 .empty-label {
   -fx-text-fill: #94a3b8;
   -fx-font-size: 14;
   -fx-font-weight: 700;
 }
 
-/* SCROLLBAR */
-.payment-table .scroll-bar:vertical,
-.payment-table .scroll-bar:horizontal {
+.report-table .scroll-bar:vertical,
+.report-table .scroll-bar:horizontal {
   -fx-background-color: transparent;
 }
 
-.payment-table .thumb {
+.report-table .thumb {
   -fx-background-color: #d6dbe4;
   -fx-background-radius: 999;
 }

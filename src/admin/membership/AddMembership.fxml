@@ -1,80 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.geometry.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/17"
-      xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="admin.membership.AddMembershipController"
       stylesheets="@membership.css"
-      styleClass="page-root"
-      spacing="0" minWidth="700">
+      styleClass="form-page"
+      spacing="18">
 
-    <!-- TOP BAR -->
-    <HBox styleClass="topbar" alignment="CENTER_LEFT" spacing="16">
-        <VBox spacing="2" HBox.hgrow="ALWAYS">
-            <Label text="Tambah Paket Membership" styleClass="page-title"/>
-            <Label text="Tambahkan paket membership baru untuk member." styleClass="page-subtitle"/>
+    <HBox styleClass="form-topbar" alignment="CENTER_LEFT">
+        <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <Label text="Tambah Paket Membership" styleClass="form-title"/>
+            <Label text="Isi detail paket baru." styleClass="form-subtitle"/>
         </VBox>
-        <TextField promptText="🔍  Cari..." styleClass="search-field" prefWidth="220"/>
-        <HBox styleClass="avatar-box" alignment="CENTER">
-            <Label text="O" styleClass="avatar-label"/>
-        </HBox>
-        <VBox spacing="1">
-            <Label text="obama" styleClass="user-name"/>
-            <Label text="Admin" styleClass="user-role"/>
-        </VBox>
+
+        <Button text="← Kembali"
+                onAction="#handleKembali"
+                styleClass="light-btn"/>
     </HBox>
 
-    <!-- CONTENT -->
-    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="content-scroll">
-        <VBox styleClass="content-body" spacing="20">
+    <VBox styleClass="form-card" spacing="18">
 
-            <!-- SECTION CARD -->
-            <VBox styleClass="form-card" spacing="20">
-                <HBox alignment="CENTER_LEFT">
-                    <VBox spacing="4" HBox.hgrow="ALWAYS">
-                        <Label text="Tambah Paket Membership" styleClass="section-title"/>
-                        <Label text="Isi detail paket baru." styleClass="section-sub"/>
-                    </VBox>
-                    <Button text="← Kembali" styleClass="btn-back" onAction="#handleKembali"/>
-                </HBox>
+        <GridPane hgap="18" vgap="14">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
 
-                <Separator/>
-
-                <!-- ROW 1: Nama + Durasi -->
-                <GridPane hgap="20" vgap="4">
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="50"/>
-                        <ColumnConstraints percentWidth="50"/>
-                    </columnConstraints>
-                    <Label text="Nama Paket" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                    <TextField fx:id="tfNama" styleClass="form-field" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-
-                    <Label text="Durasi Hari" styleClass="form-label" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                    <TextField fx:id="tfDurasi" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                </GridPane>
-
-                <!-- ROW 2: Harga -->
-                <VBox spacing="4">
-                    <Label text="Harga" styleClass="form-label"/>
-                    <TextField fx:id="tfHarga" styleClass="form-field"/>
-                </VBox>
-
-                <!-- ROW 3: Deskripsi -->
-                <VBox spacing="4">
-                    <Label text="Deskripsi" styleClass="form-label"/>
-                    <TextArea fx:id="taDeskripsi" styleClass="form-field"
-                              promptText="Contoh: Akses gym selama 30 hari"
-                              prefHeight="100" wrapText="true"/>
-                </VBox>
-
-                <!-- BUTTON SIMPAN -->
-                <Button text="💾  Simpan Paket" styleClass="btn-primary btn-full"
-                        maxWidth="Infinity" onAction="#handleSimpan"/>
+            <VBox spacing="7" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label text="Nama Paket" styleClass="form-label"/>
+                <TextField fx:id="tfNama"
+                           promptText="Contoh: Bulanan"
+                           styleClass="form-control"/>
             </VBox>
 
-        </VBox>
-    </ScrollPane>
+            <VBox spacing="7" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label text="Durasi Hari" styleClass="form-label"/>
+                <TextField fx:id="tfDurasi"
+                           promptText="Contoh: 30"
+                           styleClass="form-control"/>
+            </VBox>
+
+            <VBox spacing="7" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2">
+                <Label text="Harga" styleClass="form-label"/>
+                <TextField fx:id="tfHarga"
+                           promptText="Contoh: 150000"
+                           styleClass="form-control"/>
+            </VBox>
+
+            <VBox spacing="7" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2">
+                <Label text="Deskripsi" styleClass="form-label"/>
+                <TextArea fx:id="taDeskripsi"
+                          promptText="Contoh: Akses gym selama 30 hari"
+                          wrapText="true"
+                          prefHeight="110"
+                          styleClass="form-textarea"/>
+            </VBox>
+        </GridPane>
+
+        <Button text="Simpan Paket"
+                onAction="#handleSimpan"
+                maxWidth="Infinity"
+                styleClass="primary-btn"/>
+    </VBox>
 </VBox>
