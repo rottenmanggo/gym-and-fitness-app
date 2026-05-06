@@ -40,28 +40,31 @@
 
         <!-- Alert -->
         <Label fx:id="alertLabel"
-               text=""
-               wrapText="true"
-               maxWidth="380"
-               visible="false"
-               managed="false"
-               styleClass="auth-alert"/>
+       text=""
+       alignment="CENTER"
+       wrapText="true"
+       maxWidth="380"
+       visible="false"
+       managed="false"
+       styleClass="auth-alert"/>
 
         <!-- Form -->
         <VBox styleClass="auth-form" spacing="12" alignment="CENTER">
             <HBox alignment="CENTER_LEFT" spacing="10" maxWidth="320">
                 <Label text="📧" styleClass="field-icon"/>
                 <TextField fx:id="emailField"
-                           promptText="Masukkan email"
-                           styleClass="form-control"
-                           prefWidth="280"/>
+           promptText="Masukkan email"
+           onAction="#focusPassword"
+           styleClass="form-control"
+           prefWidth="280"/>
             </HBox>
             <HBox alignment="CENTER_LEFT" spacing="10" maxWidth="320">
                 <Label text="🔒" styleClass="field-icon"/>
                 <PasswordField fx:id="passwordField"
-                               promptText="Masukkan password"
-                               styleClass="form-control"
-                               prefWidth="280"/>
+               promptText="Masukkan password"
+               onAction="#handleLogin"
+               styleClass="form-control"
+               prefWidth="280"/>
             </HBox>
 
             <Button text="Login"

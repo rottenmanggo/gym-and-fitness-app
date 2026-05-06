@@ -38,68 +38,77 @@
                 <Insets top="12" right="0" bottom="8" left="0"/>
             </padding>
 
-            <TextField fx:id="nameField"
-                       promptText="Nama Lengkap"
-                       GridPane.rowIndex="0"
-                       GridPane.columnIndex="0"
-                       GridPane.columnSpan="2"
-                       styleClass="auth-input"/>
+           <TextField fx:id="nameField"
+           promptText="Nama Lengkap"
+           onAction="#focusEmail"
+           GridPane.rowIndex="0"
+           GridPane.columnIndex="0"
+           GridPane.columnSpan="2"
+           styleClass="auth-input"/>
 
-            <TextField fx:id="emailField"
-                       promptText="Email"
-                       GridPane.rowIndex="1"
-                       GridPane.columnIndex="0"
-                       GridPane.columnSpan="2"
-                       styleClass="auth-input"/>
+<TextField fx:id="emailField"
+           promptText="Email"
+           onAction="#focusPassword"
+           GridPane.rowIndex="1"
+           GridPane.columnIndex="0"
+           GridPane.columnSpan="2"
+           styleClass="auth-input"/>
 
-            <PasswordField fx:id="passwordField"
-                           promptText="Password"
-                           GridPane.rowIndex="2"
-                           GridPane.columnIndex="0"
-                           GridPane.columnSpan="2"
-                           styleClass="auth-input"/>
+<PasswordField fx:id="passwordField"
+               promptText="Password"
+               onAction="#focusPhone"
+               GridPane.rowIndex="2"
+               GridPane.columnIndex="0"
+               GridPane.columnSpan="2"
+               styleClass="auth-input"/>
 
-            <TextField fx:id="phoneField"
-                       promptText="No HP"
-                       GridPane.rowIndex="3"
-                       GridPane.columnIndex="0"
-                       GridPane.columnSpan="2"
-                       styleClass="auth-input"/>
+<TextField fx:id="phoneField"
+           promptText="No HP"
+           onAction="#focusGender"
+           GridPane.rowIndex="3"
+           GridPane.columnIndex="0"
+           GridPane.columnSpan="2"
+           styleClass="auth-input"/>
 
-            <ComboBox fx:id="genderBox"
-                      promptText="Gender"
-                      GridPane.rowIndex="4"
-                      GridPane.columnIndex="0"
-                      styleClass="auth-input"
-                      prefWidth="190"/>
+<ComboBox fx:id="genderBox"
+          promptText="Gender"
+          onAction="#focusAge"
+          GridPane.rowIndex="4"
+          GridPane.columnIndex="0"
+          styleClass="auth-input"
+          prefWidth="190"/>
 
-            <TextField fx:id="ageField"
-                       promptText="Umur"
-                       GridPane.rowIndex="4"
-                       GridPane.columnIndex="1"
-                       styleClass="auth-input"
-                       prefWidth="190"/>
+<TextField fx:id="ageField"
+           promptText="Umur"
+           onAction="#focusHeight"
+           GridPane.rowIndex="4"
+           GridPane.columnIndex="1"
+           styleClass="auth-input"
+           prefWidth="190"/>
 
-            <TextField fx:id="heightField"
-                       promptText="Tinggi (cm)"
-                       GridPane.rowIndex="5"
-                       GridPane.columnIndex="0"
-                       styleClass="auth-input"
-                       prefWidth="190"/>
+<TextField fx:id="heightField"
+           promptText="Tinggi (cm)"
+           onAction="#focusWeight"
+           GridPane.rowIndex="5"
+           GridPane.columnIndex="0"
+           styleClass="auth-input"
+           prefWidth="190"/>
 
-            <TextField fx:id="weightField"
-                       promptText="Berat (kg)"
-                       GridPane.rowIndex="5"
-                       GridPane.columnIndex="1"
-                       styleClass="auth-input"
-                       prefWidth="190"/>
+<TextField fx:id="weightField"
+           promptText="Berat (kg)"
+           onAction="#focusTarget"
+           GridPane.rowIndex="5"
+           GridPane.columnIndex="1"
+           styleClass="auth-input"
+           prefWidth="190"/>
 
-            <TextField fx:id="targetField"
-                       promptText="Target Fitness"
-                       GridPane.rowIndex="6"
-                       GridPane.columnIndex="0"
-                       GridPane.columnSpan="2"
-                       styleClass="auth-input"/>
+<TextField fx:id="targetField"
+           promptText="Target Fitness"
+           onAction="#handleRegister"
+           GridPane.rowIndex="6"
+           GridPane.columnIndex="0"
+           GridPane.columnSpan="2"
+           styleClass="auth-input"/>
 
             <Button text="Register"
                     onAction="#handleRegister"
