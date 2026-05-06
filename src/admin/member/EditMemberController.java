@@ -33,19 +33,13 @@ public class EditMemberController {
 
     @FXML
     public void initialize() {
-<<<<<<< HEAD
         membershipCombo.setItems(memberService.getPackageNames());
         statusCombo.getItems().addAll("aktif", "pending", "expired");
-=======
-        membershipCombo.getItems().addAll("Harian", "Mingguan", "Bulanan", "Tahunan");
-        statusCombo.getItems().addAll("Aktif", "Pending", "Nonaktif");
->>>>>>> 5d6f7a3684f291f5acfa9f359c01e0e5d1a53d2e
 
         if (selectedMember != null) {
             nameField.setText(selectedMember.getName());
             emailField.setText(selectedMember.getEmail());
             phoneField.setText(selectedMember.getPhone());
-<<<<<<< HEAD
             membershipCombo.setValue(selectedMember.getMembership());
             statusCombo.setValue(selectedMember.getStatus());
 
@@ -54,11 +48,6 @@ public class EditMemberController {
             } else {
                 startDatePicker.setValue(LocalDate.now());
             }
-=======
-
-            membershipCombo.setValue(selectedMember.getMembership());
-            statusCombo.setValue(selectedMember.getStatus());
->>>>>>> 5d6f7a3684f291f5acfa9f359c01e0e5d1a53d2e
         }
     }
 

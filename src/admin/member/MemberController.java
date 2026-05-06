@@ -3,7 +3,6 @@ package admin.member;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-<<<<<<< HEAD
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -15,21 +14,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Optional;
-=======
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import shared.AlertHelper;
-import shared.SceneManager;
-import shared.Session;
->>>>>>> 5d6f7a3684f291f5acfa9f359c01e0e5d1a53d2e
 
 public class MemberController {
 
@@ -64,21 +48,15 @@ public class MemberController {
     @FXML
     private TableColumn<Member, Void> actionColumn;
 
-    @FXML
-    private TableColumn<Member, Void> actionColumn;
-
-    @FXML
-    private ComboBox<String> statusFilterCombo;
-
     private final MemberService memberService = new MemberService();
     private ObservableList<Member> allMembers;
 
     @FXML
     public void initialize() {
         setupTable();
-<<<<<<< HEAD
 
         memberTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         nameColumn.setPrefWidth(180);
         emailColumn.setPrefWidth(220);
         phoneColumn.setPrefWidth(140);
@@ -86,15 +64,10 @@ public class MemberController {
         joinDateColumn.setPrefWidth(130);
         statusColumn.setPrefWidth(120);
         actionColumn.setPrefWidth(160);
+
         loadMembers();
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> handleSearch());
-=======
-        setupStatusFilter();
-        loadMembers();
-
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> filterMembers());
->>>>>>> 5d6f7a3684f291f5acfa9f359c01e0e5d1a53d2e
     }
 
     private void setupTable() {
@@ -105,23 +78,7 @@ public class MemberController {
         joinDateColumn.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getJoinDate())));
         statusColumn.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getStatus())));
 
-<<<<<<< HEAD
         statusColumn.setCellFactory(column -> new TableCell<>() {
-=======
-        setupStatusColumn();
-        setupActionColumn();
-
-        memberTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-    }
-
-    private void setupStatusFilter() {
-        statusFilterCombo.getItems().setAll("Semua", "Aktif", "Pending", "Expired");
-        statusFilterCombo.setValue("Semua");
-    }
-
-    private void setupStatusColumn() {
-        statusColumn.setCellFactory(column -> new TableCell<Member, String>() {
->>>>>>> 5d6f7a3684f291f5acfa9f359c01e0e5d1a53d2e
             @Override
             protected void updateItem(String status, boolean empty) {
                 super.updateItem(status, empty);
@@ -132,10 +89,9 @@ public class MemberController {
                     return;
                 }
 
-                Label badge = new Label(status);
+                Label badge = new Label();
 
                 switch (status.toLowerCase()) {
-<<<<<<< HEAD
                     case "aktif" -> {
                         badge.setText("Aktif");
                         badge.getStyleClass().add("status-active");
@@ -152,52 +108,28 @@ public class MemberController {
                         badge.setText(status);
                         badge.getStyleClass().add("status-default");
                     }
-=======
-                    case "aktif" -> badge.getStyleClass().add("status-active");
-                    case "pending" -> badge.getStyleClass().add("status-pending");
-                    case "expired" -> badge.getStyleClass().add("status-expired");
-                    case "nonaktif" -> badge.getStyleClass().add("status-expired");
-                    default -> badge.getStyleClass().add("status-default");
->>>>>>> 5d6f7a3684f291f5acfa9f359c01e0e5d1a53d2e
                 }
 
                 badge.setAlignment(Pos.CENTER);
+
                 setText(null);
                 setGraphic(badge);
             }
         });
-    }
 
-<<<<<<< HEAD
         actionColumn.setCellFactory(column -> new TableCell<>() {
             private final Button editButton = new Button("Edit");
             private final Button deleteButton = new Button("Hapus");
             private final HBox box = new HBox(8, editButton, deleteButton);
-=======
-    private void setupActionColumn() {
-        actionColumn.setCellFactory(column -> new TableCell<Member, Void>() {
-
-            private final Button editButton = new Button("Edit");
-            private final Button deleteButton = new Button("Hapus");
-            private final HBox container = new HBox(8, editButton, deleteButton);
->>>>>>> 5d6f7a3684f291f5acfa9f359c01e0e5d1a53d2e
 
             {
                 editButton.getStyleClass().add("table-edit-btn");
                 deleteButton.getStyleClass().add("table-delete-btn");
-<<<<<<< HEAD
                 box.setAlignment(Pos.CENTER_LEFT);
 
                 editButton.setOnAction(event -> {
                     Member member = getTableView().getItems().get(getIndex());
                     openEditMember(member);
-=======
-                container.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
-
-                editButton.setOnAction(event -> {
-                    Member member = getTableView().getItems().get(getIndex());
-                    openEditPage(member);
->>>>>>> 5d6f7a3684f291f5acfa9f359c01e0e5d1a53d2e
                 });
 
                 deleteButton.setOnAction(event -> {
@@ -209,22 +141,17 @@ public class MemberController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-<<<<<<< HEAD
 
                 if (empty) {
                     setGraphic(null);
                 } else {
                     setGraphic(box);
                 }
-=======
-                setGraphic(empty ? null : container);
->>>>>>> 5d6f7a3684f291f5acfa9f359c01e0e5d1a53d2e
             }
         });
     }
 
     private void loadMembers() {
-<<<<<<< HEAD
         allMembers = memberService.getAllMembers();
         memberTable.setItems(allMembers);
         totalDataLabel.setText(allMembers.size() + " data");
@@ -250,88 +177,18 @@ public class MemberController {
                         || safe(member.getMembership()).toLowerCase().contains(keyword)
                         || safe(member.getJoinDate()).toLowerCase().contains(keyword)
                         || safe(member.getStatus()).toLowerCase().contains(keyword));
-=======
-        ObservableList<Member> members = memberService.getAllMembers();
-        memberTable.setItems(members);
-        totalDataLabel.setText(members.size() + " data");
-    }
-
-    private void filterMembers() {
-        String keyword = searchField.getText().trim().toLowerCase();
-        String statusFilter = statusFilterCombo.getValue();
-
-        ObservableList<Member> filtered = FXCollections.observableArrayList();
-
-        for (Member member : memberService.getAllMembers()) {
-            boolean matchesKeyword =
-                    member.getName().toLowerCase().contains(keyword)
-                            || member.getEmail().toLowerCase().contains(keyword)
-                            || member.getMembership().toLowerCase().contains(keyword)
-                            || member.getStatus().toLowerCase().contains(keyword);
-
-            boolean matchesStatus =
-                    statusFilter == null
-                            || statusFilter.equals("Semua")
-                            || member.getStatus().equalsIgnoreCase(statusFilter);
-
-            if (matchesKeyword && matchesStatus) {
-                filtered.add(member);
-            }
-        }
->>>>>>> 5d6f7a3684f291f5acfa9f359c01e0e5d1a53d2e
 
         memberTable.setItems(filtered);
         totalDataLabel.setText(filtered.size() + " data");
         updateStats(filtered);
     }
 
-    private void openEditPage(Member member) {
-        EditMemberController.setSelectedMember(member);
-
-        SceneManager.changeScene(
-                memberTable,
-                "/admin/member/EditMember.fxml",
-                "GYMBRUT - Edit Member",
-                1280,
-                760);
-    }
-
-    private void deleteMember(Member member) {
-        boolean confirm = AlertHelper.showConfirm(
-                "Hapus Member",
-                "Yakin ingin menghapus member " + member.getName() + "?");
-
-        if (!confirm) {
-            return;
-        }
-
-        boolean success = memberService.deleteMember(member);
-
-        if (!success) {
-            AlertHelper.showWarning("Gagal", "Member gagal dihapus.");
-            return;
-        }
-
-        loadMembers();
-        AlertHelper.showInfo("Berhasil", "Member berhasil dihapus.");
-    }
-
-    @FXML
-    private void handleFilterStatus() {
-        filterMembers();
-    }
-
     @FXML
     private void handleReset() {
         searchField.clear();
-<<<<<<< HEAD
         memberTable.setItems(allMembers);
         totalDataLabel.setText(allMembers.size() + " data");
         updateStats(allMembers);
-=======
-        statusFilterCombo.setValue("Semua");
-        loadMembers();
->>>>>>> 5d6f7a3684f291f5acfa9f359c01e0e5d1a53d2e
     }
 
     @FXML
@@ -340,7 +197,6 @@ public class MemberController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AddMember.fxml"));
             Parent root = loader.load();
 
-<<<<<<< HEAD
             Stage stage = new Stage();
             stage.setTitle("Tambah Member");
             stage.setScene(new Scene(root));
@@ -390,8 +246,9 @@ public class MemberController {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Konfirmasi Hapus");
         confirm.setHeaderText("Hapus member?");
-        confirm.setContentText("Data member \"" + member.getName()
-                + "\" akan dihapus beserta membership, payment, check-in, progress, dan notifikasi.");
+        confirm.setContentText(
+                "Data member \"" + member.getName()
+                        + "\" akan dihapus beserta membership, payment, check-in, progress, dan notifikasi.");
 
         Optional<ButtonType> result = confirm.showAndWait();
 
@@ -442,27 +299,4 @@ public class MemberController {
         alert.setContentText(content);
         alert.showAndWait();
     }
-=======
-    @FXML
-    private void openDashboard(ActionEvent event) {
-        SceneManager.changeScene(
-                (Node) event.getSource(),
-                "/admin/dashboard/Dashboard.fxml",
-                "GYMBRUT - Dashboard Admin",
-                1280,
-                760);
-    }
-
-    @FXML
-    private void handleLogout(ActionEvent event) {
-        Session.clear();
-
-        SceneManager.changeScene(
-                (Node) event.getSource(),
-                "/auth/Login.fxml",
-                "GYMBRUT - Login",
-                1100,
-                720);
-    }
->>>>>>> 5d6f7a3684f291f5acfa9f359c01e0e5d1a53d2e
 }
