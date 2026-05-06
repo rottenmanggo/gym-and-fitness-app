@@ -97,6 +97,16 @@ public class DashboardController {
     }
 
     @FXML
+    private void openPayments(ActionEvent event) {
+        SceneManager.changeScene(
+                (Node) event.getSource(),
+                "/admin/payments/Payment.fxml",
+                "GYMBRUT - Payments",
+                1280,
+                760);
+    }
+
+    @FXML
     private void handleLogout(ActionEvent event) {
         Session.clear();
 
