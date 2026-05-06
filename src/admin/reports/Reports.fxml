@@ -9,7 +9,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
@@ -21,67 +20,65 @@
       spacing="18">
 
     <!-- HERO -->
-    <HBox styleClass="reports-hero">
-        <VBox spacing="8" HBox.hgrow="ALWAYS">
+    <HBox styleClass="reports-hero" spacing="22">
+        <VBox spacing="9" HBox.hgrow="ALWAYS">
             <Label text="📊 REPORTS OVERVIEW" styleClass="banner-pill"/>
-            <Label text="Laporan performa gym lebih rapi dan mudah dibaca."
-                   wrapText="true"
-                   styleClass="hero-title"/>
-            <Label text="Pantau pendapatan, pertumbuhan member, dan paket terlaris dari data database."
+            <Label text="Laporan Performa Gym" styleClass="hero-title"/>
+            <Label text="Pantau pendapatan, pertumbuhan member, dan paket paling populer dari satu halaman laporan."
                    wrapText="true"
                    styleClass="hero-desc"/>
         </VBox>
 
-        <VBox spacing="6" styleClass="hero-card">
+        <VBox spacing="7" styleClass="hero-card">
             <Label text="Paket Terlaris" styleClass="hero-card-label"/>
             <Label fx:id="lblHeroBestPackage" text="Belum ada" styleClass="hero-card-value"/>
-            <Label text="Berdasarkan data membership" styleClass="hero-card-sub"/>
+            <Label text="Berdasarkan total membership" styleClass="hero-card-sub"/>
         </VBox>
     </HBox>
 
-    <!-- STAT CARDS -->
-    <GridPane hgap="16" vgap="16">
-        <VBox styleClass="stat-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+    <!-- STATS -->
+    <HBox spacing="16">
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
             <Label text="Pendapatan Hari Ini" styleClass="stat-label"/>
             <Label fx:id="lblTodayIncome" text="Rp0" styleClass="stat-value"/>
-            <Label text="Pembayaran verified hari ini" styleClass="stat-meta"/>
+            <Label text="Verified payment hari ini" styleClass="stat-meta"/>
         </VBox>
 
-        <VBox styleClass="stat-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
             <Label text="Pendapatan Bulan Ini" styleClass="stat-label"/>
             <Label fx:id="lblMonthIncome" text="Rp0" styleClass="stat-value"/>
-            <Label text="Akumulasi bulan berjalan" styleClass="stat-meta"/>
+            <Label text="Total verified bulan berjalan" styleClass="stat-meta"/>
         </VBox>
 
-        <VBox styleClass="stat-card" GridPane.columnIndex="2" GridPane.rowIndex="0">
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
             <Label text="Member Baru" styleClass="stat-label"/>
             <Label fx:id="lblNewMembers" text="0" styleClass="stat-value"/>
-            <Label text="Member baru bulan ini" styleClass="stat-meta"/>
+            <Label text="Bulan ini" styleClass="stat-meta"/>
         </VBox>
 
-        <VBox styleClass="stat-card" GridPane.columnIndex="3" GridPane.rowIndex="0">
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
             <Label text="Paket Terlaris" styleClass="stat-label"/>
             <Label fx:id="lblBestPackage" text="Belum ada" styleClass="stat-value-small"/>
             <Label text="Paling banyak dipilih" styleClass="stat-meta"/>
         </VBox>
-    </GridPane>
+    </HBox>
 
     <!-- CHARTS -->
     <HBox spacing="18">
-        <VBox styleClass="premium-card" spacing="10" HBox.hgrow="ALWAYS">
+        <VBox styleClass="chart-card" spacing="10" HBox.hgrow="ALWAYS">
             <HBox alignment="CENTER_LEFT">
                 <VBox spacing="4" HBox.hgrow="ALWAYS">
                     <Label text="Grafik Pendapatan" styleClass="section-title"/>
                     <Label text="Total pembayaran verified per bulan." styleClass="section-subtitle"/>
                 </VBox>
 
-                <Label text="Live Data" styleClass="badge-info"/>
+                <Label text="Revenue" styleClass="pill-orange"/>
             </HBox>
 
             <LineChart fx:id="incomeReportChart"
                        animated="false"
                        legendVisible="false"
-                       prefHeight="280">
+                       prefHeight="300">
                 <xAxis>
                     <CategoryAxis label="Bulan"/>
                 </xAxis>
@@ -91,14 +88,20 @@
             </LineChart>
         </VBox>
 
-        <VBox styleClass="premium-card" spacing="10" prefWidth="430">
-            <Label text="Pertumbuhan Member" styleClass="section-title"/>
-            <Label text="Jumlah member baru per bulan." styleClass="section-subtitle"/>
+        <VBox styleClass="chart-card" spacing="10" prefWidth="430">
+            <HBox alignment="CENTER_LEFT">
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Pertumbuhan Member" styleClass="section-title"/>
+                    <Label text="Jumlah member baru per bulan." styleClass="section-subtitle"/>
+                </VBox>
+
+                <Label text="Members" styleClass="pill-blue"/>
+            </HBox>
 
             <BarChart fx:id="memberReportChart"
                       animated="false"
                       legendVisible="false"
-                      prefHeight="280">
+                      prefHeight="300">
                 <xAxis>
                     <CategoryAxis label="Bulan"/>
                 </xAxis>
@@ -118,7 +121,7 @@
                     <Label fx:id="totalDataLabel" text="0 data" styleClass="data-count"/>
                 </HBox>
 
-                <Label text="Laporan pendapatan dan pertumbuhan member."
+                <Label text="Laporan pendapatan, member baru, dan paket terlaris."
                        styleClass="section-subtitle"/>
             </VBox>
 
@@ -132,18 +135,18 @@
                     onAction="#handleReset"
                     styleClass="light-btn"/>
 
-            <Button text="Download Laporan"
+            <Button text="Download"
                     onAction="#handleDownloadReport"
                     styleClass="primary-btn"/>
         </HBox>
 
         <TableView fx:id="reportTable"
-                   prefHeight="300"
+                   prefHeight="320"
                    styleClass="report-table"
                    VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="colMonth" text="Bulan" prefWidth="220"/>
-                <TableColumn fx:id="colRevenue" text="Pendapatan" prefWidth="220"/>
+                <TableColumn fx:id="colMonth" text="Bulan" prefWidth="230"/>
+                <TableColumn fx:id="colRevenue" text="Pendapatan" prefWidth="230"/>
                 <TableColumn fx:id="colNewMembers" text="Member Baru" prefWidth="200"/>
                 <TableColumn fx:id="colBestPackage" text="Paket Terlaris" prefWidth="260"/>
             </columns>

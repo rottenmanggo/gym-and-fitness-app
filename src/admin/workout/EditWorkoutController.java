@@ -6,77 +6,122 @@ import javafx.stage.Stage;
 
 public class EditWorkoutController {
 
-    @FXML private TextField tfJudul;
-    @FXML private TextField tfKategori;
-    @FXML private TextField tfEquipment;
-    @FXML private TextField tfSets;
-    @FXML private TextField tfReps;
-    @FXML private TextField tfVideo;
-    @FXML private TextField tfGambar;
-    @FXML private TextArea  taDeskripsi;
+    @FXML
+    private ComboBox<String> categoryCombo;
+    @FXML
+    private TextField titleField;
+    @FXML
+    private TextField equipmentField;
+    @FXML
+    private TextField youtubeField;
+    @FXML
+    private TextField setsField;
+    @FXML
+    private TextField repsField;
+    @FXML
+    private TextField imageField;
+    @FXML
+    private TextArea tutorialArea;
 
     private Workout currentWorkout;
     private WorkoutController parentController;
     private final WorkoutService service = new WorkoutService();
 
-    public void setData(Workout w, WorkoutController ctrl) {
-        this.currentWorkout   = w;
-        this.parentController = ctrl;
+    @FXML
+    public void initialize() {
+        categoryCombo.getItems().addAll(
+                "Fat Loss",
+                "Bulking",
+                "Cardio",
+                "Strength",
+                "Beginner");
+    }
 
-        tfJudul.setText(w.getTitle());
-        tfKategori.setText(w.getCategory());
-        tfEquipment.setText(w.getEquipment() != null ? w.getEquipment() : "");
-        tfSets.setText(String.valueOf(w.getSets()));
-        tfReps.setText(w.getReps() != null ? w.getReps() : "");
-        tfVideo.setText(w.getVideoUrl() != null ? w.getVideoUrl() : "");
-        tfGambar.setText(w.getImagePath() != null ? w.getImagePath() : "");
-        taDeskripsi.setText(w.getDescription() != null ? w.getDescription() : "");
+    public void setData(Workout workout, WorkoutController parentController) {
+        this.currentWorkout = workout;
+        this.parentController = parentController;
+
+        titleField.setText(workout.getTitle());
+        categoryCombo.setValue(workout.getCategory());
+        equipmentField.setText(workout.getEquipment() == null ? "" : workout.getEquipment());
+        youtubeField.setText(workout.getVideoUrl() == null ? "" : workout.getVideoUrl());
+        setsField.setText(String.valueOf(workout.getSets()));
+        repsField.setText(workout.getReps() == null ? "" : workout.getReps());
+        imageField.setText(workout.getImagePath() == null ? "" : workout.getImagePath());
+        tutorialArea.setText(workout.getDescription() == null ? "" : workout.getDescription());
     }
 
     @FXML
-    public void handleUpdate() {
-        String judul    = tfJudul.getText().trim();
-        String kategori = tfKategori.getText().trim();
-        String sets     = tfSets.getText().trim();
-        String reps     = tfReps.getText().trim();
-
-        if (judul.isEmpty() || kategori.isEmpty() || sets.isEmpty() || reps.isEmpty()) {
-            showAlert(Alert.AlertType.WARNING, "Judul, Kategori, Set, dan Reps wajib diisi!");
+    private void handleUpdate() {
+        if (currentWorkout == null) {
+            showAlert(Alert.AlertType.ERROR, "Gagal", "Data workout tidak ditemukan.");
             return;
         }
 
-        try {
-            int setsInt = Integer.parseInt(sets);
-            currentWorkout.setTitle(judul);
-            currentWorkout.setCategory(kategori);
-            currentWorkout.setEquipment(tfEquipment.getText().trim());
-            currentWorkout.setSets(setsInt);
-            currentWorkout.setReps(reps);
-            currentWorkout.setVideoUrl(tfVideo.getText().trim());
-            currentWorkout.setDescription(taDeskripsi.getText().trim());
-            currentWorkout.setImagePath(tfGambar.getText().trim());
+        String category = categoryCombo.getValue();
+        String title = titleField.getText() == null ? "" : titleField.getText().trim();
+        String equipment = equipmentField.getText() == null ? "" : equipmentField.getText().trim();
+        String youtube = youtubeField.getText() == null ? "" : youtubeField.getText().trim();
+        String setsText = setsField.getText() == null ? "" : setsField.getText().trim();
+        String reps = repsField.getText() == null ? "" : repsField.getText().trim();
+        String image = imageField.getText() == null ? "" : imageField.getText().trim();
+        String tutorial = tutorialArea.getText() == null ? "" : tutorialArea.getText().trim();
 
-            boolean ok = service.update(currentWorkout);
-            if (ok) {
-                showAlert(Alert.AlertType.INFORMATION, "Workout berhasil diupdate!");
-                if (parentController != null) parentController.refreshData();
-                closeWindow();
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Gagal mengupdate workout.");
+        if (category == null || title.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Validasi", "Kategori dan judul workout wajib diisi.");
+            return;
+        }
+
+        int sets = 0;
+
+        if (!setsText.isEmpty()) {
+            try {
+                sets = Integer.parseInt(setsText);
+            } catch (NumberFormatException e) {
+                showAlert(Alert.AlertType.ERROR, "Format Salah", "Jumlah set harus berupa angka.");
+                return;
             }
-        } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR, "Jumlah Set harus berupa angka.");
+        }
+
+        currentWorkout.setCategory(category);
+        currentWorkout.setTitle(title);
+        currentWorkout.setEquipment(equipment);
+        currentWorkout.setVideoUrl(youtube);
+        currentWorkout.setSets(sets);
+        currentWorkout.setReps(reps);
+        currentWorkout.setImagePath(image.isEmpty() ? null : image);
+        currentWorkout.setDescription(tutorial);
+
+        boolean success = service.update(currentWorkout);
+
+        if (success) {
+            showAlert(Alert.AlertType.INFORMATION, "Berhasil", "Workout berhasil diperbarui.");
+
+            if (parentController != null) {
+                parentController.refreshData();
+            }
+
+            closeWindow();
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Gagal", "Workout gagal diperbarui.");
         }
     }
 
-    private void closeWindow() {
-        ((Stage) tfJudul.getScene().getWindow()).close();
+    @FXML
+    private void handleKembali() {
+        closeWindow();
     }
 
-    private void showAlert(Alert.AlertType type, String msg) {
-        Alert a = new Alert(type);
-        a.setHeaderText(null);
-        a.setContentText(msg);
-        a.showAndWait();
+    private void closeWindow() {
+        Stage stage = (Stage) titleField.getScene().getWindow();
+        stage.close();
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

@@ -40,17 +40,18 @@
 
 .hero-title {
   -fx-text-fill: #ffffff;
-  -fx-font-size: 27;
+  -fx-font-size: 29;
   -fx-font-weight: 900;
 }
 
 .hero-desc {
   -fx-text-fill: #cbd5e1;
   -fx-font-size: 14;
+  -fx-line-spacing: 4;
 }
 
 .hero-card {
-  -fx-background-color: rgba(255, 255, 255, 0.98);
+  -fx-background-color: #ffffff;
   -fx-background-radius: 22;
   -fx-border-radius: 22;
   -fx-border-color: rgba(255, 255, 255, 0.65);
@@ -78,7 +79,7 @@
   -fx-font-weight: 600;
 }
 
-/* STAT */
+/* STAT CARD */
 .stat-card {
   -fx-background-color: #ffffff;
   -fx-background-radius: 22;
@@ -86,7 +87,6 @@
   -fx-border-color: #e5e7eb;
   -fx-border-width: 1;
   -fx-padding: 20;
-  -fx-min-width: 220;
   -fx-min-height: 120;
   -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.08), 18, 0.12, 0, 8);
 }
@@ -110,7 +110,7 @@
 
 .stat-value-small {
   -fx-text-fill: #111827;
-  -fx-font-size: 22;
+  -fx-font-size: 21;
   -fx-font-weight: 900;
 }
 
@@ -121,7 +121,7 @@
 }
 
 /* CARDS */
-.premium-card,
+.chart-card,
 .table-card {
   -fx-background-color: #ffffff;
   -fx-background-radius: 22;
@@ -145,19 +145,21 @@
 }
 
 .data-count,
-.badge-info {
+.pill-orange,
+.pill-blue {
   -fx-background-radius: 999;
   -fx-padding: 7 13;
   -fx-font-size: 12;
   -fx-font-weight: 900;
 }
 
-.data-count {
+.data-count,
+.pill-orange {
   -fx-background-color: #fff3e8;
   -fx-text-fill: #e86600;
 }
 
-.badge-info {
+.pill-blue {
   -fx-background-color: #e0f2fe;
   -fx-text-fill: #0284c7;
 }
@@ -217,11 +219,12 @@
 /* CHART */
 .chart {
   -fx-background-color: transparent;
-  -fx-padding: 10 0 0 0;
+  -fx-padding: 8 0 0 0;
 }
 
 .chart-plot-background {
-  -fx-background-color: transparent;
+  -fx-background-color: #fbfdff;
+  -fx-background-radius: 18;
 }
 
 .chart-vertical-grid-lines {

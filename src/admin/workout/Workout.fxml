@@ -1,53 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.geometry.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/17"
-      xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="admin.workout.WorkoutController"
       stylesheets="@workout.css"
-      styleClass="page-root"
-      spacing="0">
+      styleClass="workout-root"
+      spacing="18">
 
-    <!-- TOP BAR -->
-    <HBox styleClass="topbar" alignment="CENTER_LEFT" spacing="16">
-        <VBox spacing="2" HBox.hgrow="ALWAYS">
-            <Label text="Workouts" styleClass="page-title"/>
-            <Label text="Kelola program latihan yang tersedia untuk seluruh member gym." styleClass="page-subtitle"/>
+    <HBox styleClass="workout-hero">
+        <VBox spacing="8" HBox.hgrow="ALWAYS">
+            <Label text="🔥 WORKOUT PROGRAMS" styleClass="banner-pill"/>
+            <Label text="Workouts" styleClass="hero-title"/>
+            <Label text="Kelola program latihan yang tersedia untuk seluruh member gym."
+                   wrapText="true"
+                   styleClass="hero-desc"/>
         </VBox>
-        <TextField fx:id="searchField" promptText="🔍  Cari program workout..." styleClass="search-field" prefWidth="280"/>
-        <HBox styleClass="avatar-box" alignment="CENTER">
-            <Label text="O" styleClass="avatar-label"/>
-        </HBox>
-        <VBox spacing="1">
-            <Label text="obama" styleClass="user-name"/>
-            <Label text="Admin" styleClass="user-role"/>
-        </VBox>
+
+        <Button text="+ Tambah Program"
+                onAction="#handleTambah"
+                styleClass="primary-btn"/>
     </HBox>
 
-    <!-- CONTENT -->
-    <ScrollPane styleClass="content-scroll" fitToWidth="true" VBox.vgrow="ALWAYS">
-        <VBox spacing="24" styleClass="content-body">
+    <VBox styleClass="section-card" spacing="18" VBox.vgrow="ALWAYS">
 
-            <!-- SECTION HEADER -->
-            <HBox alignment="CENTER_LEFT" spacing="12">
-                <VBox spacing="4" HBox.hgrow="ALWAYS">
+        <HBox alignment="CENTER_LEFT" spacing="14">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="12">
                     <Label text="Daftar Program Workout" styleClass="section-title"/>
-                    <Label text="Program latihan modern yang bisa dipilih sesuai tujuan fitness." styleClass="section-sub"/>
-                </VBox>
-                <Button text="+ Tambah Program" styleClass="btn-primary" onAction="#handleTambah"/>
-            </HBox>
+                    <Label fx:id="totalDataLabel" text="0 program" styleClass="data-count"/>
+                </HBox>
 
-            <!-- CARD GRID -->
-            <GridPane fx:id="cardGrid" hgap="20" vgap="20">
+                <Label text="Program latihan modern yang bisa dipilih sesuai tujuan fitness."
+                       styleClass="section-subtitle"/>
+            </VBox>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <TextField fx:id="searchField"
+                           promptText="Cari program workout..."
+                           styleClass="search-input"/>
+
+                <Button text="Reset"
+                        onAction="#handleReset"
+                        styleClass="light-btn"/>
+            </HBox>
+        </HBox>
+
+        <ScrollPane fitToWidth="true"
+                    styleClass="content-scroll"
+                    VBox.vgrow="ALWAYS">
+            <GridPane fx:id="cardGrid"
+                      hgap="18"
+                      vgap="18"
+                      styleClass="card-grid">
                 <columnConstraints>
                     <ColumnConstraints percentWidth="50"/>
                     <ColumnConstraints percentWidth="50"/>
                 </columnConstraints>
             </GridPane>
-
-        </VBox>
-    </ScrollPane>
+        </ScrollPane>
+    </VBox>
 </VBox>

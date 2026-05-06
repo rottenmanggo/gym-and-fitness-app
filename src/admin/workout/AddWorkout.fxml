@@ -1,95 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.geometry.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/17"
-      xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="admin.workout.AddWorkoutController"
       stylesheets="@workout.css"
-      styleClass="page-root"
-      spacing="0" minWidth="760">
+      styleClass="form-page"
+      spacing="18">
 
-    <HBox styleClass="topbar" alignment="CENTER_LEFT" spacing="16">
-        <VBox spacing="2" HBox.hgrow="ALWAYS">
-            <Label text="Tambah Program Workout" styleClass="page-title"/>
-            <Label text="Isi detail program latihan baru." styleClass="page-subtitle"/>
+    <HBox styleClass="form-topbar" alignment="CENTER_LEFT">
+        <VBox spacing="5" HBox.hgrow="ALWAYS">
+            <Label text="Tambah Workout" styleClass="form-title"/>
+            <Label text="Isi data program latihan baru." styleClass="form-subtitle"/>
         </VBox>
-        <HBox styleClass="avatar-box" alignment="CENTER">
-            <Label text="O" styleClass="avatar-label"/>
-        </HBox>
-        <VBox spacing="1">
-            <Label text="obama" styleClass="user-name"/>
-            <Label text="Admin" styleClass="user-role"/>
-        </VBox>
+
+        <Button text="← Kembali"
+                onAction="#handleKembali"
+                styleClass="light-btn"/>
     </HBox>
 
-    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="content-scroll">
-        <VBox styleClass="content-body" spacing="20">
+    <VBox styleClass="form-card" spacing="18">
 
-            <VBox styleClass="form-card" spacing="20">
-                <HBox alignment="CENTER_LEFT">
-                    <Label text="Informasi Workout" styleClass="section-title" HBox.hgrow="ALWAYS"/>
-                    <Button text="← Kembali" styleClass="btn-back" onAction="#handleKembali"/>
-                </HBox>
-                <Separator/>
+        <GridPane hgap="18" vgap="14">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
 
-                <!-- ROW 1: Judul + Kategori -->
-                <GridPane hgap="20" vgap="4">
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="50"/>
-                        <ColumnConstraints percentWidth="50"/>
-                    </columnConstraints>
-                    <Label text="Judul Workout" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                    <TextField fx:id="tfJudul" styleClass="form-field" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-
-                    <Label text="Kategori" styleClass="form-label" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                    <TextField fx:id="tfKategori" promptText="Beginner / Cardio / Strength / Bulking" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                </GridPane>
-
-                <!-- ROW 2: Equipment + Sets -->
-                <GridPane hgap="20" vgap="4">
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="50"/>
-                        <ColumnConstraints percentWidth="50"/>
-                    </columnConstraints>
-                    <Label text="Equipment" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                    <TextField fx:id="tfEquipment" styleClass="form-field" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-
-                    <Label text="Jumlah Set" styleClass="form-label" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                    <TextField fx:id="tfSets" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                </GridPane>
-
-                <!-- ROW 3: Reps + Video -->
-                <GridPane hgap="20" vgap="4">
-                    <columnConstraints>
-                        <ColumnConstraints percentWidth="50"/>
-                        <ColumnConstraints percentWidth="50"/>
-                    </columnConstraints>
-                    <Label text="Repetisi / Durasi" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                    <TextField fx:id="tfReps" styleClass="form-field" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-
-                    <Label text="Link Video" styleClass="form-label" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                    <TextField fx:id="tfVideo" promptText="https://www.youtube.com/..." styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                </GridPane>
-
-                <!-- Deskripsi -->
-                <VBox spacing="4">
-                    <Label text="Deskripsi Latihan" styleClass="form-label"/>
-                    <TextArea fx:id="taDeskripsi" styleClass="form-field"
-                              prefHeight="100" wrapText="true"/>
-                </VBox>
-
-                <!-- Gambar (path manual) -->
-                <VBox spacing="4">
-                    <Label text="Gambar Workout (nama file)" styleClass="form-label"/>
-                    <TextField fx:id="tfGambar" promptText="Contoh: dumbell.jpg" styleClass="form-field"/>
-                </VBox>
-
-                <Button text="💾  Simpan Program" styleClass="btn-primary btn-full"
-                        maxWidth="Infinity" onAction="#handleSimpan"/>
+            <VBox spacing="7" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label text="Kategori" styleClass="form-label"/>
+                <ComboBox fx:id="categoryCombo"
+                          maxWidth="Infinity"
+                          styleClass="form-control"/>
             </VBox>
-        </VBox>
-    </ScrollPane>
+
+            <VBox spacing="7" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label text="Judul Workout" styleClass="form-label"/>
+                <TextField fx:id="titleField"
+                           promptText="Contoh: HIIT Fat Burner"
+                           styleClass="form-control"/>
+            </VBox>
+
+            <VBox spacing="7" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Label text="Equipment" styleClass="form-label"/>
+                <TextField fx:id="equipmentField"
+                           promptText="Contoh: Dumbbell, Matras"
+                           styleClass="form-control"/>
+            </VBox>
+
+            <VBox spacing="7" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Label text="Youtube URL" styleClass="form-label"/>
+                <TextField fx:id="youtubeField"
+                           promptText="https://youtube.com/..."
+                           styleClass="form-control"/>
+            </VBox>
+
+            <VBox spacing="7" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                <Label text="Jumlah Set" styleClass="form-label"/>
+                <TextField fx:id="setsField"
+                           promptText="Contoh: 3"
+                           styleClass="form-control"/>
+            </VBox>
+
+            <VBox spacing="7" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <Label text="Reps / Durasi" styleClass="form-label"/>
+                <TextField fx:id="repsField"
+                           promptText="Contoh: 10-12 / 20 menit"
+                           styleClass="form-control"/>
+            </VBox>
+
+            <VBox spacing="7" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2">
+                <Label text="Nama File Gambar" styleClass="form-label"/>
+                <TextField fx:id="imageField"
+                           promptText="Contoh: workout.jpg"
+                           styleClass="form-control"/>
+            </VBox>
+
+            <VBox spacing="7" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2">
+                <Label text="Tutorial" styleClass="form-label"/>
+                <TextArea fx:id="tutorialArea"
+                          promptText="Tuliskan langkah-langkah latihan..."
+                          wrapText="true"
+                          prefHeight="110"
+                          styleClass="form-textarea"/>
+            </VBox>
+        </GridPane>
+
+        <Button text="Simpan Workout"
+                onAction="#handleSimpan"
+                maxWidth="Infinity"
+                styleClass="primary-btn"/>
+    </VBox>
 </VBox>

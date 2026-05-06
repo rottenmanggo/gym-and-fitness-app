@@ -1,93 +1,113 @@
 package admin.workout;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
+import java.awt.Desktop;
+import java.net.URI;
+
 public class DetailWorkoutController {
 
-    @FXML private Label  lblJudul;
-    @FXML private Label  lblMeta;
-    @FXML private Label  lblBadge;
-    @FXML private Label  lblDeskripsi;
-    @FXML private Label  lblGambar;
-    @FXML private VBox   stepsContainer;
-    @FXML private Button btnVideo;
+    @FXML
+    private Label titleLabel;
+    @FXML
+    private Label metaLabel;
+    @FXML
+    private Label categoryBadge;
+    @FXML
+    private Label imageLabel;
+    @FXML
+    private Label descriptionLabel;
+    @FXML
+    private VBox stepsContainer;
+    @FXML
+    private Button videoButton;
 
     private Workout workout;
 
-    public void setData(Workout w) {
-        this.workout = w;
+    public void setData(Workout workout) {
+        this.workout = workout;
 
-        lblJudul.setText(w.getTitle());
-        lblMeta.setText(w.getCategory() + "  •  " + w.getSets() + " Set  •  " + w.getReps());
-        lblBadge.setText(w.getCategory());
-        lblDeskripsi.setText(w.getDescription() != null ? w.getDescription() : "-");
-        lblGambar.setText(w.getImagePath() != null ? "[ " + w.getImagePath() + " ]" : "[ Tidak ada gambar ]");
-
-        buildSteps(w);
-    }
-
-    private void buildSteps(Workout w) {
-        stepsContainer.getChildren().clear();
-
-        if (w.getSteps() == null || w.getSteps().isEmpty()) {
-            stepsContainer.getChildren().add(new Label("Belum ada langkah latihan."));
+        if (workout == null) {
             return;
         }
 
-        for (WorkoutStep step : w.getSteps()) {
-            VBox stepCard = new VBox(6);
-            stepCard.getStyleClass().add("step-card");
-            stepCard.setPadding(new Insets(14));
+        titleLabel.setText(workout.getTitle());
+        metaLabel.setText(workout.getMetaInfo());
+        categoryBadge.setText(workout.getCategory());
+        imageLabel.setText(workout.getImagePath() == null || workout.getImagePath().isBlank()
+                ? "Tidak ada gambar"
+                : workout.getImagePath());
+        descriptionLabel.setText(workout.getDescriptionText());
 
-            // Nomor + instruksi
+        videoButton.setDisable(workout.getVideoUrl() == null || workout.getVideoUrl().isBlank());
+
+        buildSteps();
+    }
+
+    private void buildSteps() {
+        stepsContainer.getChildren().clear();
+
+        if (workout.getSteps() == null || workout.getSteps().isEmpty()) {
+            Label empty = new Label("Belum ada instruksi detail.");
+            empty.getStyleClass().add("empty-subtitle");
+            stepsContainer.getChildren().add(empty);
+            return;
+        }
+
+        for (WorkoutStep step : workout.getSteps()) {
             HBox row = new HBox(12);
             row.setAlignment(Pos.TOP_LEFT);
+            row.getStyleClass().add("step-row");
 
-            Label num = new Label(String.valueOf(step.getStepOrder()));
-            num.getStyleClass().add("step-num");
-            num.setMinWidth(32);
-            num.setMinHeight(32);
+            Label number = new Label(String.valueOf(step.getStepOrder()));
+            number.getStyleClass().add("step-number");
 
-            VBox info = new VBox(4);
-            Label stepTitle = new Label("Step " + step.getStepOrder());
-            stepTitle.getStyleClass().add("step-title");
-            Label instr = new Label(step.getInstruction());
-            instr.getStyleClass().add("card-benefit-text");
-            instr.setWrapText(true);
-            info.getChildren().addAll(stepTitle, instr);
+            VBox info = new VBox(5);
+            HBox.setHgrow(info, Priority.ALWAYS);
 
-            row.getChildren().addAll(num, info);
+            Label title = new Label("Step " + step.getStepOrder());
+            title.getStyleClass().add("step-title");
 
-            // Duration badge
+            Label instruction = new Label(step.getInstruction());
+            instruction.getStyleClass().add("step-instruction");
+            instruction.setWrapText(true);
+
+            info.getChildren().addAll(title, instruction);
+
             if (step.getDuration() != null && !step.getDuration().isBlank()) {
-                Label dur = new Label(step.getDuration());
-                dur.getStyleClass().add("duration-badge");
-            stepCard.getChildren().addAll(row, dur);
-            } else {
-                stepCard.getChildren().add(row);
+                Label duration = new Label(step.getDuration());
+                duration.getStyleClass().add("duration-badge");
+                info.getChildren().add(duration);
             }
 
-            stepsContainer.getChildren().add(stepCard);
+            row.getChildren().addAll(number, info);
+            stepsContainer.getChildren().add(row);
         }
     }
 
     @FXML
-    public void handleVideo() {
+    private void handleVideo() {
         if (workout == null || workout.getVideoUrl() == null || workout.getVideoUrl().isBlank()) {
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setHeaderText(null);
-            a.setContentText("Video tidak tersedia.");
-            a.showAndWait();
+            showAlert(Alert.AlertType.INFORMATION, "Video Kosong", "Video tidak tersedia.");
             return;
         }
+
         try {
-            java.awt.Desktop.getDesktop().browse(new java.net.URI(workout.getVideoUrl()));
+            Desktop.getDesktop().browse(new URI(workout.getVideoUrl()));
         } catch (Exception e) {
             e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Gagal", "Tidak bisa membuka video.");
         }
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

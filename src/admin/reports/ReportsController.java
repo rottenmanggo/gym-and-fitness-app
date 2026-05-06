@@ -75,6 +75,11 @@ public class ReportsController {
     private void setupTable() {
         reportTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
+        colMonth.setPrefWidth(220);
+        colRevenue.setPrefWidth(220);
+        colNewMembers.setPrefWidth(180);
+        colBestPackage.setPrefWidth(260);
+
         colMonth.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getMonthName()));
         colRevenue.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getRevenueFormatted()));
         colNewMembers.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getNewMembers() + " orang"));
