@@ -39,7 +39,42 @@ public class LoginController {
         // ⚡ set session user
         Session.setUser(user);
 
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
         // ⚡ redirect sesuai role
+=======
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+        // if (user.isAdmin()) {
+        //     SceneManager.changeScene(emailField, "/admin/dashboard/Dashboard.fxml", "Dashboard Admin", 1280, 760);
+        // } else {
+        //     SceneManager.changeScene(emailField, "/member/dashboard/MemberDashboard.fxml", "Dashboard Member", 1280,
+        //             760);
+        // }ini yg asli, dibawah ini untuk testing punya ari, jangan di push ya yang bawah ini
+
+<<<<<<< HEAD
+if (user.getRole().equalsIgnoreCase("admin")) {
+    SceneManager.changeScene(
+            emailField,
+            "/admin/dashboard/Dashboard.fxml",
+            "GYMBRUT - Dashboard Admin",
+            1280,
+            760);
+} else if (user.getRole().equalsIgnoreCase("member")) {
+    SceneManager.changeScene(
+            emailField,
+            "/member/dashboard/MemberDashboard.fxml",
+            "GYMBRUT - Dashboard Member",
+            1280,
+            760);
+} else {
+    showAlert("Role akun tidak dikenali.", "danger");
+}
+=======
+>>>>>>> Stashed changes
         if (user.isAdmin()) {
             SceneManager.changeScene(
                     emailField,

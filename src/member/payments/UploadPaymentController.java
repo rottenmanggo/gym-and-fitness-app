@@ -1,29 +1,20 @@
 package member.payments;
 
+import config.Database;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import config.Database;
+import java.nio.file.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class UploadPaymentController {
 
     private File selectedFile;
-
     private FileChooser fileChooser = new FileChooser();
 
- // sesuaikan jika beda
-
-    // =========================
-    // PILIH FILE
-    // =========================
     @FXML
     private void handleChooseFile(ActionEvent event) {
         selectedFile = fileChooser.showOpenDialog(null);
@@ -33,9 +24,6 @@ public class UploadPaymentController {
         }
     }
 
-    // =========================
-    // UPLOAD FILE
-    // =========================
     @FXML
     private void handleUpload(ActionEvent event) {
         try {
@@ -44,9 +32,7 @@ public class UploadPaymentController {
                 return;
             }
 
-            // =========================
-            // 1. SIMPAN FILE DULU (PASTI JALAN)
-            // =========================
+            // simpan file
             String fileName = System.currentTimeMillis() + "_" + selectedFile.getName();
             Path targetPath = Paths.get("src/uploads/payments/" + fileName);
 
@@ -54,22 +40,18 @@ public class UploadPaymentController {
 
             System.out.println("File berhasil disimpan!");
 
-            // =========================
-            // 2. BARU COBA DATABASE
-            // =========================
-            Connection connection = Database.getConnection();
+            // simpan ke DB
+            Connection conn = Database.getConnection();
 
-            if (connection == null) {
-                System.out.println("DB gagal, tapi file tetap tersimpan.");
-                return;
-            }
+            String query = """
+                INSERT INTO payments 
+                (membership_id, amount, payment_date, payment_method, status, proof_image_path)
+                VALUES (?, ?, NOW(), 'transfer', 'pending', ?)
+            """;
 
-            String query = "INSERT INTO payments (membership_id, amount, payment_date, payment_method, status, proof_image_path) VALUES (?, ?, NOW(), 'transfer', 'pending', ?)";
-
-            PreparedStatement ps = connection.prepareStatement(query);
-
-            ps.setInt(1, 1);
-            ps.setDouble(2, 100000);
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, 1); // sementara
+            ps.setDouble(2, 100000); // sementara
             ps.setString(3, targetPath.toString());
 
             int result = ps.executeUpdate();
