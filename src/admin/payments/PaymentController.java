@@ -11,6 +11,9 @@ import javafx.scene.layout.HBox;
 
 import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -146,18 +149,27 @@ public class PaymentController {
 
         colBukti.setCellFactory(column -> new TableCell<>() {
             private final Button lihatButton = new Button("Lihat");
+            private Payment currentPayment;
 
             {
                 lihatButton.getStyleClass().add("table-soft-btn");
                 lihatButton.setOnAction(event -> {
-                    Payment payment = getTableView().getItems().get(getIndex());
-                    openProofFile(payment);
+                    System.out.println("Tombol Lihat diklik, currentPayment: "
+                            + (currentPayment != null ? currentPayment.getInvoice() : "null"));
+                    if (currentPayment != null) {
+                        openProofFile(currentPayment);
+                    } else {
+                        showAlert(Alert.AlertType.WARNING, "Error",
+                                "Data pembayaran tidak tersedia. Silakan refresh halaman.");
+                    }
                 });
             }
 
             @Override
             protected void updateItem(String proofFile, boolean empty) {
                 super.updateItem(proofFile, empty);
+                System.out.println("updateItem colBukti dipanggil - empty: " + empty + ", proofFile: " + proofFile);
+                currentPayment = null;
 
                 if (empty) {
                     setText(null);
@@ -171,6 +183,11 @@ public class PaymentController {
                     setText(null);
                     setGraphic(dash);
                 } else {
+                    if (getTableRow() != null) {
+                        currentPayment = getTableRow().getItem();
+                        System.out.println("Set currentPayment untuk bukti: "
+                                + (currentPayment != null ? currentPayment.getInvoice() : "null"));
+                    }
                     setText(null);
                     setGraphic(lihatButton);
                 }
@@ -181,6 +198,7 @@ public class PaymentController {
             private final Button verifyButton = new Button("Verify");
             private final Button rejectButton = new Button("Reject");
             private final HBox actionBox = new HBox(8, verifyButton, rejectButton);
+            private Payment currentPayment;
 
             {
                 verifyButton.getStyleClass().add("table-soft-btn");
@@ -189,19 +207,22 @@ public class PaymentController {
                 actionBox.setAlignment(Pos.CENTER_LEFT);
 
                 verifyButton.setOnAction(event -> {
-                    Payment payment = getTableView().getItems().get(getIndex());
-                    handleVerify(payment);
+                    if (currentPayment != null) {
+                        handleVerify(currentPayment);
+                    }
                 });
 
                 rejectButton.setOnAction(event -> {
-                    Payment payment = getTableView().getItems().get(getIndex());
-                    handleReject(payment);
+                    if (currentPayment != null) {
+                        handleReject(currentPayment);
+                    }
                 });
             }
 
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
+                currentPayment = null;
 
                 if (empty) {
                     setText(null);
@@ -209,9 +230,11 @@ public class PaymentController {
                     return;
                 }
 
-                Payment payment = getTableView().getItems().get(getIndex());
+                if (getTableRow() != null) {
+                    currentPayment = getTableRow().getItem();
+                }
 
-                if ("pending".equalsIgnoreCase(payment.getStatus())) {
+                if (currentPayment != null && "pending".equalsIgnoreCase(currentPayment.getStatus())) {
                     setText(null);
                     setGraphic(actionBox);
                 } else {
@@ -330,29 +353,142 @@ public class PaymentController {
     }
 
     private void openProofFile(Payment payment) {
+        System.out
+                .println("openProofFile dipanggil untuk payment: " + (payment != null ? payment.getInvoice() : "null"));
         if (payment == null || payment.getProofFile() == null || payment.getProofFile().isBlank()) {
+            System.out.println("Payment atau proofFile null/blank");
             showAlert(Alert.AlertType.WARNING, "Bukti Kosong", "File bukti pembayaran tidak tersedia.");
             return;
         }
 
+        String proofFile = payment.getProofFile();
+        System.out.println("Proof file dari database: " + proofFile);
+
         try {
-            File file = new File("uploads/payments/" + payment.getProofFile());
+            File file = findPaymentProofFile(proofFile);
 
-            if (!file.exists()) {
-                file = new File(payment.getProofFile());
-            }
-
-            if (!file.exists()) {
-                showAlert(Alert.AlertType.WARNING, "File Tidak Ditemukan", "File bukti tidak ditemukan.");
+            if (file == null || !file.exists()) {
+                System.out.println("File tidak ditemukan");
+                showAlert(
+                        Alert.AlertType.WARNING,
+                        "File Tidak Ditemukan",
+                        "File bukti tidak ditemukan.\n\nNama file: " + proofFile
+                                + "\n\nPastikan file ada di folder:\n"
+                                + "gym-and-fitness-app/uploads/payments/");
                 return;
             }
 
-            Desktop.getDesktop().open(file);
+            System.out.println("Membuka bukti pembayaran: " + file.getAbsolutePath());
 
+            if (openFile(file)) {
+                System.out.println("File berhasil dibuka");
+                return;
+            }
+
+            System.out.println("Semua metode pembukaan gagal");
+            showAlert(Alert.AlertType.ERROR, "Gagal",
+                    "Gagal membuka file bukti pembayaran. Periksa asosiasi file di sistem.");
         } catch (Exception e) {
+            System.out.println("Exception di openProofFile: " + e.getMessage());
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Gagal", "Gagal membuka file bukti pembayaran.");
+            showAlert(Alert.AlertType.ERROR, "Gagal", "Gagal membuka file bukti pembayaran. Error: " + e.getMessage());
         }
+    }
+
+    private boolean openFile(File file) {
+        System.out.println("Mencoba membuka file: " + file.getAbsolutePath());
+        try {
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+                if (desktop.isSupported(Desktop.Action.OPEN)) {
+                    System.out.println("Menggunakan Desktop.open()");
+                    desktop.open(file);
+                    return true;
+                }
+            }
+
+            if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                String filePath = file.getAbsolutePath();
+                try {
+                    System.out.println("Menggunakan cmd start: " + filePath);
+                    new ProcessBuilder("cmd", "/c", "start", "", filePath).start();
+                    return true;
+                } catch (IOException e) {
+                    System.out.println("cmd start gagal: " + e.getMessage());
+                }
+
+                try {
+                    System.out.println("Menggunakan explorer.exe: " + filePath);
+                    new ProcessBuilder("explorer.exe", filePath).start();
+                    return true;
+                } catch (IOException e) {
+                    System.out.println("explorer.exe gagal: " + e.getMessage());
+                }
+
+                try {
+                    System.out.println("Menggunakan rundll32: " + filePath);
+                    new ProcessBuilder("cmd", "/c", "rundll32", "url.dll,FileProtocolHandler", filePath).start();
+                    return true;
+                } catch (IOException e) {
+                    System.out.println("rundll32 gagal: " + e.getMessage());
+                }
+            }
+
+            System.out.println("Semua metode pembukaan file gagal");
+            return false;
+        } catch (UnsupportedOperationException e) {
+            System.out.println("Desktop tidak didukung: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private File findPaymentProofFile(String proofFile) {
+        String cleanFile = proofFile.trim();
+        System.out.println("Mencari file bukti: " + cleanFile);
+
+        // Kalau database menyimpan path, ambil nama filenya saja.
+        cleanFile = cleanFile.replace("\\", "/");
+        if (cleanFile.contains("/")) {
+            cleanFile = cleanFile.substring(cleanFile.lastIndexOf("/") + 1);
+        }
+
+        System.out.println("Nama file bersih: " + cleanFile);
+
+        Path currentDir = Path.of(System.getProperty("user.dir"));
+        Path parentDir = currentDir.getParent();
+
+        System.out.println("Current dir: " + currentDir);
+        System.out.println("Parent dir: " + parentDir);
+
+        Path[] possiblePaths = {
+                currentDir.resolve("uploads/payments").resolve(cleanFile),
+                currentDir.resolve("gym-and-fitness-app/uploads/payments").resolve(cleanFile),
+                currentDir.resolve("src/uploads/payments").resolve(cleanFile),
+                currentDir.resolve("src/gym-and-fitness-app/uploads/payments").resolve(cleanFile),
+                parentDir == null ? null : parentDir.resolve("uploads/payments").resolve(cleanFile),
+                parentDir == null ? null : parentDir.resolve("gym-and-fitness-app/uploads/payments").resolve(cleanFile),
+                parentDir == null ? null : parentDir.resolve("src/uploads/payments").resolve(cleanFile),
+                parentDir == null ? null
+                        : parentDir.resolve("src/gym-and-fitness-app/uploads/payments").resolve(cleanFile)
+        };
+
+        for (Path path : possiblePaths) {
+            if (path == null) {
+                continue;
+            }
+
+            File file = path.toFile();
+            System.out.println("Cek bukti pembayaran: " + file.getAbsolutePath() + " - exists: " + Files.exists(path));
+
+            if (Files.exists(path)) {
+                System.out.println("File ditemukan: " + file.getAbsolutePath());
+                return file;
+            }
+        }
+
+        System.out.println("File tidak ditemukan di semua lokasi");
+        return null;
     }
 
     private void updateTotalLabel(int total) {

@@ -1,10 +1,135 @@
-<VBox spacing="15" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="member.checkin.CheckinController">
+<?xml version="1.0" encoding="UTF-8"?>
 
-    <Label text="Check-in Harian" />
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-    <Label fx:id="statusLabel" text="Status" />
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="member.checkin.CheckinController"
+      stylesheets="@../../assets/css/style.css"
+      styleClass="member-dashboard-page"
+      spacing="22">
 
-    <Button text="Check-in Sekarang" onAction="#handleCheckin"/>
+    <!-- HERO -->
+    <HBox styleClass="dashboard-hero" spacing="20">
+        <VBox spacing="10" HBox.hgrow="ALWAYS">
+            <Label text="↪ Member Check-in" styleClass="banner-pill"/>
+            <Label text="Check In Gym" styleClass="hero-title"/>
+            <Label fx:id="heroSubtitleLabel"
+                   text="Halo, Member. Catat kehadiranmu hari ini agar progress latihan dan aktivitas gym kamu tersimpan dengan rapi."
+                   wrapText="true"
+                   styleClass="hero-desc"/>
+        </VBox>
+
+        <VBox styleClass="dashboard-hero-card" spacing="7">
+            <Label text="Status Membership" styleClass="hero-card-label"/>
+            <Label fx:id="heroStatusLabel"
+                   text="Tidak Aktif"
+                   styleClass="hero-card-value"/>
+            <Label fx:id="heroPackageLabel"
+                   text="Belum ada membership aktif"
+                   styleClass="hero-card-sub"/>
+        </VBox>
+    </HBox>
+
+    <Label fx:id="messageLabel"
+           text=""
+           managed="false"
+           visible="false"
+           styleClass="alert-box"/>
+
+    <HBox spacing="18">
+
+        <!-- FORM CHECK-IN -->
+        <VBox styleClass="premium-card" spacing="16" prefWidth="430">
+            <HBox styleClass="card-header-inline">
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Form Check-in" styleClass="section-title"/>
+                    <Label text="Check-in hanya bisa dilakukan satu kali dalam sehari."
+                           wrapText="true"
+                           styleClass="section-subtitle"/>
+                </VBox>
+
+                <Label fx:id="membershipBadge"
+                       text="Tidak Aktif"
+                       styleClass="badge-soft badge-failed"/>
+            </HBox>
+
+            <VBox styleClass="metric-list" spacing="0">
+                <HBox styleClass="metric-row">
+                    <Label text="Paket" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="packageLabel"
+                           text="Belum ada membership aktif"
+                           styleClass="metric-value"/>
+                </HBox>
+
+                <HBox styleClass="metric-row">
+                    <Label text="Berlaku sampai" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="endDateLabel"
+                           text="-"
+                           styleClass="metric-value"/>
+                </HBox>
+
+                <HBox styleClass="metric-row">
+                    <Label text="Status hari ini" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="todayStatusLabel"
+                           text="Belum check-in"
+                           styleClass="metric-value"/>
+                </HBox>
+            </VBox>
+
+            <VBox spacing="8">
+                <Label text="Catatan Latihan" styleClass="form-label"/>
+                <TextArea fx:id="notesArea"
+                          promptText="Contoh: Latihan dada, cardio, full body..."
+                          wrapText="true"
+                          prefHeight="120"
+                          styleClass="form-textarea"/>
+            </VBox>
+
+            <Button fx:id="checkinButton"
+                    text="Check In Sekarang"
+                    onAction="#handleCheckin"
+                    maxWidth="Infinity"
+                    styleClass="primary-btn"/>
+
+            <Label fx:id="hintLabel"
+                   text=""
+                   wrapText="true"
+                   styleClass="text-soft"/>
+        </VBox>
+
+        <!-- RIWAYAT -->
+        <VBox styleClass="premium-card" spacing="16" HBox.hgrow="ALWAYS">
+            <HBox styleClass="card-header-inline">
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Riwayat Check-in" styleClass="section-title"/>
+                    <Label text="10 aktivitas check-in terbaru kamu."
+                           styleClass="section-subtitle"/>
+                </VBox>
+
+                <Label fx:id="totalHistoryLabel"
+                       text="0 data"
+                       styleClass="data-count"/>
+            </HBox>
+
+            <VBox styleClass="payment-table-card" spacing="0">
+                <HBox styleClass="payment-table-header">
+                    <Label text="Tanggal" styleClass="payment-th" HBox.hgrow="ALWAYS"/>
+                    <Label text="Jam" styleClass="payment-th" HBox.hgrow="ALWAYS"/>
+                    <Label text="Catatan" styleClass="payment-th" HBox.hgrow="ALWAYS"/>
+                </HBox>
+
+                <VBox fx:id="historyContainer"/>
+            </VBox>
+        </VBox>
+
+    </HBox>
 
 </VBox>

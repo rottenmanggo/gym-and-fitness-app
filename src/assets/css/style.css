@@ -1,0 +1,753 @@
+/* =====================================================
+   GYMBRUT JAVAFX - STYLE.CSS
+   Dipakai untuk Member Dashboard Java
+   Path: src/assets/css/style.css
+   ===================================================== */
+
+.member-dashboard-page {
+  -fx-background-color:
+    radial-gradient(
+      center 5% 0%,
+      radius 60%,
+      rgba(255, 122, 0, 0.12),
+      transparent
+    ),
+    radial-gradient(
+      center 100% 100%,
+      radius 55%,
+      rgba(255, 122, 0, 0.08),
+      transparent
+    ),
+    #f5f7fb;
+}
+
+/* HERO */
+.dashboard-hero {
+  -fx-background-color: linear-gradient(to right, #111827, #1f2937);
+  -fx-background-radius: 26;
+  -fx-padding: 26;
+  -fx-alignment: center-left;
+  -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.2), 24, 0.16, 0, 12);
+}
+
+.banner-pill {
+  -fx-background-color: rgba(255, 122, 0, 0.18);
+  -fx-background-radius: 999;
+  -fx-padding: 7 13;
+  -fx-text-fill: #ffb15c;
+  -fx-font-size: 12;
+  -fx-font-weight: 900;
+}
+
+.hero-title {
+  -fx-text-fill: #ffffff;
+  -fx-font-size: 28;
+  -fx-font-weight: 900;
+}
+
+.hero-desc {
+  -fx-text-fill: #cbd5e1;
+  -fx-font-size: 14;
+  -fx-line-spacing: 4;
+}
+
+.dashboard-hero-card {
+  -fx-background-color: rgba(255, 255, 255, 0.98);
+  -fx-background-radius: 22;
+  -fx-border-radius: 22;
+  -fx-border-color: rgba(255, 255, 255, 0.65);
+  -fx-border-width: 1;
+  -fx-padding: 20;
+  -fx-min-width: 260;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.16), 18, 0.12, 0, 8);
+}
+
+.hero-card-label {
+  -fx-text-fill: #64748b;
+  -fx-font-size: 13;
+  -fx-font-weight: 700;
+}
+
+.hero-card-value {
+  -fx-text-fill: #ff7a00;
+  -fx-font-size: 27;
+  -fx-font-weight: 900;
+}
+
+.hero-card-sub {
+  -fx-text-fill: #94a3b8;
+  -fx-font-size: 12;
+  -fx-font-weight: 600;
+}
+
+/* STAT ROW */
+.stats-row {
+  -fx-alignment: stretch;
+}
+
+/* STAT BOX */
+.stat-card-modern {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 22;
+  -fx-border-radius: 22;
+  -fx-border-color: #e5e7eb;
+  -fx-border-width: 1;
+  -fx-padding: 22;
+  -fx-min-height: 132;
+  -fx-pref-height: 132;
+  -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.08), 18, 0.12, 0, 8);
+}
+
+.stat-card-modern:hover {
+  -fx-translate-y: -2;
+  -fx-border-color: rgba(255, 122, 0, 0.22);
+  -fx-background-color: linear-gradient(to bottom right, #ffffff, #fffaf5);
+  -fx-effect: dropshadow(gaussian, rgba(255, 122, 0, 0.13), 22, 0.16, 0, 10);
+}
+
+.stat-label {
+  -fx-text-fill: #64748b;
+  -fx-font-size: 13;
+  -fx-font-weight: 800;
+}
+
+.stat-value {
+  -fx-text-fill: #111827;
+  -fx-font-size: 29;
+  -fx-font-weight: 900;
+}
+
+.stat-value-small {
+  -fx-text-fill: #111827;
+  -fx-font-size: 22;
+  -fx-font-weight: 900;
+}
+
+.stat-desc {
+  -fx-text-fill: #94a3b8;
+  -fx-font-size: 12;
+  -fx-font-weight: 600;
+  -fx-line-spacing: 2;
+}
+/* CARDS */
+.premium-card {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 22;
+  -fx-border-radius: 22;
+  -fx-border-color: #e5e7eb;
+  -fx-border-width: 1;
+  -fx-padding: 22;
+  -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.08), 18, 0.12, 0, 8);
+}
+
+.card-header-inline {
+  -fx-alignment: center-left;
+}
+
+.section-title {
+  -fx-text-fill: #111827;
+  -fx-font-size: 19;
+  -fx-font-weight: 900;
+}
+
+.section-subtitle {
+  -fx-text-fill: #64748b;
+  -fx-font-size: 13;
+  -fx-font-weight: 600;
+}
+
+/* BADGES */
+.badge-soft {
+  -fx-background-radius: 999;
+  -fx-padding: 6 12;
+  -fx-font-size: 12;
+  -fx-font-weight: 900;
+  -fx-alignment: center;
+}
+
+.badge-active {
+  -fx-background-color: #dcfce7;
+  -fx-text-fill: #16a34a;
+}
+
+.badge-pending {
+  -fx-background-color: #fef3c7;
+  -fx-text-fill: #f59e0b;
+}
+
+.badge-failed {
+  -fx-background-color: #fee2e2;
+  -fx-text-fill: #ef4444;
+}
+
+.badge-info {
+  -fx-background-color: #e0f2fe;
+  -fx-text-fill: #0284c7;
+}
+
+/* METRIC LIST */
+.metric-list {
+  -fx-background-color: #ffffff;
+}
+
+.metric-row {
+  -fx-border-color: transparent transparent #eef2f7 transparent;
+  -fx-border-width: 0 0 1 0;
+  -fx-padding: 15 0;
+  -fx-alignment: center-left;
+}
+
+.metric-label {
+  -fx-text-fill: #64748b;
+  -fx-font-size: 13;
+  -fx-font-weight: 700;
+}
+
+.metric-value {
+  -fx-text-fill: #111827;
+  -fx-font-size: 13;
+  -fx-font-weight: 900;
+}
+
+/* LIST */
+.card-list {
+  -fx-background-color: transparent;
+}
+
+.list-row {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 16;
+  -fx-border-radius: 16;
+  -fx-border-color: #eef2f7;
+  -fx-border-width: 1;
+  -fx-padding: 14 16;
+}
+
+.list-row:hover {
+  -fx-background-color: #fffaf5;
+  -fx-border-color: rgba(255, 122, 0, 0.25);
+}
+
+.list-row-title {
+  -fx-text-fill: #111827;
+  -fx-font-size: 13;
+  -fx-font-weight: 900;
+}
+
+.list-row-subtitle {
+  -fx-text-fill: #64748b;
+  -fx-font-size: 12;
+  -fx-font-weight: 600;
+}
+
+.text-soft {
+  -fx-text-fill: #94a3b8;
+  -fx-font-size: 13;
+  -fx-font-weight: 700;
+}
+
+/* PAYMENT TABLE */
+.payment-table-card {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 18;
+  -fx-border-radius: 18;
+  -fx-border-color: #eef2f7;
+  -fx-border-width: 1;
+  -fx-padding: 0;
+}
+
+.payment-table-header {
+  -fx-background-color: #fff7ef;
+  -fx-background-radius: 18 18 0 0;
+  -fx-padding: 15 16;
+  -fx-alignment: center-left;
+}
+
+.payment-th {
+  -fx-text-fill: #475569;
+  -fx-font-size: 12;
+  -fx-font-weight: 900;
+  -fx-max-width: Infinity;
+}
+
+.payment-row {
+  -fx-background-color: #ffffff;
+  -fx-border-color: transparent transparent #eef2f7 transparent;
+  -fx-border-width: 0 0 1 0;
+  -fx-padding: 14 16;
+  -fx-alignment: center-left;
+}
+
+.payment-row:hover {
+  -fx-background-color: #fffaf5;
+}
+
+.payment-td {
+  -fx-text-fill: #334155;
+  -fx-font-size: 13;
+  -fx-font-weight: 600;
+  -fx-max-width: Infinity;
+}
+
+.payment-td-strong {
+  -fx-text-fill: #111827;
+  -fx-font-size: 13;
+  -fx-font-weight: 900;
+  -fx-max-width: Infinity;
+}
+
+/* =====================================================
+   MEMBER CHECK-IN PAGE
+   ===================================================== */
+
+.alert-box {
+  -fx-background-radius: 16;
+  -fx-border-radius: 16;
+  -fx-padding: 14 16;
+  -fx-font-size: 13;
+  -fx-font-weight: 800;
+}
+
+.alert-success {
+  -fx-background-color: #dcfce7;
+  -fx-border-color: #bbf7d0;
+  -fx-border-width: 1;
+  -fx-text-fill: #15803d;
+}
+
+.alert-danger {
+  -fx-background-color: #fee2e2;
+  -fx-border-color: #fecaca;
+  -fx-border-width: 1;
+  -fx-text-fill: #dc2626;
+}
+
+.form-label {
+  -fx-text-fill: #111827;
+  -fx-font-size: 14;
+  -fx-font-weight: 800;
+}
+
+.form-textarea {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #d8dee9;
+  -fx-background-radius: 14;
+  -fx-border-radius: 14;
+  -fx-padding: 10 14;
+  -fx-font-size: 14;
+  -fx-text-fill: #111827;
+  -fx-prompt-text-fill: #94a3b8;
+}
+
+.form-textarea:focused {
+  -fx-border-color: #ff7a00;
+  -fx-effect: dropshadow(gaussian, rgba(255, 122, 0, 0.18), 12, 0.2, 0, 2);
+}
+
+.text-area.form-textarea .content {
+  -fx-background-color: #ffffff;
+}
+
+.form-textarea:disabled {
+  -fx-opacity: 0.72;
+}
+
+.primary-btn:disabled {
+  -fx-opacity: 0.65;
+}
+
+/* =====================================================
+   MEMBER MEMBERSHIP PAGE
+   ===================================================== */
+
+.alert-box {
+  -fx-background-radius: 16;
+  -fx-border-radius: 16;
+  -fx-padding: 14 16;
+  -fx-font-size: 13;
+  -fx-font-weight: 800;
+}
+
+.alert-success {
+  -fx-background-color: #dcfce7;
+  -fx-border-color: #bbf7d0;
+  -fx-border-width: 1;
+  -fx-text-fill: #15803d;
+}
+
+.alert-danger {
+  -fx-background-color: #fee2e2;
+  -fx-border-color: #fecaca;
+  -fx-border-width: 1;
+  -fx-text-fill: #dc2626;
+}
+
+.data-count {
+  -fx-background-color: #fff3e8;
+  -fx-background-radius: 999;
+  -fx-padding: 7 13;
+  -fx-text-fill: #e86600;
+  -fx-font-size: 12;
+  -fx-font-weight: 900;
+}
+
+.package-row {
+  -fx-alignment: stretch;
+}
+
+.membership-package-card {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 22;
+  -fx-border-radius: 22;
+  -fx-border-color: #e5e7eb;
+  -fx-border-width: 1;
+  -fx-padding: 20;
+  -fx-min-width: 210;
+  -fx-pref-width: 260;
+  -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.08), 18, 0.12, 0, 8);
+}
+
+.membership-package-card:hover {
+  -fx-translate-y: -2;
+  -fx-border-color: rgba(255, 122, 0, 0.28);
+  -fx-background-color: linear-gradient(to bottom right, #ffffff, #fffaf5);
+  -fx-effect: dropshadow(gaussian, rgba(255, 122, 0, 0.13), 22, 0.16, 0, 10);
+}
+
+.package-card-title {
+  -fx-text-fill: #111827;
+  -fx-font-size: 22;
+  -fx-font-weight: 900;
+}
+
+.package-card-price {
+  -fx-text-fill: #ff7a00;
+  -fx-font-size: 17;
+  -fx-font-weight: 900;
+}
+
+/* =====================================================
+   MEMBER PAYMENTS PAGE
+   ===================================================== */
+
+.payment-qr-box {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 20;
+  -fx-border-radius: 20;
+  -fx-border-color: #e2e8f0;
+  -fx-border-width: 1;
+  -fx-padding: 18;
+  -fx-min-width: 220;
+  -fx-min-height: 220;
+  -fx-pref-width: 220;
+  -fx-pref-height: 220;
+  -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.08), 16, 0.12, 0, 6);
+}
+
+.qr-text {
+  -fx-text-fill: #111827;
+  -fx-font-size: 42;
+  -fx-font-weight: 900;
+}
+
+.qr-subtext {
+  -fx-text-fill: #94a3b8;
+  -fx-font-size: 12;
+  -fx-font-weight: 800;
+}
+
+.payment-pending-title {
+  -fx-text-fill: #111827;
+  -fx-font-size: 20;
+  -fx-font-weight: 900;
+}
+
+.btn-outline-soft-small {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #fed7aa;
+  -fx-border-width: 1;
+  -fx-text-fill: #f97316;
+  -fx-background-radius: 999;
+  -fx-border-radius: 999;
+  -fx-padding: 6 12;
+  -fx-font-size: 12;
+  -fx-font-weight: 900;
+  -fx-cursor: hand;
+}
+
+.btn-outline-soft-small:hover {
+  -fx-background-color: #fff7ed;
+}
+
+.table-disabled-btn {
+  -fx-background-color: #f8fafc;
+  -fx-border-color: #e2e8f0;
+  -fx-border-width: 1;
+  -fx-text-fill: #94a3b8;
+  -fx-background-radius: 999;
+  -fx-border-radius: 999;
+  -fx-padding: 6 12;
+  -fx-font-size: 12;
+  -fx-font-weight: 800;
+}
+
+/* =====================================================
+   MEMBER WORKOUT PAGE
+   ===================================================== */
+
+.content-scroll {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-padding: 0;
+}
+
+.content-scroll > .viewport {
+  -fx-background-color: transparent;
+}
+
+.content-scroll .scroll-bar:vertical,
+.content-scroll .scroll-bar:horizontal {
+  -fx-background-color: transparent;
+}
+
+.content-scroll .thumb {
+  -fx-background-color: #d6dbe4;
+  -fx-background-radius: 999;
+}
+
+.member-workout-grid {
+  -fx-background-color: transparent;
+  -fx-padding: 4 0 4 0;
+}
+
+.member-workout-card {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 22;
+  -fx-border-radius: 22;
+  -fx-border-color: #e5e7eb;
+  -fx-border-width: 1;
+  -fx-padding: 20;
+  -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.08), 18, 0.12, 0, 8);
+}
+
+.member-workout-card:hover {
+  -fx-translate-y: -2;
+  -fx-border-color: rgba(255, 122, 0, 0.28);
+  -fx-background-color: linear-gradient(to bottom right, #ffffff, #fffaf5);
+  -fx-effect: dropshadow(gaussian, rgba(255, 122, 0, 0.13), 22, 0.16, 0, 10);
+}
+
+.workout-image-placeholder {
+  -fx-background-color: linear-gradient(to bottom right, #fff3e8, #ffffff);
+  -fx-background-radius: 18;
+  -fx-border-radius: 18;
+  -fx-border-color: rgba(255, 122, 0, 0.22);
+  -fx-border-width: 1;
+  -fx-min-height: 175;
+  -fx-pref-height: 175;
+  -fx-max-height: 175;
+  -fx-padding: 0;
+  -fx-alignment: center;
+  -fx-background-insets: 0;
+}
+
+.workout-image-icon {
+  -fx-text-fill: #e86600;
+  -fx-font-size: 44;
+  -fx-font-weight: 900;
+}
+
+.workout-image-text {
+  -fx-text-fill: #94a3b8;
+  -fx-font-size: 12;
+  -fx-font-weight: 800;
+}
+
+.form-label {
+  -fx-text-fill: #111827;
+  -fx-font-size: 14;
+  -fx-font-weight: 800;
+}
+
+.form-control {
+  -fx-pref-height: 44;
+  -fx-background-color: #ffffff;
+  -fx-border-color: #d8dee9;
+  -fx-background-radius: 14;
+  -fx-border-radius: 14;
+  -fx-padding: 0 14;
+  -fx-font-size: 14;
+  -fx-text-fill: #111827;
+  -fx-prompt-text-fill: #94a3b8;
+}
+
+.form-control:focused {
+  -fx-border-color: #ff7a00;
+  -fx-effect: dropshadow(gaussian, rgba(255, 122, 0, 0.18), 12, 0.2, 0, 2);
+}
+
+.combo-box.form-control {
+  -fx-padding: 0;
+}
+
+.primary-btn-small,
+.btn-outline-soft-small {
+  -fx-background-radius: 999;
+  -fx-border-radius: 999;
+  -fx-padding: 7 14;
+  -fx-font-size: 12;
+  -fx-font-weight: 900;
+  -fx-cursor: hand;
+}
+
+.primary-btn-small {
+  -fx-background-color: linear-gradient(to right, #ff7a00, #ff9f45);
+  -fx-text-fill: white;
+  -fx-effect: dropshadow(gaussian, rgba(255, 122, 0, 0.2), 10, 0.1, 0, 3);
+}
+
+.primary-btn-small:hover {
+  -fx-background-color: linear-gradient(to right, #e86f00, #ff8f25);
+}
+
+.btn-outline-soft-small {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #fed7aa;
+  -fx-border-width: 1;
+  -fx-text-fill: #f97316;
+}
+
+.btn-outline-soft-small:hover {
+  -fx-background-color: #fff7ed;
+}
+
+.primary-btn-small:disabled {
+  -fx-opacity: 0.55;
+}
+
+/* =====================================================
+   MEMBER PROFILE PAGE
+   ===================================================== */
+
+.profile-photo-card-java {
+  -fx-alignment: center-left;
+}
+
+.profile-photo-frame {
+  -fx-background-color: linear-gradient(to bottom right, #fff3e8, #ffffff);
+  -fx-background-radius: 999;
+  -fx-border-radius: 999;
+  -fx-border-color: rgba(255, 122, 0, 0.35);
+  -fx-border-width: 2;
+  -fx-min-width: 138;
+  -fx-min-height: 138;
+  -fx-pref-width: 138;
+  -fx-pref-height: 138;
+  -fx-padding: 9;
+  -fx-effect: dropshadow(gaussian, rgba(255, 122, 0, 0.18), 18, 0.12, 0, 8);
+}
+
+.profile-photo-frame .image-view {
+  -fx-background-radius: 999;
+}
+
+.alert-box {
+  -fx-background-radius: 16;
+  -fx-border-radius: 16;
+  -fx-padding: 14 16;
+  -fx-font-size: 13;
+  -fx-font-weight: 800;
+}
+
+.alert-success {
+  -fx-background-color: #dcfce7;
+  -fx-border-color: #bbf7d0;
+  -fx-border-width: 1;
+  -fx-text-fill: #15803d;
+}
+
+.alert-danger {
+  -fx-background-color: #fee2e2;
+  -fx-border-color: #fecaca;
+  -fx-border-width: 1;
+  -fx-text-fill: #dc2626;
+}
+
+/* MEMBER PAYMENTS PAGE */
+
+.payment-qr-box {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 20;
+  -fx-border-radius: 20;
+  -fx-border-color: #e2e8f0;
+  -fx-border-width: 1;
+  -fx-padding: 18;
+  -fx-min-width: 220;
+  -fx-min-height: 220;
+  -fx-pref-width: 220;
+  -fx-pref-height: 220;
+  -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.08), 16, 0.12, 0, 6);
+}
+
+.qr-subtext {
+  -fx-text-fill: #94a3b8;
+  -fx-font-size: 12;
+  -fx-font-weight: 800;
+}
+
+.payment-pending-title {
+  -fx-text-fill: #111827;
+  -fx-font-size: 20;
+  -fx-font-weight: 900;
+}
+
+.btn-outline-soft-small {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #fed7aa;
+  -fx-border-width: 1;
+  -fx-text-fill: #f97316;
+  -fx-background-radius: 999;
+  -fx-border-radius: 999;
+  -fx-padding: 6 12;
+  -fx-font-size: 12;
+  -fx-font-weight: 900;
+  -fx-cursor: hand;
+}
+
+.btn-outline-soft-small:hover {
+  -fx-background-color: #fff7ed;
+}
+
+.table-disabled-btn {
+  -fx-background-color: #f8fafc;
+  -fx-border-color: #e2e8f0;
+  -fx-border-width: 1;
+  -fx-text-fill: #94a3b8;
+  -fx-background-radius: 999;
+  -fx-border-radius: 999;
+  -fx-padding: 6 12;
+  -fx-font-size: 12;
+  -fx-font-weight: 800;
+}
+
+.alert-box {
+  -fx-background-radius: 16;
+  -fx-border-radius: 16;
+  -fx-padding: 14 16;
+  -fx-font-size: 13;
+  -fx-font-weight: 800;
+}
+
+.alert-success {
+  -fx-background-color: #dcfce7;
+  -fx-border-color: #bbf7d0;
+  -fx-border-width: 1;
+  -fx-text-fill: #15803d;
+}
+
+.alert-danger {
+  -fx-background-color: #fee2e2;
+  -fx-border-color: #fecaca;
+  -fx-border-width: 1;
+  -fx-text-fill: #dc2626;
+}

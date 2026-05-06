@@ -1,68 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<!--
-  MemberDashboard.fxml - Konten halaman Dashboard Member.
-  CONTENT-ONLY: tidak mengandung sidebar atau topbar.
-  Di-load ke dalam LayoutTop.fxml contentArea secara dinamis.
--->
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="member.dashboard.MemberDashboardController"
-      spacing="22"
-      styleClass="content">
+      stylesheets="@../../assets/css/style.css"
+      styleClass="member-dashboard-page"
+      spacing="22">
+
     <padding>
         <Insets top="8" right="4" bottom="16" left="4"/>
     </padding>
 
-    <!-- Greeting -->
-    <HBox alignment="CENTER_LEFT">
-        <VBox spacing="4">
-            <Label fx:id="greetingLabel" text="Halo, Member 👋" styleClass="page-title"/>
-            <Label text="Selamat datang di dashboard GYMBRUT" styleClass="page-subtitle"/>
+    <!-- HERO -->
+    <HBox styleClass="dashboard-hero" spacing="20">
+        <VBox spacing="10" HBox.hgrow="ALWAYS">
+            <Label text="♡ Member Overview" styleClass="banner-pill"/>
+            <Label fx:id="greetingLabel"
+                   text="Halo, Member 👋"
+                   styleClass="hero-title"/>
+            <Label text="Pantau membership, pembayaran, check-in, dan progress latihan kamu dari satu dashboard."
+                   wrapText="true"
+                   styleClass="hero-desc"/>
+        </VBox>
+
+        <VBox styleClass="dashboard-hero-card" spacing="7">
+            <Label text="Status Membership" styleClass="hero-card-label"/>
+            <Label fx:id="heroMembershipStatusLabel"
+                   text="Pending"
+                   styleClass="hero-card-value"/>
+            <Label fx:id="heroMembershipPackageLabel"
+                   text="Belum Ada"
+                   styleClass="hero-card-sub"/>
         </VBox>
     </HBox>
 
-    <!-- Stat Cards -->
+    <!-- QUICK STATS -->
+<HBox spacing="18" styleClass="stats-row">
+    <VBox styleClass="stat-card stat-card-modern" spacing="8" HBox.hgrow="ALWAYS">
+        <Label text="Membership" styleClass="stat-label"/>
+        <Label fx:id="membershipPackageLabel"
+               text="Belum Ada"
+               styleClass="stat-value-small"/>
+        <Label fx:id="membershipMetaLabel"
+               text="Status: Pending • sampai -"
+               wrapText="true"
+               styleClass="stat-desc"/>
+    </VBox>
+
+    <VBox styleClass="stat-card stat-card-modern" spacing="8" HBox.hgrow="ALWAYS">
+        <Label text="Check-in Bulan Ini" styleClass="stat-label"/>
+        <Label fx:id="checkinMonthLabel"
+               text="0x"
+               styleClass="stat-value"/>
+        <Label text="Aktivitas gym bulan berjalan"
+               wrapText="true"
+               styleClass="stat-desc"/>
+    </VBox>
+
+    <VBox styleClass="stat-card stat-card-modern" spacing="8" HBox.hgrow="ALWAYS">
+        <Label text="Berat Saat Ini" styleClass="stat-label"/>
+        <Label fx:id="weightLabel"
+               text="0,0 kg"
+               styleClass="stat-value"/>
+        <Label fx:id="progressMetaLabel"
+               text="Belum ada progress"
+               wrapText="true"
+               styleClass="stat-desc"/>
+    </VBox>
+
+    <VBox styleClass="stat-card stat-card-modern" spacing="8" HBox.hgrow="ALWAYS">
+        <Label text="Pembayaran Terakhir" styleClass="stat-label"/>
+        <Label fx:id="lastPaymentAmountLabel"
+               text="Rp0"
+               styleClass="stat-value-small"/>
+        <Label fx:id="lastPaymentMetaLabel"
+               text="Pending pada -"
+               wrapText="true"
+               styleClass="stat-desc"/>
+    </VBox>
+</HBox>
+    <!-- MEMBERSHIP + WORKOUT -->
     <HBox spacing="18">
-        <VBox styleClass="stat-card" spacing="8" HBox.hgrow="ALWAYS">
-            <Label text="Status Membership" styleClass="stat-label"/>
-            <Label text="Aktif" styleClass="stat-value"/>
-            <Label text="Berlaku sampai 30 hari lagi" styleClass="stat-desc"/>
+        <VBox styleClass="premium-card" spacing="16" HBox.hgrow="ALWAYS">
+            <HBox styleClass="card-header-inline">
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Ringkasan Membership" styleClass="section-title"/>
+                    <Label text="Detail paket membership kamu saat ini."
+                           styleClass="section-subtitle"/>
+                </VBox>
+
+                <Label fx:id="membershipStatusBadge"
+                       text="Pending"
+                       styleClass="badge-soft badge-pending"/>
+            </HBox>
+
+            <VBox styleClass="metric-list" spacing="0">
+                <HBox styleClass="metric-row">
+                    <Label text="Paket" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="summaryPackageLabel" text="Belum Ada" styleClass="metric-value"/>
+                </HBox>
+
+                <HBox styleClass="metric-row">
+                    <Label text="Status" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="summaryStatusLabel" text="Pending" styleClass="metric-value"/>
+                </HBox>
+
+                <HBox styleClass="metric-row">
+                    <Label text="Berakhir" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="summaryEndDateLabel" text="-" styleClass="metric-value"/>
+                </HBox>
+
+                <HBox styleClass="metric-row">
+                    <Label text="Harga Paket" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="summaryPriceLabel" text="Rp0" styleClass="metric-value"/>
+                </HBox>
+            </VBox>
         </VBox>
 
-        <VBox styleClass="stat-card" spacing="8" HBox.hgrow="ALWAYS">
-            <Label text="Kunjungan Bulan Ini" styleClass="stat-label"/>
-            <Label text="12x" styleClass="stat-value"/>
-            <Label text="Target 20x kunjungan" styleClass="stat-desc"/>
-        </VBox>
+        <VBox styleClass="premium-card" spacing="16" HBox.hgrow="ALWAYS">
+            <HBox styleClass="card-header-inline">
+                <VBox spacing="4">
+                    <Label text="Workout Terbaru" styleClass="section-title"/>
+                    <Label text="Data latihan dari database workout."
+                           styleClass="section-subtitle"/>
+                </VBox>
+            </HBox>
 
-        <VBox styleClass="stat-card" spacing="8" HBox.hgrow="ALWAYS">
-            <Label text="Kelas Terjadwal" styleClass="stat-label"/>
-            <Label text="3" styleClass="stat-value"/>
-            <Label text="Minggu ini" styleClass="stat-desc"/>
+            <VBox fx:id="workoutListContainer"
+                  styleClass="card-list"
+                  spacing="10"/>
         </VBox>
     </HBox>
 
-    <!-- Panels -->
-    <HBox spacing="18" VBox.vgrow="ALWAYS">
-        <VBox styleClass="panel-card" spacing="14" HBox.hgrow="ALWAYS">
-            <Label text="Jadwal Latihan Hari Ini" styleClass="section-title"/>
-            <Label text="• 08:00 - Cardio Session" styleClass="list-text"/>
-            <Label text="• 16:00 - Strength Training" styleClass="list-text"/>
-            <Label text="• 19:00 - Yoga Class" styleClass="list-text"/>
-        </VBox>
+    <!-- PAYMENT HISTORY -->
+    <VBox styleClass="premium-card" spacing="16">
+        <HBox styleClass="card-header-inline">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="Riwayat Pembayaran Terakhir" styleClass="section-title"/>
+                <Label text="Status pembayaran membership terbaru kamu."
+                       styleClass="section-subtitle"/>
+            </VBox>
 
-        <VBox styleClass="panel-card" spacing="14" HBox.hgrow="ALWAYS">
-            <Label text="Progress Singkat" styleClass="section-title"/>
-            <Label text="Berat badan: 68 kg" styleClass="list-text"/>
-            <Label text="Kalori terbakar: 4.250 kcal" styleClass="list-text"/>
-            <Label text="Durasi latihan: 14 jam" styleClass="list-text"/>
-            <Button text="Lihat Detail" styleClass="small-orange-btn"/>
+            <Label fx:id="paymentStatusBadge"
+                   text="Pending"
+                   styleClass="badge-soft badge-pending"/>
+        </HBox>
+
+        <VBox styleClass="payment-table-card" spacing="0">
+            <HBox styleClass="payment-table-header">
+                <Label text="Invoice" styleClass="payment-th" HBox.hgrow="ALWAYS"/>
+                <Label text="Paket" styleClass="payment-th" HBox.hgrow="ALWAYS"/>
+                <Label text="Nominal" styleClass="payment-th" HBox.hgrow="ALWAYS"/>
+                <Label text="Status" styleClass="payment-th" HBox.hgrow="ALWAYS"/>
+                <Label text="Tanggal" styleClass="payment-th" HBox.hgrow="ALWAYS"/>
+            </HBox>
+
+            <VBox fx:id="paymentRowsContainer"/>
         </VBox>
-    </HBox>
+    </VBox>
+
 </VBox>

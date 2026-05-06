@@ -1,12 +1,348 @@
-<VBox spacing="10" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="member.profile.MemberProfileController">
+<?xml version="1.0" encoding="UTF-8"?>
 
-    <Label text="Profile Member" />
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-    <TextField fx:id="nameField" promptText="Nama"/>
-    <TextField fx:id="emailField" promptText="Email"/>
-    <PasswordField fx:id="passwordField" promptText="Password"/>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="member.profile.MemberProfileController"
+      stylesheets="@../../assets/css/style.css"
+      styleClass="member-dashboard-page"
+      spacing="22">
 
-    <Button text="Update Profile" onAction="#handleUpdate"/>
+    <!-- HERO -->
+    <HBox styleClass="dashboard-hero" spacing="20">
+        <VBox spacing="10" HBox.hgrow="ALWAYS">
+            <Label text="👤 Member Profile" styleClass="banner-pill"/>
+            <Label text="Profile Saya" styleClass="hero-title"/>
+            <Label text="Kelola data akun, informasi tubuh, dan target fitness agar sistem bisa menampilkan progress yang lebih sesuai."
+                   wrapText="true"
+                   styleClass="hero-desc"/>
+        </VBox>
+
+        <VBox styleClass="dashboard-hero-card" spacing="7">
+            <Label text="Kelengkapan Profile" styleClass="hero-card-label"/>
+            <Label fx:id="completionLabel"
+                   text="0%"
+                   styleClass="hero-card-value"/>
+            <Label fx:id="completionNameLabel"
+                   text="Member"
+                   styleClass="hero-card-sub"/>
+        </VBox>
+    </HBox>
+
+    <Label fx:id="messageLabel"
+           text=""
+           managed="false"
+           visible="false"
+           styleClass="alert-box"/>
+
+    <!-- PHOTO CARD -->
+    <HBox styleClass="premium-card profile-photo-card-java" spacing="18">
+        <VBox styleClass="profile-photo-frame" alignment="CENTER">
+            <ImageView fx:id="photoImageView"
+                       fitWidth="120"
+                       fitHeight="120"
+                       preserveRatio="false"/>
+        </VBox>
+
+        <VBox spacing="8" HBox.hgrow="ALWAYS">
+            <Label fx:id="profileNameTitleLabel"
+                   text="Member"
+                   styleClass="section-title"/>
+
+            <Label fx:id="profileEmailTitleLabel"
+                   text="-"
+                   styleClass="section-subtitle"/>
+
+            <HBox spacing="10">
+                <Button text="Pilih Foto"
+                        onAction="#handleChoosePhoto"
+                        styleClass="light-btn"/>
+
+                <Button text="Simpan Foto"
+                        onAction="#handleSavePhoto"
+                        styleClass="primary-btn"/>
+            </HBox>
+
+            <Label text="Format JPG, PNG, JPEG, atau WEBP. Ukuran maksimal 2MB."
+                   wrapText="true"
+                   styleClass="text-soft"/>
+        </VBox>
+    </HBox>
+
+    <!-- STATS -->
+    <HBox spacing="18" styleClass="stats-row">
+        <VBox styleClass="stat-card stat-card-modern" spacing="8" HBox.hgrow="ALWAYS">
+            <Label text="Nama Member" styleClass="stat-label"/>
+            <Label fx:id="statNameLabel"
+                   text="-"
+                   wrapText="true"
+                   styleClass="stat-value-small"/>
+            <Label fx:id="statEmailLabel"
+                   text="-"
+                   wrapText="true"
+                   styleClass="stat-desc"/>
+        </VBox>
+
+        <VBox styleClass="stat-card stat-card-modern" spacing="8" HBox.hgrow="ALWAYS">
+            <Label text="Target Fitness" styleClass="stat-label"/>
+            <Label fx:id="statTargetLabel"
+                   text="-"
+                   wrapText="true"
+                   styleClass="stat-value-small"/>
+            <Label text="Tujuan latihan utama"
+                   styleClass="stat-desc"/>
+        </VBox>
+
+        <VBox styleClass="stat-card stat-card-modern" spacing="8" HBox.hgrow="ALWAYS">
+            <Label text="BMI" styleClass="stat-label"/>
+            <Label fx:id="statBmiLabel"
+                   text="-"
+                   styleClass="stat-value-small"/>
+            <Label fx:id="statBmiStatusLabel"
+                   text="-"
+                   styleClass="stat-desc"/>
+        </VBox>
+
+        <VBox styleClass="stat-card stat-card-modern" spacing="8" HBox.hgrow="ALWAYS">
+            <Label text="Bergabung" styleClass="stat-label"/>
+            <Label fx:id="statCreatedLabel"
+                   text="-"
+                   styleClass="stat-value-small"/>
+            <Label text="Tanggal akun dibuat"
+                   styleClass="stat-desc"/>
+        </VBox>
+    </HBox>
+
+    <!-- EDIT PROFILE + SUMMARY -->
+    <HBox spacing="18">
+        <VBox styleClass="premium-card" spacing="16" HBox.hgrow="ALWAYS">
+            <HBox styleClass="card-header-inline">
+                <VBox spacing="4">
+                    <Label text="Edit Profile" styleClass="section-title"/>
+                    <Label text="Perbarui informasi pribadi dan data fitness kamu."
+                           styleClass="section-subtitle"/>
+                </VBox>
+            </HBox>
+
+            <GridPane hgap="16" vgap="14">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50"/>
+                    <ColumnConstraints percentWidth="50"/>
+                </columnConstraints>
+
+                <VBox spacing="7" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label text="Nama Lengkap" styleClass="form-label"/>
+                    <TextField fx:id="nameField"
+                               promptText="Nama lengkap"
+                               styleClass="form-control"/>
+                </VBox>
+
+                <VBox spacing="7" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Label text="Email" styleClass="form-label"/>
+                    <TextField fx:id="emailField"
+                               promptText="Email"
+                               styleClass="form-control"/>
+                </VBox>
+
+                <VBox spacing="7" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Label text="No. Telepon" styleClass="form-label"/>
+                    <TextField fx:id="phoneField"
+                               promptText="Contoh: 08123456789"
+                               styleClass="form-control"/>
+                </VBox>
+
+                <VBox spacing="7" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Label text="Gender" styleClass="form-label"/>
+                    <ComboBox fx:id="genderCombo"
+                              maxWidth="Infinity"
+                              styleClass="form-control"/>
+                </VBox>
+
+                <VBox spacing="7" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <Label text="Umur" styleClass="form-label"/>
+                    <TextField fx:id="ageField"
+                               promptText="Contoh: 21"
+                               styleClass="form-control"/>
+                </VBox>
+
+                <VBox spacing="7" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <Label text="Tinggi Badan (cm)" styleClass="form-label"/>
+                    <TextField fx:id="heightField"
+                               promptText="Contoh: 170"
+                               styleClass="form-control"/>
+                </VBox>
+
+                <VBox spacing="7" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                    <Label text="Berat Badan (kg)" styleClass="form-label"/>
+                    <TextField fx:id="weightField"
+                               promptText="Contoh: 65"
+                               styleClass="form-control"/>
+                </VBox>
+
+                <VBox spacing="7" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <Label text="Target Fitness" styleClass="form-label"/>
+                    <ComboBox fx:id="targetCombo"
+                              maxWidth="Infinity"
+                              styleClass="form-control"/>
+                </VBox>
+            </GridPane>
+
+            <Button text="Simpan Profile"
+                    onAction="#handleSaveProfile"
+                    styleClass="primary-btn"/>
+        </VBox>
+
+        <VBox styleClass="premium-card" spacing="16" prefWidth="430">
+            <HBox styleClass="card-header-inline">
+                <VBox spacing="4">
+                    <Label text="Ringkasan Data" styleClass="section-title"/>
+                    <Label text="Informasi singkat dari profile kamu."
+                           styleClass="section-subtitle"/>
+                </VBox>
+            </HBox>
+
+            <VBox styleClass="metric-list" spacing="0">
+                <HBox styleClass="metric-row">
+                    <Label text="Nama" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="summaryNameLabel" text="-" styleClass="metric-value"/>
+                </HBox>
+
+                <HBox styleClass="metric-row">
+                    <Label text="Email" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="summaryEmailLabel" text="-" styleClass="metric-value"/>
+                </HBox>
+
+                <HBox styleClass="metric-row">
+                    <Label text="Telepon" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="summaryPhoneLabel" text="-" styleClass="metric-value"/>
+                </HBox>
+
+                <HBox styleClass="metric-row">
+                    <Label text="Gender" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="summaryGenderLabel" text="-" styleClass="metric-value"/>
+                </HBox>
+
+                <HBox styleClass="metric-row">
+                    <Label text="Umur" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="summaryAgeLabel" text="-" styleClass="metric-value"/>
+                </HBox>
+
+                <HBox styleClass="metric-row">
+                    <Label text="Tinggi" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="summaryHeightLabel" text="-" styleClass="metric-value"/>
+                </HBox>
+
+                <HBox styleClass="metric-row">
+                    <Label text="Berat" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="summaryWeightLabel" text="-" styleClass="metric-value"/>
+                </HBox>
+
+                <HBox styleClass="metric-row">
+                    <Label text="Target" styleClass="metric-label"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="summaryTargetLabel" text="-" styleClass="metric-value"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </HBox>
+
+    <!-- PASSWORD + NOTES -->
+    <HBox spacing="18">
+        <VBox styleClass="premium-card" spacing="16" HBox.hgrow="ALWAYS">
+            <HBox styleClass="card-header-inline">
+                <VBox spacing="4">
+                    <Label text="Ubah Password" styleClass="section-title"/>
+                    <Label text="Gunakan password minimal 6 karakter."
+                           styleClass="section-subtitle"/>
+                </VBox>
+            </HBox>
+
+            <VBox spacing="12">
+                <VBox spacing="7">
+                    <Label text="Password Lama" styleClass="form-label"/>
+                    <PasswordField fx:id="oldPasswordField"
+                                   promptText="Masukkan password lama"
+                                   styleClass="form-control"/>
+                </VBox>
+
+                <VBox spacing="7">
+                    <Label text="Password Baru" styleClass="form-label"/>
+                    <PasswordField fx:id="newPasswordField"
+                                   promptText="Masukkan password baru"
+                                   styleClass="form-control"/>
+                </VBox>
+
+                <VBox spacing="7">
+                    <Label text="Konfirmasi Password" styleClass="form-label"/>
+                    <PasswordField fx:id="confirmPasswordField"
+                                   promptText="Ulangi password baru"
+                                   styleClass="form-control"/>
+                </VBox>
+            </VBox>
+
+            <Button text="Update Password"
+                    onAction="#handleUpdatePassword"
+                    styleClass="primary-btn"/>
+        </VBox>
+
+        <VBox styleClass="premium-card" spacing="16" HBox.hgrow="ALWAYS">
+            <HBox styleClass="card-header-inline">
+                <VBox spacing="4">
+                    <Label text="Catatan Profile" styleClass="section-title"/>
+                    <Label text="Saran agar data member lebih rapi."
+                           styleClass="section-subtitle"/>
+                </VBox>
+            </HBox>
+
+            <VBox styleClass="card-list" spacing="10">
+                <HBox styleClass="list-row">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Lengkapi data tubuh" styleClass="list-row-title"/>
+                        <Label text="Tinggi dan berat badan dipakai untuk menghitung BMI."
+                               wrapText="true"
+                               styleClass="list-row-subtitle"/>
+                    </VBox>
+                    <Label text="Info" styleClass="badge-soft badge-info"/>
+                </HBox>
+
+                <HBox styleClass="list-row">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Sesuaikan target fitness" styleClass="list-row-title"/>
+                        <Label text="Target membantu member memilih workout yang sesuai."
+                               wrapText="true"
+                               styleClass="list-row-subtitle"/>
+                    </VBox>
+                    <Label text="Tips" styleClass="badge-soft badge-pending"/>
+                </HBox>
+
+                <HBox styleClass="list-row">
+                    <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label text="Gunakan password yang aman" styleClass="list-row-title"/>
+                        <Label text="Minimal 6 karakter dan jangan mudah ditebak."
+                               wrapText="true"
+                               styleClass="list-row-subtitle"/>
+                    </VBox>
+                    <Label text="Aman" styleClass="badge-soft badge-active"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </HBox>
 
 </VBox>

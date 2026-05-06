@@ -9,77 +9,86 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<!--
-  SidebarMember.fxml - Navigasi sidebar untuk role Member.
-  Menampilkan brand, menu navigasi member, dan footer logout.
--->
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="includes.SidebarMemberController"
       styleClass="sidebar"
       spacing="6">
 
-    <!-- Brand / Logo -->
-    <HBox styleClass="sidebar-brand">
-        <ImageView fitWidth="46" fitHeight="46"
+    <!-- BRAND -->
+    <HBox styleClass="sidebar-brand" spacing="12">
+        <ImageView fitWidth="46"
+                   fitHeight="46"
                    preserveRatio="true"
                    styleClass="sidebar-logo-img">
             <image>
-                <Image url="@../assets/img/logo-g.png" />
+                <Image url="@../assets/image/logo-gymbrut.png"/>
             </image>
         </ImageView>
-        <VBox>
-            <Label text="GYMBRUT" styleClass="brand-title" />
-            <Label text="MEMBER AREA" styleClass="brand-subtitle" />
+
+        <VBox spacing="2">
+            <Label text="GYMBRUT" styleClass="brand-title"/>
+            <Label text="MEMBER PANEL" styleClass="brand-subtitle"/>
         </VBox>
     </HBox>
 
-    <Separator />
+    <Separator/>
 
-    <!-- Section Title -->
-    <Label text="MENU" styleClass="sidebar-title" />
+    <Label text="MAIN MENU" styleClass="sidebar-title"/>
 
-    <!-- Navigation Links -->
-    <VBox styleClass="sidebar-nav">
+    <!-- MENU -->
+    <VBox styleClass="sidebar-nav" spacing="6">
         <Button fx:id="btnDashboard"
                 text="▦   Dashboard"
                 onAction="#navigateDashboard"
-                styleClass="sidebar-link-active" />
-        <Button fx:id="btnWorkout"
-                text="🔥  Jadwal Latihan"
-                onAction="#navigateWorkout"
-                styleClass="sidebar-link" />
+                maxWidth="Infinity"
+                styleClass="sidebar-link-active"/>
+
         <Button fx:id="btnMembership"
-                text="▤   Membership"
+                text="🏆  Membership"
                 onAction="#navigateMembership"
-                styleClass="sidebar-link" />
-        <Button fx:id="btnCheckin"
-                text="📍  Check-in"
-                onAction="#navigateCheckin"
-                styleClass="sidebar-link" />
+                maxWidth="Infinity"
+                styleClass="sidebar-link"/>
+
         <Button fx:id="btnPayments"
-                text="💳  Pembayaran"
+                text="💳  Payments"
                 onAction="#navigatePayments"
-                styleClass="sidebar-link" />
-        <Button fx:id="btnNotifications"
-                text="🔔  Notifikasi"
-                onAction="#navigateNotifications"
-                styleClass="sidebar-link" />
+                maxWidth="Infinity"
+                styleClass="sidebar-link"/>
+
+        <Button fx:id="btnCheckin"
+                text="↪  Check In"
+                onAction="#navigateCheckin"
+                maxWidth="Infinity"
+                styleClass="sidebar-link"/>
+
+        <Button fx:id="btnWorkouts"
+                text="⚡  Workouts"
+                onAction="#navigateWorkouts"
+                maxWidth="Infinity"
+                styleClass="sidebar-link"/>
+
         <Button fx:id="btnProfile"
-                text="👤  Profil"
+                text="👤  Profile"
                 onAction="#navigateProfile"
-                styleClass="sidebar-link" />
+                maxWidth="Infinity"
+                styleClass="sidebar-link"/>
     </VBox>
 
-    <!-- Spacer -->
-    <Region VBox.vgrow="ALWAYS" />
+    <Region VBox.vgrow="ALWAYS"/>
 
-    <!-- Footer -->
-    <VBox styleClass="sidebar-footer">
-        <Label fx:id="memberNameLabel" text="Member" styleClass="sidebar-user-name" />
-        <Label text="Member" styleClass="sidebar-user-role" />
+    <!-- FOOTER -->
+    <VBox styleClass="sidebar-footer" spacing="8">
+        <Label fx:id="memberNameLabel"
+               text="Member"
+               styleClass="sidebar-user-name"/>
+
+        <Label text="Gym Member"
+               styleClass="sidebar-user-role"/>
+
         <Button text="↪  Logout"
                 onAction="#handleLogout"
-                styleClass="logout-btn" />
+                maxWidth="Infinity"
+                styleClass="logout-btn"/>
     </VBox>
 
 </VBox>
