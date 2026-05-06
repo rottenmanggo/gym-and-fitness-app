@@ -18,12 +18,6 @@ import shared.AlertHelper;
 import shared.SceneManager;
 import shared.Session;
 
-/**
- * MemberController - Controller untuk konten Data Member (Admin).
- *
- * Menangani CRUD member dan tabel. Navigasi sidebar/logout
- * ditangani oleh SidebarAdminController via LayoutTopController.
- */
 public class MemberController {
 
     @FXML
