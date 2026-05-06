@@ -1,0 +1,10 @@
+<VBox spacing="15" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="member.checkin.CheckinController">
+
+    <Label text="Check-in Harian" />
+
+    <Label fx:id="statusLabel" text="Status" />
+
+    <Button text="Check-in Sekarang" onAction="#handleCheckin"/>
+
+</VBox>
