@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -13,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import shared.AlertHelper;
 import shared.SceneManager;
 import shared.Session;
+import javafx.scene.control.TableCell;
 
 public class MemberController {
 
@@ -46,14 +48,14 @@ public class MemberController {
     private final MemberService memberService = new MemberService();
 
     @FXML
-public void initialize() {
-    setupTable();
-    loadMembers();
+    public void initialize() {
+        setupTable();
+        loadMembers();
 
-    searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-        handleSearch();
-    });
-}
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            handleSearch();
+        });
+    }
 
     private void setupTable() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -62,6 +64,47 @@ public void initialize() {
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         membershipColumn.setCellValueFactory(new PropertyValueFactory<>("membership"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        statusColumn.setCellFactory(column -> new TableCell<Member, String>() {
+            @Override
+            protected void updateItem(String status, boolean empty) {
+                super.updateItem(status, empty);
+
+                if (empty || status == null) {
+                    setGraphic(null);
+                    setText(null);
+                    return;
+                }
+
+                Label badge = new Label();
+
+                switch (status.toLowerCase()) {
+                    case "aktif" -> {
+                        badge.setText("Aktif");
+                        badge.getStyleClass().add("status-active");
+                    }
+
+                    case "pending" -> {
+                        badge.setText("Pending");
+                        badge.getStyleClass().add("status-pending");
+                    }
+
+                    case "expired" -> {
+                        badge.setText("Expired");
+                        badge.getStyleClass().add("status-expired");
+                    }
+
+                    default -> {
+                        badge.setText(status);
+                        badge.getStyleClass().add("status-default");
+                    }
+                }
+
+                setGraphic(badge);
+                setText(null);
+            }
+        });
+
     }
 
     private void loadMembers() {
