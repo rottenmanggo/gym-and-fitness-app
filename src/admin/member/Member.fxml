@@ -5,121 +5,82 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.Region?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="admin.member.MemberController"
-            stylesheets="@member.css"
-            prefWidth="1280"
-            prefHeight="760"
-            styleClass="app-shell">
+<!--
+  Member.fxml - Konten halaman Data Member (Admin).
+  CONTENT-ONLY: tidak mengandung sidebar atau topbar.
+  Di-load ke dalam LayoutTop.fxml contentArea secara dinamis.
+-->
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="admin.member.MemberController"
+      stylesheets="@member.css"
+      styleClass="main-content"
+      spacing="18">
 
-    <left>
-        <VBox styleClass="sidebar">
-
-            <HBox styleClass="sidebar-brand">
-                <Label text="⚡" styleClass="sidebar-brand-logo" />
-                <VBox>
-                    <Label text="GYMBRUT" styleClass="brand-title" />
-                    <Label text="ADMIN PANEL" styleClass="brand-subtitle" />
-                </VBox>
-            </HBox>
-
-            <Label text="MAIN MENU" styleClass="sidebar-title" />
-
-            <VBox styleClass="sidebar-nav">
-                <Button text="▦   Dashboard" onAction="#openDashboard" styleClass="sidebar-link" />
-                <Button text="👥  Members" styleClass="sidebar-link-active" />
-                <Button text="▤   Memberships" styleClass="sidebar-link" />
-                <Button text="💳  Payments" styleClass="sidebar-link" />
-                <Button text="📊  Reports" styleClass="sidebar-link" />
-                <Button text="🔥  Workouts" styleClass="sidebar-link" />
-            </VBox>
-
-            <VBox styleClass="sidebar-footer">
-                <Label text="Admin" styleClass="sidebar-user-name" />
-                <Button text="↪  Logout" onAction="#handleLogout" styleClass="logout-btn" />
-            </VBox>
-
+    <!-- Hero Banner -->
+    <HBox styleClass="page-hero">
+        <VBox styleClass="hero-left">
+            <Label text="👥  Member Management" styleClass="banner-pill" />
+            <Label text="Kelola semua member gym." styleClass="hero-title" />
+            <Label text="Tambah, ubah, hapus, dan pantau status membership member."
+                   wrapText="true"
+                   styleClass="hero-desc" />
         </VBox>
-    </left>
 
-    <center>
-        <VBox styleClass="main-content">
-
-            <HBox styleClass="topbar">
-                <VBox>
-                    <Label text="Data Members" styleClass="topbar-title" />
-                    <Label text="Kelola data member GYMBRUT." styleClass="topbar-subtitle" />
-                </VBox>
-            </HBox>
-
-            <HBox styleClass="page-hero">
-                <VBox styleClass="hero-left">
-                    <Label text="👥  Member Management" styleClass="banner-pill" />
-                    <Label text="Kelola semua member gym." styleClass="hero-title" />
-                    <Label text="Tambah, ubah, hapus, dan pantau status membership member."
-                           wrapText="true"
-                           styleClass="hero-desc" />
-                </VBox>
-
-                <Button text="+ Tambah Member"
-                        onAction="#openAddMember"
-                        styleClass="primary-btn" />
-            </HBox>
-
-
-            <VBox styleClass="table-card">
-    <HBox styleClass="table-header">
-        <HBox alignment="CENTER_LEFT" spacing="14">
-            <Label text="Daftar Member" styleClass="section-title" />
-            <Label fx:id="totalDataLabel"
-                   text="0 data"
-                   styleClass="data-count" />
-        </HBox>
-
-        <Region HBox.hgrow="ALWAYS" />
-
-        <HBox spacing="10" alignment="CENTER_RIGHT">
-            <TextField fx:id="searchField"
-                       promptText="Cari nama, email, membership..."
-                       styleClass="search-input" />
-
-            <Button text="Cari"
-                    onAction="#handleSearch"
-                    styleClass="secondary-btn" />
-
-            <Button text="Reset"
-                    onAction="#handleReset"
-                    styleClass="light-btn" />
-        </HBox>
+        <Button text="+ Tambah Member"
+                onAction="#openAddMember"
+                styleClass="primary-btn" />
     </HBox>
 
-    <TableView fx:id="memberTable" prefHeight="520" styleClass="member-table">
-        <columns>
-            <TableColumn fx:id="idColumn" text="ID" prefWidth="60" />
-<TableColumn fx:id="nameColumn" text="Nama" prefWidth="220" />
-<TableColumn fx:id="emailColumn" text="Email" prefWidth="260" />
-<TableColumn fx:id="phoneColumn" text="No HP" prefWidth="180" />
-<TableColumn fx:id="membershipColumn" text="Membership" prefWidth="170" />
-<TableColumn fx:id="statusColumn" text="Status" prefWidth="150" />
-        </columns>
-    </TableView>
+    <!-- Table Card -->
+    <VBox styleClass="table-card">
+        <HBox styleClass="table-header">
+            <HBox alignment="CENTER_LEFT" spacing="14">
+                <Label text="Daftar Member" styleClass="section-title" />
+                <Label fx:id="totalDataLabel"
+                       text="0 data"
+                       styleClass="data-count" />
+            </HBox>
 
-    <HBox styleClass="action-row">
-        <Button text="Edit Member"
-                onAction="#openEditMember"
-                styleClass="warning-btn" />
+            <Region HBox.hgrow="ALWAYS" />
 
-        <Button text="Hapus Member"
-                onAction="#handleDeleteMember"
-                styleClass="danger-btn" />
-    </HBox>
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <TextField fx:id="searchField"
+                           promptText="Cari nama, email, membership..."
+                           styleClass="search-input" />
+
+                <Button text="Cari"
+                        onAction="#handleSearch"
+                        styleClass="secondary-btn" />
+
+                <Button text="Reset"
+                        onAction="#handleReset"
+                        styleClass="light-btn" />
+            </HBox>
+        </HBox>
+
+        <TableView fx:id="memberTable" prefHeight="520" styleClass="member-table">
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID" prefWidth="60" />
+                <TableColumn fx:id="nameColumn" text="Nama" prefWidth="220" />
+                <TableColumn fx:id="emailColumn" text="Email" prefWidth="260" />
+                <TableColumn fx:id="phoneColumn" text="No HP" prefWidth="180" />
+                <TableColumn fx:id="membershipColumn" text="Membership" prefWidth="170" />
+                <TableColumn fx:id="statusColumn" text="Status" prefWidth="150" />
+            </columns>
+        </TableView>
+
+        <HBox styleClass="action-row">
+            <Button text="Edit Member"
+                    onAction="#openEditMember"
+                    styleClass="warning-btn" />
+
+            <Button text="Hapus Member"
+                    onAction="#handleDeleteMember"
+                    styleClass="danger-btn" />
+        </HBox>
+    </VBox>
 </VBox>
-</VBox>
-    </center>
-
-</BorderPane>

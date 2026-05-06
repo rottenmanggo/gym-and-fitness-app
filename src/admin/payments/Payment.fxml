@@ -4,126 +4,83 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="admin.payments.PaymentController"
-            stylesheets="@payment.css"
-            prefWidth="1280"
-            prefHeight="760"
-            styleClass="app-shell">
+<!--
+  Payment.fxml - Konten halaman Payments (Admin).
+  CONTENT-ONLY: tidak mengandung sidebar atau topbar.
+  Di-load ke dalam LayoutTop.fxml contentArea secara dinamis.
+-->
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="admin.payments.PaymentController"
+      stylesheets="@payment.css"
+      styleClass="main-content"
+      spacing="0">
 
-    <left>
-        <VBox styleClass="sidebar">
+    <!-- CONTENT -->
+    <VBox spacing="24"
+          styleClass="content-body"
+          VBox.vgrow="ALWAYS">
 
-            <HBox styleClass="sidebar-brand">
-                <Label text="⚡" styleClass="sidebar-brand-logo" />
-                <VBox>
-                    <Label text="GYMBRUT" styleClass="brand-title" />
-                    <Label text="ADMIN PANEL" styleClass="brand-subtitle" />
+        <VBox styleClass="payment-card" spacing="22">
+
+            <!-- SECTION HEADER -->
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Data Pembayaran" styleClass="section-title"/>
+                    <Label text="Approve atau reject pembayaran member." styleClass="section-sub"/>
                 </VBox>
+                <TextField fx:id="searchField"
+                           promptText="🔍  Cari invoice atau nama member..."
+                           styleClass="search-field"
+                           prefWidth="300"/>
             </HBox>
 
-            <Label text="MAIN MENU" styleClass="sidebar-title" />
+            <!-- TABLE -->
+            <Label fx:id="statusInfo"
+                   text=""
+                   styleClass="status-info"/>
+            <TableView fx:id="paymentTable" VBox.vgrow="ALWAYS" styleClass="payment-table">
+                <columns>
 
-            <VBox styleClass="sidebar-nav">
-                <Button text="▦   Dashboard" onAction="#openDashboard" styleClass="sidebar-link" />
-                <Button text="👥  Members" onAction="#openMembers" styleClass="sidebar-link" />
-                <Button text="▤   Memberships" styleClass="sidebar-link" />
-                <Button text="💳  Payments" styleClass="sidebar-link-active" />
-                <Button text="📊  Reports" styleClass="sidebar-link" />
-                <Button text="🔥  Workouts" styleClass="sidebar-link" />
-            </VBox>
+                    <TableColumn fx:id="colInvoice"
+                                 text="INVOICE"
+                                 prefWidth="160"/>
 
-            <VBox styleClass="sidebar-footer">
-                <Label text="Admin" styleClass="sidebar-user-name" />
-                <Button text="↪  Logout" onAction="#handleLogout" styleClass="logout-btn" />
-            </VBox>
+                    <TableColumn fx:id="colNama"
+                                 text="MEMBER"
+                                 prefWidth="250"/>
+
+                    <TableColumn fx:id="colPaket"
+                                 text="PAKET"
+                                 prefWidth="150"/>
+
+                    <TableColumn fx:id="colNominal"
+                                 text="NOMINAL"
+                                 prefWidth="180"/>
+
+                    <TableColumn fx:id="colStatus"
+                                 text="STATUS"
+                                 prefWidth="160"/>
+
+                    <TableColumn fx:id="colTanggal"
+                                 text="TANGGAL"
+                                 prefWidth="180"/>
+
+                    <TableColumn fx:id="colBukti"
+                                 text="BUKTI"
+                                 prefWidth="130"/>
+
+                    <TableColumn fx:id="colAksi"
+                                 text="AKSI"
+                                 prefWidth="220"/>
+
+                </columns>
+                <placeholder>
+                    <Label text="Belum ada data pembayaran." styleClass="empty-label"/>
+                </placeholder>
+            </TableView>
 
         </VBox>
-    </left>
 
-    <center>
-        <VBox styleClass="main-content">
-            <!-- TOP BAR -->
-                <HBox styleClass="topbar" alignment="CENTER_LEFT" spacing="16">
-                    <VBox spacing="2" HBox.hgrow="ALWAYS">
-                        <Label text="Payments" styleClass="page-title"/>
-                        <Label text="Pantau status pembayaran member dan invoice secara real-time." styleClass="page-subtitle"/>
-                    </VBox>
-                    <TextField fx:id="searchField" promptText="🔍  Cari invoice atau nama member..." styleClass="search-field" prefWidth="300"/>
-                    <HBox styleClass="avatar-box" alignment="CENTER">
-                        <Label text="O" styleClass="avatar-label"/>
-                    </HBox>
-                    <VBox spacing="1">
-                        <Label text="obama" styleClass="user-name"/>
-                        <Label text="Admin" styleClass="user-role"/>
-                    </VBox>
-                </HBox>
-
-                <!-- CONTENT -->
-                <VBox spacing="24"
-                    styleClass="content-body"
-                    VBox.vgrow="ALWAYS">
-
-                    <VBox styleClass="payment-card" spacing="22">
-
-                        <!-- SECTION HEADER -->
-                        <HBox alignment="CENTER_LEFT" spacing="12">
-                            <VBox spacing="4" HBox.hgrow="ALWAYS">
-                                <Label text="Data Pembayaran" styleClass="section-title"/>
-                                <Label text="Approve atau reject pembayaran member." styleClass="section-sub"/>
-                            </VBox>
-                        </HBox>
-
-                        <!-- TABLE -->
-                        <Label fx:id="statusInfo"
-                                text=""
-                                styleClass="status-info"/>
-                        <TableView fx:id="paymentTable" VBox.vgrow="ALWAYS" styleClass="payment-table">
-                            <columns>
-
-                                <TableColumn fx:id="colInvoice"
-                                            text="INVOICE"
-                                            prefWidth="160"/>
-
-                                <TableColumn fx:id="colNama"
-                                            text="MEMBER"
-                                            prefWidth="250"/>
-
-                                <TableColumn fx:id="colPaket"
-                                            text="PAKET"
-                                            prefWidth="150"/>
-
-                                <TableColumn fx:id="colNominal"
-                                            text="NOMINAL"
-                                            prefWidth="180"/>
-
-                                <TableColumn fx:id="colStatus"
-                                            text="STATUS"
-                                            prefWidth="160"/>
-
-                                <TableColumn fx:id="colTanggal"
-                                            text="TANGGAL"
-                                            prefWidth="180"/>
-
-                                <TableColumn fx:id="colBukti"
-                                            text="BUKTI"
-                                            prefWidth="130"/>
-
-                                <TableColumn fx:id="colAksi"
-                                            text="AKSI"
-                                            prefWidth="220"/>
-
-                            </columns>
-                            <placeholder>
-                                <Label text="Belum ada data pembayaran." styleClass="empty-label"/>
-                            </placeholder>
-                        </TableView>
-
-                    </VBox>
-
-                </VBox>
-        </VBox>
-    </center>
-
-</BorderPane>
+    </VBox>
+</VBox>

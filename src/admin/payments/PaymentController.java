@@ -10,13 +10,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import shared.SceneManager;
 import config.Database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import javafx.scene.Node;
-import shared.Session;
 import java.io.File;
 import java.awt.Desktop;
 
@@ -438,37 +435,8 @@ public class PaymentController implements Initializable {
         statusInfo.setStyle("-fx-text-fill: " + color + "; -fx-font-weight: bold;");
     }
 
-    @FXML
-    private void openDashboard(ActionEvent event) {
-        SceneManager.changeScene(
-                (Node) event.getSource(),
-                "/admin/dashboard/Dashboard.fxml",
-                "Dashboard",
-                1280,
-                760);
-    }
-
-    @FXML
-    private void openMembers(ActionEvent event) {
-        SceneManager.changeScene(
-                (Node) event.getSource(),
-                "/admin/member/Member.fxml",
-                "Members",
-                1280,
-                760);
-    }
-
-    @FXML
-    private void handleLogout(ActionEvent event) {
-        Session.clear();
-
-        SceneManager.changeScene(
-                (Node) event.getSource(),
-                "/auth/Login.fxml",
-                "Login",
-                1100,
-                720);
-    }
+    // Navigasi sidebar & logout ditangani oleh SidebarAdminController
+    // via LayoutTopController (single-shell architecture).
     
 }
 

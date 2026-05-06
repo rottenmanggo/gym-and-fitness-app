@@ -1,0 +1,48 @@
+/*
+ * ============================================
+ * GYMBRUT - Mobile Member Styles
+ * Style untuk bottom navigation member
+ * dan layout responsive mobile-like.
+ * ============================================
+ */
+
+/* === BOTTOM NAV BAR === */
+.bottom-nav {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #e7ebf3 transparent transparent transparent;
+  -fx-border-width: 1px 0 0 0;
+  -fx-padding: 8px 4px;
+  -fx-min-height: 64px;
+  -fx-pref-height: 64px;
+  -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.08), 12, 0, 0, -4);
+}
+
+/* === BOTTOM NAV BUTTON === */
+.bottom-nav-btn,
+.bottom-nav-btn-active {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-font-size: 11px;
+  -fx-font-weight: 700;
+  -fx-cursor: hand;
+  -fx-padding: 6px 8px;
+  -fx-alignment: center;
+  -fx-text-alignment: center;
+  -fx-wrap-text: true;
+  -fx-content-display: top;
+  -fx-background-radius: 12px;
+}
+
+.bottom-nav-btn {
+  -fx-text-fill: #94a3b8;
+}
+
+.bottom-nav-btn:hover {
+  -fx-text-fill: #475569;
+  -fx-background-color: #f6f7fb;
+}
+
+.bottom-nav-btn-active {
+  -fx-text-fill: #e86600;
+  -fx-background-color: #fff3e8;
+}

@@ -1,0 +1,154 @@
+/*
+ * ============================================
+ * GYMBRUT - Sidebar Styles
+ * Style untuk sidebar navigasi Admin & Member.
+ * ============================================
+ */
+
+/* === SIDEBAR CONTAINER === */
+.sidebar {
+  -fx-pref-width: 260px;
+  -fx-min-width: 260px;
+  -fx-background-color: #ffffff;
+  -fx-border-color: transparent #e7ebf3 transparent transparent;
+  -fx-border-width: 0 1px 0 0;
+  -fx-padding: 22px 16px 18px 16px;
+  -fx-spacing: 10px;
+}
+
+/* === SIDEBAR BRAND === */
+.sidebar-brand {
+  -fx-alignment: center-left;
+  -fx-spacing: 14px;
+  -fx-padding: 10px 10px 18px 10px;
+}
+
+.sidebar-brand-logo {
+  -fx-min-width: 50px;
+  -fx-min-height: 50px;
+  -fx-pref-width: 50px;
+  -fx-pref-height: 50px;
+  -fx-background-color: linear-gradient(to bottom right, #ff7a00, #ff9f45);
+  -fx-background-radius: 16px;
+  -fx-alignment: center;
+  -fx-text-fill: #ffffff;
+  -fx-font-size: 22px;
+}
+
+.sidebar-logo-img {
+  -fx-effect: dropshadow(gaussian, rgba(255, 122, 0, 0.25), 8, 0, 0, 3);
+}
+
+.brand-title {
+  -fx-font-size: 20px;
+  -fx-font-weight: 900;
+  -fx-text-fill: #18212f;
+}
+
+.brand-subtitle {
+  -fx-font-size: 11px;
+  -fx-font-weight: 800;
+  -fx-text-fill: #94a3b8;
+}
+
+/* === SIDEBAR SECTION TITLE === */
+.sidebar-title {
+  -fx-padding: 18px 10px 8px 10px;
+  -fx-font-size: 11px;
+  -fx-font-weight: 900;
+  -fx-text-fill: #94a3b8;
+}
+
+/* === SIDEBAR NAVIGATION === */
+.sidebar-nav {
+  -fx-spacing: 6px;
+}
+
+.sidebar-link,
+.sidebar-link-active {
+  -fx-pref-width: 228px;
+  -fx-alignment: center-left;
+  -fx-padding: 13px 14px;
+  -fx-background-radius: 14px;
+  -fx-border-radius: 14px;
+  -fx-border-width: 1px;
+  -fx-font-size: 14px;
+  -fx-font-weight: 700;
+  -fx-cursor: hand;
+}
+
+.sidebar-link {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-text-fill: #475569;
+}
+
+.sidebar-link:hover,
+.sidebar-link-active {
+  -fx-background-color: #fff3e8;
+  -fx-border-color: #ffd7b8;
+  -fx-text-fill: #e86600;
+}
+
+/* === NAV BUTTONS (Member alternate style) === */
+.nav-btn,
+.nav-btn-active {
+  -fx-alignment: center-left;
+  -fx-padding: 13px 14px;
+  -fx-background-radius: 14px;
+  -fx-border-radius: 14px;
+  -fx-border-width: 1px;
+  -fx-font-size: 14px;
+  -fx-font-weight: 700;
+  -fx-cursor: hand;
+}
+
+.nav-btn {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-text-fill: #475569;
+}
+
+.nav-btn:hover,
+.nav-btn-active {
+  -fx-background-color: #fff3e8;
+  -fx-border-color: #ffd7b8;
+  -fx-text-fill: #e86600;
+}
+
+/* === SIDEBAR FOOTER === */
+.sidebar-footer {
+  -fx-padding: 20px 10px 0 10px;
+  -fx-spacing: 14px;
+}
+
+.sidebar-user-name {
+  -fx-font-size: 15px;
+  -fx-font-weight: 800;
+  -fx-text-fill: #18212f;
+}
+
+.sidebar-user-role {
+  -fx-font-size: 11px;
+  -fx-font-weight: 700;
+  -fx-text-fill: #94a3b8;
+}
+
+/* === LOGOUT BUTTON === */
+.logout-btn {
+  -fx-pref-width: 204px;
+  -fx-padding: 11px 16px;
+  -fx-background-color: linear-gradient(to bottom right, #ff7a00, #ff9b3f);
+  -fx-background-radius: 14px;
+  -fx-text-fill: #ffffff;
+  -fx-font-weight: 800;
+  -fx-cursor: hand;
+}
+
+.logout-btn:hover {
+  -fx-background-color: linear-gradient(to bottom right, #f06b00, #ff8c2a);
+}
+
+.logout-btn:pressed {
+  -fx-opacity: 0.85;
+}

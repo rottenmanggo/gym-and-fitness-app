@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+  SidebarMember.fxml - Navigasi sidebar untuk role Member.
+  Menampilkan brand, menu navigasi member, dan footer logout.
+-->
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="includes.SidebarMemberController"
+      styleClass="sidebar"
+      spacing="6">
+
+    <!-- Brand / Logo -->
+    <HBox styleClass="sidebar-brand">
+        <ImageView fitWidth="46" fitHeight="46"
+                   preserveRatio="true"
+                   styleClass="sidebar-logo-img">
+            <image>
+                <Image url="@../assets/img/logo-g.png" />
+            </image>
+        </ImageView>
+        <VBox>
+            <Label text="GYMBRUT" styleClass="brand-title" />
+            <Label text="MEMBER AREA" styleClass="brand-subtitle" />
+        </VBox>
+    </HBox>
+
+    <Separator />
+
+    <!-- Section Title -->
+    <Label text="MENU" styleClass="sidebar-title" />
+
+    <!-- Navigation Links -->
+    <VBox styleClass="sidebar-nav">
+        <Button fx:id="btnDashboard"
+                text="▦   Dashboard"
+                onAction="#navigateDashboard"
+                styleClass="sidebar-link-active" />
+        <Button fx:id="btnWorkout"
+                text="🔥  Jadwal Latihan"
+                onAction="#navigateWorkout"
+                styleClass="sidebar-link" />
+        <Button fx:id="btnMembership"
+                text="▤   Membership"
+                onAction="#navigateMembership"
+                styleClass="sidebar-link" />
+        <Button fx:id="btnCheckin"
+                text="📍  Check-in"
+                onAction="#navigateCheckin"
+                styleClass="sidebar-link" />
+        <Button fx:id="btnPayments"
+                text="💳  Pembayaran"
+                onAction="#navigatePayments"
+                styleClass="sidebar-link" />
+        <Button fx:id="btnNotifications"
+                text="🔔  Notifikasi"
+                onAction="#navigateNotifications"
+                styleClass="sidebar-link" />
+        <Button fx:id="btnProfile"
+                text="👤  Profil"
+                onAction="#navigateProfile"
+                styleClass="sidebar-link" />
+    </VBox>
+
+    <!-- Spacer -->
+    <Region VBox.vgrow="ALWAYS" />
+
+    <!-- Footer -->
+    <VBox styleClass="sidebar-footer">
+        <Label fx:id="memberNameLabel" text="Member" styleClass="sidebar-user-name" />
+        <Label text="Member" styleClass="sidebar-user-role" />
+        <Button text="↪  Logout"
+                onAction="#handleLogout"
+                styleClass="logout-btn" />
+    </VBox>
+
+</VBox>

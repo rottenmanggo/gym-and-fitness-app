@@ -1,10 +1,26 @@
 package member.dashboard;
 
-import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import shared.Session;
 
+/**
+ * MemberDashboardController - Controller untuk konten Dashboard Member.
+ *
+ * Hanya menangani logika data dashboard member.
+ * Navigasi dan logout ditangani oleh SidebarMemberController
+ * melalui LayoutTopController (single-shell architecture).
+ */
 public class MemberDashboardController {
 
-    public void handleLogout(ActionEvent event) {
-        System.out.println("Logout clicked - testing only");
+    @FXML
+    private Label greetingLabel;
+
+    @FXML
+    public void initialize() {
+        // Set greeting dari session
+        if (Session.isLoggedIn() && Session.getUser() != null) {
+            greetingLabel.setText("Halo, " + Session.getUser().getName() + " 👋");
+        }
     }
 }

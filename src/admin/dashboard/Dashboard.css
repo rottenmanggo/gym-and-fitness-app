@@ -1,4 +1,4 @@
-@import "../member/member.css";
+/* Dashboard-specific styles. Global styles cascade from LayoutTop (theme.css). */
 
 .member-chart {
   -fx-pref-height: 280px;

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+  LayoutTop.fxml - Wrapper layout utama (single-shell) aplikasi GYMBRUT.
+  Sidebar di-load secara dinamis di sidebarContainer (berdasarkan role).
+  Topbar di-include dari Topbar.fxml via fx:include.
+  Konten halaman di-swap di contentArea tanpa me-reload sidebar.
+-->
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="includes.LayoutTopController"
+            stylesheets="@../assets/css/theme.css,@../assets/css/sidebar.css,@../assets/css/topbar.css"
+            prefWidth="1280"
+            prefHeight="760"
+            styleClass="app-shell">
+
+    <!-- LEFT: Sidebar container (Admin/Member di-load dinamis oleh controller) -->
+    <left>
+        <StackPane fx:id="sidebarContainer" />
+    </left>
+
+    <!-- CENTER: Topbar (fx:include) + Scrollable Content Area -->
+    <center>
+        <VBox styleClass="main-content">
+
+            <!-- Topbar: di-include dari Topbar.fxml, controller auto-injected -->
+            <fx:include fx:id="topbar" source="Topbar.fxml" />
+
+            <!-- Area konten halaman, di-swap secara dinamis tanpa reload sidebar -->
+            <ScrollPane fx:id="contentScrollPane"
+                        fitToWidth="true"
+                        hbarPolicy="NEVER"
+                        styleClass="main-scroll"
+                        VBox.vgrow="ALWAYS">
+                <StackPane fx:id="contentArea" />
+            </ScrollPane>
+
+        </VBox>
+    </center>
+
+</BorderPane>

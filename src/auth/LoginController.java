@@ -42,21 +42,14 @@ public class LoginController {
         // Set session user
         Session.setUser(user);
 
-        // Redirect sesuai role
-        if (user.isAdmin()) {
-            System.out.println("Redirecting to Admin Dashboard");
+        // Redirect ke LayoutTop (single-shell).
+        // LayoutTopController akan load sidebar & konten sesuai role dari Session.
+        if (user.isAdmin() || user.isMember()) {
+            System.out.println("Redirecting to LayoutTop (role: " + user.getRole() + ")");
             SceneManager.changeScene(
                     emailField,
-                    "/admin/dashboard/Dashboard.fxml",
-                    "Dashboard Admin",
-                    1280,
-                    760);
-        } else if (user.isMember()) {
-            System.out.println("Redirecting to Member Dashboard");
-            SceneManager.changeScene(
-                    emailField,
-                    "/member/dashboard/MemberDashboard.fxml",
-                    "Dashboard Member",
+                    "/includes/LayoutTop.fxml",
+                    "GYMBRUT",
                     1280,
                     760);
         } else {

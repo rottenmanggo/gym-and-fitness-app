@@ -1,16 +1,19 @@
 package admin.dashboard;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import shared.SceneManager;
-import shared.Session;
 
+/**
+ * DashboardController - Controller untuk konten Dashboard Admin.
+ *
+ * Hanya menangani logika data dashboard (stats, chart, metrics).
+ * Navigasi sidebar dan logout ditangani oleh SidebarAdminController
+ * melalui LayoutTopController (single-shell architecture).
+ */
 public class DashboardController {
 
     @FXML
@@ -84,57 +87,5 @@ public class DashboardController {
 
         row.getChildren().addAll(titleLabel, valueLabel);
         return row;
-    }
-
-    @FXML
-    private void openMembers(ActionEvent event) {
-        SceneManager.changeScene(
-                (Node) event.getSource(),
-                "/admin/member/Member.fxml",
-                "GYMBRUT - Data Member",
-                1280,
-                760);
-    }
-
-    @FXML
-    private void openMemberships (ActionEvent event) {
-        SceneManager.changeScene(
-                (Node) event.getSource(),
-                "/admin/membership/Membership.fxml",
-                "GYMBRUT - Data Membership",
-                1280,
-                760);
-    }
-
-    @FXML
-    private void openWorkouts(ActionEvent event) {
-        SceneManager.changeScene(
-                (Node) event.getSource(),
-                "/admin/workout/Workout.fxml",
-                "GYMBRUT - Data Workout",
-                1280,
-                760);
-    }
-
-    @FXML
-    private void openPayments(ActionEvent event) {
-        SceneManager.changeScene(
-                (Node) event.getSource(),
-                "/admin/payments/Payment.fxml",
-                "GYMBRUT - Payments",
-                1280,
-                760);
-    }
-
-    @FXML
-    private void handleLogout(ActionEvent event) {
-        Session.clear();
-
-        SceneManager.changeScene(
-                (Node) event.getSource(),
-                "/auth/Login.fxml",
-                "GYMBRUT - Login",
-                1100,
-                720);
     }
 }

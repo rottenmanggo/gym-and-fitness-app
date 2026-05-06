@@ -13,9 +13,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import shared.AlertHelper;
 import shared.SceneManager;
-import shared.Session;
-import javafx.scene.control.TableCell;
 
+/**
+ * MemberController - Controller untuk konten Data Member (Admin).
+ *
+ * Menangani CRUD member dan tabel. Navigasi sidebar/logout
+ * ditangani oleh SidebarAdminController via LayoutTopController.
+ */
 public class MemberController {
 
     @FXML
@@ -199,25 +203,4 @@ public class MemberController {
         }
     }
 
-    @FXML
-    private void openDashboard(ActionEvent event) {
-        SceneManager.changeScene(
-                (Node) event.getSource(),
-                "/admin/dashboard/Dashboard.fxml",
-                "GYMBRUT - Dashboard Admin",
-                1280,
-                760);
-    }
-
-    @FXML
-    private void handleLogout(ActionEvent event) {
-        Session.clear();
-
-        SceneManager.changeScene(
-                (Node) event.getSource(),
-                "/auth/Login.fxml",
-                "GYMBRUT - Login",
-                1100,
-                720);
-    }
 }
