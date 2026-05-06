@@ -17,12 +17,6 @@
   -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.1), 60, 0, 0, 20);
 }
 
-.logo-wrapper {
-  -fx-background-color: #fff4eb;
-  -fx-background-radius: 20px;
-  -fx-padding: 10px;
-}
-
 .auth-title {
   -fx-font-size: 25px;
   -fx-font-weight: 900;

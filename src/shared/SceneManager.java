@@ -16,30 +16,24 @@ public class SceneManager {
             }
 
             Stage stage = (Stage) node.getScene().getWindow();
-            System.out.println("Loading FXML: " + fxmlPath);
+
             FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(fxmlPath));
             Parent root = loader.load();
-            System.out.println("FXML loaded successfully");
 
-            Scene scene = new Scene(root, width, height);
-            stage.setScene(scene);
-            stage.setTitle(title);
+            Scene currentScene = stage.getScene();
 
-            // Hanya set maximized jika bukan dari login/register
-            if (!fxmlPath.contains("auth")) {
-                stage.setMaximized(true);
+            if (currentScene != null) {
+                currentScene.setRoot(root);
             } else {
-                stage.setMaximized(false);
-                stage.setWidth(width);
-                stage.setHeight(height);
+                stage.setScene(new Scene(root, width, height));
             }
+
+            stage.setTitle(title);
+            stage.setMaximized(true);
             stage.show();
-            System.out.println("Scene changed to: " + title);
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Error loading FXML: " + fxmlPath);
-            System.err.println("Exception: " + e.getMessage());
         }
     }
 }

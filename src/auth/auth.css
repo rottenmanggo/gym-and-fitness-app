@@ -174,3 +174,47 @@
 .auth-link-btn:pressed {
   -fx-opacity: 0.8;
 }
+
+.register-card {
+  -fx-padding: 28 44 26 44;
+  -fx-max-width: 520;
+  -fx-max-height: 660;
+}
+
+.auth-input {
+  -fx-background-color: #ffffff;
+  -fx-border-color: #d8e0ee;
+  -fx-border-width: 1.2;
+  -fx-border-radius: 14;
+  -fx-background-radius: 14;
+  -fx-padding: 0 14 0 14;
+  -fx-pref-height: 44;
+  -fx-font-size: 13px;
+  -fx-text-fill: #334155;
+  -fx-prompt-text-fill: #94a3b8;
+}
+
+.auth-input:focused {
+  -fx-border-color: #ff7a00;
+  -fx-effect: dropshadow(gaussian, rgba(255, 122, 0, 0.18), 10, 0, 0, 2);
+}
+
+.auth-btn {
+  -fx-background-color: linear-gradient(to right, #ff7a00, #ff9f43);
+  -fx-background-radius: 14;
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+  -fx-font-size: 14px;
+  -fx-cursor: hand;
+  -fx-effect: dropshadow(gaussian, rgba(255, 122, 0, 0.35), 14, 0, 0, 5);
+}
+
+.auth-btn:hover {
+  -fx-opacity: 0.92;
+}
+
+.auth-message {
+  -fx-font-size: 12px;
+  -fx-text-fill: #ef4444;
+  -fx-alignment: center;
+}

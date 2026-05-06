@@ -9,24 +9,24 @@
 <StackPane xmlns="http://javafx.com/javafx/21"
            xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="auth.RegisterController"
-           stylesheets="@../assets/css/auth.css"
-           prefWidth="1100"
-           prefHeight="720"
+           stylesheets="@auth.css"
            styleClass="auth-page">
 
     <VBox alignment="CENTER"
-          spacing="12"
-          maxWidth="480"
-          styleClass="auth-card">
+      spacing="10"
+      maxWidth="520"
+      maxHeight="660"
+      styleClass="auth-card register-card">
 
         <!-- Logo -->
-        <StackPane styleClass="logo-wrapper">
-            <ImageView fitWidth="72" fitHeight="72" preserveRatio="true">
-                <image>
-                    <Image url="@../assets/img/logo-g.png"/>
-                </image>
-            </ImageView>
-        </StackPane>
+        <ImageView fitWidth="74"
+           fitHeight="74"
+           preserveRatio="true"
+           styleClass="auth-logo-img">
+    <image>
+        <Image url="@../assets/image/logo-gymbrut.png"/>
+    </image>
+</ImageView>
 
         <!-- Title -->
         <Label text="Create Account" styleClass="auth-title"/>
