@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="admin.member.MemberController"
@@ -70,49 +71,55 @@
                         styleClass="primary-btn" />
             </HBox>
 
-            <HBox styleClass="toolbar">
-                <TextField fx:id="searchField"
-                           promptText="Cari nama, email, atau membership..."
-                           styleClass="search-input" />
-
-                <Button text="Cari"
-                        onAction="#handleSearch"
-                        styleClass="secondary-btn" />
-
-                <Button text="Reset"
-                        onAction="#handleReset"
-                        styleClass="light-btn" />
-            </HBox>
 
             <VBox styleClass="table-card">
-                <HBox styleClass="table-header">
-                    <Label text="Daftar Member" styleClass="section-title" />
-                    <Label fx:id="totalDataLabel" text="0 data" styleClass="data-count" />
-                </HBox>
+    <HBox styleClass="table-header">
+        <HBox alignment="CENTER_LEFT" spacing="14">
+            <Label text="Daftar Member" styleClass="section-title" />
+            <Label fx:id="totalDataLabel"
+                   text="0 data"
+                   styleClass="data-count" />
+        </HBox>
 
-                <TableView fx:id="memberTable" prefHeight="430" styleClass="member-table">
-                    <columns>
-                        <TableColumn fx:id="idColumn" text="ID" prefWidth="70" />
-                        <TableColumn fx:id="nameColumn" text="Nama" prefWidth="220" />
-                        <TableColumn fx:id="emailColumn" text="Email" prefWidth="250" />
-                        <TableColumn fx:id="phoneColumn" text="No HP" prefWidth="160" />
-                        <TableColumn fx:id="membershipColumn" text="Membership" prefWidth="160" />
-                        <TableColumn fx:id="statusColumn" text="Status" prefWidth="130" />
-                    </columns>
-                </TableView>
+        <Region HBox.hgrow="ALWAYS" />
 
-                <HBox styleClass="action-row">
-                    <Button text="Edit Member"
-                            onAction="#openEditMember"
-                            styleClass="warning-btn" />
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <TextField fx:id="searchField"
+                       promptText="Cari nama, email, membership..."
+                       styleClass="search-input" />
 
-                    <Button text="Hapus Member"
-                            onAction="#handleDeleteMember"
-                            styleClass="danger-btn" />
-                </HBox>
-            </VBox>
+            <Button text="Cari"
+                    onAction="#handleSearch"
+                    styleClass="secondary-btn" />
 
-        </VBox>
+            <Button text="Reset"
+                    onAction="#handleReset"
+                    styleClass="light-btn" />
+        </HBox>
+    </HBox>
+
+    <TableView fx:id="memberTable" prefHeight="520" styleClass="member-table">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="60" />
+<TableColumn fx:id="nameColumn" text="Nama" prefWidth="220" />
+<TableColumn fx:id="emailColumn" text="Email" prefWidth="260" />
+<TableColumn fx:id="phoneColumn" text="No HP" prefWidth="180" />
+<TableColumn fx:id="membershipColumn" text="Membership" prefWidth="170" />
+<TableColumn fx:id="statusColumn" text="Status" prefWidth="150" />
+        </columns>
+    </TableView>
+
+    <HBox styleClass="action-row">
+        <Button text="Edit Member"
+                onAction="#openEditMember"
+                styleClass="warning-btn" />
+
+        <Button text="Hapus Member"
+                onAction="#handleDeleteMember"
+                styleClass="danger-btn" />
+    </HBox>
+</VBox>
+</VBox>
     </center>
 
 </BorderPane>

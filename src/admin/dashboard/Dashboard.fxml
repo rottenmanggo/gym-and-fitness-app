@@ -35,7 +35,9 @@
                 <Button text="▦   Dashboard" styleClass="sidebar-link-active" />
                 <Button text="👥  Members" onAction="#openMembers" styleClass="sidebar-link" />
                 <Button text="▤   Memberships" styleClass="sidebar-link" />
-                <Button text="💳  Payments" styleClass="sidebar-link" />
+                <Button text="💳  Payments"
+                        onAction="#openPayments"
+                        styleClass="sidebar-link" />
                 <Button text="📊  Reports" styleClass="sidebar-link" />
                 <Button text="🔥  Workouts" styleClass="sidebar-link" />
             </VBox>
