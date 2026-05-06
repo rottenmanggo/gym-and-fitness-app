@@ -37,6 +37,15 @@ public class EditMemberController {
     public void initialize() {
         membershipCombo.getItems().addAll("Harian", "Mingguan", "Bulanan", "Tahunan");
         statusCombo.getItems().addAll("Aktif", "Pending", "Nonaktif");
+
+        if (selectedMember != null) {
+            nameField.setText(selectedMember.getName());
+            emailField.setText(selectedMember.getEmail());
+            phoneField.setText(selectedMember.getPhone());
+
+            membershipCombo.setValue(selectedMember.getMembership());
+            statusCombo.setValue(selectedMember.getStatus());
+        }
     }
 
     @FXML

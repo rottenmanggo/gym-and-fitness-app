@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>    
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -9,16 +10,39 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.Region?>
 
-<!--
-  Member.fxml - Konten halaman Data Member (Admin).
-  CONTENT-ONLY: tidak mengandung sidebar atau topbar.
-  Di-load ke dalam LayoutTop.fxml contentArea secara dinamis.
--->
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="admin.member.MemberController"
-      stylesheets="@member.css"
-      styleClass="main-content"
-      spacing="18">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+    fx:controller="admin.member.MemberController"
+    stylesheets="@member.css"
+    prefWidth="1280"
+    prefHeight="760"
+    styleClass="app-shell">
+
+    <left>
+        <VBox styleClass="sidebar">
+
+            <HBox styleClass="sidebar-brand">
+                <Label text="⚡" styleClass="sidebar-brand-logo" />
+                <VBox>
+                    <Label text="GYMBRUT" styleClass="brand-title" />
+                    <Label text="ADMIN PANEL" styleClass="brand-subtitle" />
+                </VBox>
+            </HBox>
+
+            <Label text="MAIN MENU" styleClass="sidebar-title" />
+
+            <VBox styleClass="sidebar-nav">
+                <Button text="▦   Dashboard" onAction="#openDashboard" styleClass="sidebar-link" />
+                <Button text="👥  Members" styleClass="sidebar-link-active" />
+                <Button text="▤   Memberships" styleClass="sidebar-link" />
+                <Button text="💳  Payments" styleClass="sidebar-link" />
+                <Button text="📊  Reports" styleClass="sidebar-link" />
+                <Button text="🔥  Workouts" styleClass="sidebar-link" />
+            </VBox>
+
+            <VBox styleClass="sidebar-footer">
+                <Label text="Admin" styleClass="sidebar-user-name" />
+                <Button text="↪  Logout" onAction="#handleLogout" styleClass="logout-btn" />
+            </VBox>
 
     <!-- Hero Banner -->
     <HBox styleClass="page-hero">
@@ -30,27 +54,73 @@
                    styleClass="hero-desc" />
         </VBox>
 
-        <Button text="+ Tambah Member"
-                onAction="#openAddMember"
-                styleClass="primary-btn" />
-    </HBox>
+    <center>
+        <VBox styleClass="main-content">
 
-    <!-- Table Card -->
-    <VBox styleClass="table-card">
-        <HBox styleClass="table-header">
-            <HBox alignment="CENTER_LEFT" spacing="14">
-                <Label text="Daftar Member" styleClass="section-title" />
-                <Label fx:id="totalDataLabel"
-                       text="0 data"
-                       styleClass="data-count" />
+            <HBox styleClass="topbar">
+                <VBox>
+                    <Label text="Data Members" styleClass="topbar-title" />
+                    <Label text="Kelola data member GYMBRUT." styleClass="topbar-subtitle" />
+                </VBox>
             </HBox>
 
-            <Region HBox.hgrow="ALWAYS" />
+            <HBox styleClass="page-hero">
+                <VBox styleClass="hero-left">
+                    <Label text="👥  Member Management" styleClass="banner-pill" />
+                    <Label text="Kelola semua member gym." styleClass="hero-title" />
+                    <Label text="Tambah, ubah, hapus, dan pantau status membership member."
+                        wrapText="true"
+                        styleClass="hero-desc" />
+                </VBox>
 
-            <HBox spacing="10" alignment="CENTER_RIGHT">
-                <TextField fx:id="searchField"
-                           promptText="Cari nama, email, membership..."
-                           styleClass="search-input" />
+                <Button text="+ Tambah Member"
+                    onAction="#openAddMember"
+                    styleClass="primary-btn" />
+            </HBox>
+
+
+            <VBox styleClass="table-card">
+                <HBox styleClass="table-header">
+                    <HBox alignment="CENTER_LEFT" spacing="14">
+                        <Label text="Daftar Member" styleClass="section-title" />
+                        <Label fx:id="totalDataLabel"
+                            text="0 data"
+                            styleClass="data-count" />
+                    </HBox>
+
+                    <Region HBox.hgrow="ALWAYS" />
+
+                    <HBox spacing="10" alignment="CENTER_RIGHT">
+                        <TextField fx:id="searchField"
+                            promptText="Cari nama, email, membership..."
+                            styleClass="search-input" />
+
+                        <Button text="Reset"
+                            onAction="#handleReset"
+                            styleClass="light-btn" />
+
+                        <ComboBox fx:id="statusFilterCombo"
+                            promptText="Filter Status"
+                            onAction="#handleFilterStatus"
+                            styleClass="filter-combo" />
+                    </HBox>
+                </HBox>
+
+                <TableView fx:id="memberTable" prefHeight="620" styleClass="member-table">
+                    <columns>
+                        <TableColumn fx:id="idColumn" text="ID" />
+                        <TableColumn fx:id="nameColumn" text="Nama" />
+                        <TableColumn fx:id="emailColumn" text="Email" />
+                        <TableColumn fx:id="phoneColumn" text="No HP" />
+                        <TableColumn fx:id="membershipColumn" text="Membership" />
+                        <TableColumn fx:id="statusColumn" text="Status" />
+                        <TableColumn fx:id="actionColumn" text="Action" prefWidth="160" />
+                    </columns>
+                </TableView>
+
+            </VBox>
+        </VBox>
+    </center>
 
                 <Button text="Cari"
                         onAction="#handleSearch"
