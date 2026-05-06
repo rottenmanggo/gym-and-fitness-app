@@ -1,108 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<!--
-  Dashboard.fxml - Konten halaman Dashboard Admin.
-  CONTENT-ONLY: tidak mengandung sidebar atau topbar.
-  Di-load ke dalam LayoutTop.fxml contentArea secara dinamis.
--->
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="admin.dashboard.DashboardController"
-      stylesheets="@Dashboard.css"
-      styleClass="main-content"
-      spacing="18">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="admin.dashboard.DashboardController"
+            stylesheets="@Dashboard.css"
+            styleClass="dashboard-root">
 
-    <!-- Hero Banner -->
-    <HBox styleClass="dashboard-hero">
-        <VBox styleClass="hero-left">
-            <Label text="⚡  Admin Overview" styleClass="banner-pill" />
-            <Label text="Kelola operasional gym lebih cepat." styleClass="hero-title" />
-            <Label text="Pantau member, membership aktif, pembayaran, check-in, dan aktivitas terbaru."
-                   wrapText="true"
-                   styleClass="hero-desc" />
+    <center>
+        <VBox spacing="20">
+            <padding>
+                <Insets top="25" right="25" bottom="25" left="25"/>
+            </padding>
+
+            <!-- HERO -->
+            <HBox spacing="20" styleClass="dashboard-hero">
+                <VBox spacing="8" HBox.hgrow="ALWAYS">
+                    <Label text="Admin Overview" styleClass="banner-pill"/>
+                    <Label text="Kelola operasional gym lebih cepat." styleClass="hero-title"/>
+                    <Label text="Pantau member, membership aktif, pembayaran, check-in, dan aktivitas terbaru dari satu dashboard yang lebih rapi."
+                           wrapText="true"
+                           styleClass="hero-subtitle"/>
+                </VBox>
+
+                <VBox spacing="6" styleClass="income-card">
+                    <Label text="Pendapatan bulan ini" styleClass="card-small-text"/>
+                    <Label fx:id="lblIncome" text="Rp0" styleClass="income-value"/>
+                    <Label text="Dari pembayaran verified" styleClass="card-small-text"/>
+                </VBox>
+            </HBox>
+
+            <!-- STAT CARDS -->
+            <GridPane hgap="15" vgap="15">
+                <VBox GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="stat-card">
+                    <Label text="Total Member" styleClass="stat-label"/>
+                    <Label fx:id="lblTotalMember" text="0" styleClass="stat-value"/>
+                    <Label text="Semua akun member" styleClass="stat-meta"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="stat-card">
+                    <Label text="Member Aktif" styleClass="stat-label"/>
+                    <Label fx:id="lblActiveMember" text="0" styleClass="stat-value"/>
+                    <Label text="Membership status aktif" styleClass="stat-meta"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" styleClass="stat-card">
+                    <Label text="Pending Payment" styleClass="stat-label"/>
+                    <Label fx:id="lblPendingPayment" text="0" styleClass="stat-value"/>
+                    <Label text="Menunggu verifikasi" styleClass="stat-meta"/>
+                </VBox>
+
+                <VBox GridPane.columnIndex="3" GridPane.rowIndex="0" styleClass="stat-card">
+                    <Label text="Workout Program" styleClass="stat-label"/>
+                    <Label fx:id="lblTotalWorkout" text="0" styleClass="stat-value"/>
+                    <Label text="Program tersedia" styleClass="stat-meta"/>
+                </VBox>
+            </GridPane>
+
+            <!-- CHART + SUMMARY -->
+            <HBox spacing="20">
+                <VBox spacing="10" styleClass="premium-card" HBox.hgrow="ALWAYS">
+                    <Label text="Pertumbuhan Member" styleClass="section-title"/>
+                    <Label text="Jumlah member baru per bulan" styleClass="section-subtitle"/>
+
+                    <LineChart fx:id="memberGrowthChart"
+                               animated="false"
+                               legendVisible="false"
+                               prefHeight="280">
+                        <xAxis>
+                            <CategoryAxis label="Bulan"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Jumlah Member"/>
+                        </yAxis>
+                    </LineChart>
+                </VBox>
+
+                <VBox spacing="14" styleClass="premium-card" prefWidth="330">
+                    <Label text="Ringkasan Operasional" styleClass="section-title"/>
+
+                    <HBox spacing="10">
+                        <Label text="Check-in hari ini" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblTodayCheckin" text="0 orang" styleClass="summary-value"/>
+                    </HBox>
+
+                    <HBox spacing="10">
+                        <Label text="Paket populer" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblPopularPackage" text="Belum ada" styleClass="summary-value"/>
+                    </HBox>
+
+                    <HBox spacing="10">
+                        <Label text="Membership hampir habis" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblExpiringSoon" text="0 akun" styleClass="summary-value"/>
+                    </HBox>
+
+                    <HBox spacing="10">
+                        <Label text="Pembayaran pending" HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="lblPendingSummary" text="0 transaksi" styleClass="summary-value"/>
+                    </HBox>
+                </VBox>
+            </HBox>
+
+            <!-- RECENT LISTS -->
+            <HBox spacing="20">
+                <VBox spacing="10" styleClass="premium-card" HBox.hgrow="ALWAYS">
+                    <Label text="Member Terbaru" styleClass="section-title"/>
+                    <ListView fx:id="listRecentMembers" prefHeight="220"/>
+                </VBox>
+
+                <VBox spacing="10" styleClass="premium-card" HBox.hgrow="ALWAYS">
+                    <Label text="Pembayaran Terbaru" styleClass="section-title"/>
+                    <ListView fx:id="listRecentPayments" prefHeight="220"/>
+                </VBox>
+            </HBox>
+
         </VBox>
+    </center>
 
-        <VBox styleClass="dashboard-hero-card">
-            <Label text="Pendapatan bulan ini" styleClass="hero-card-label" />
-            <Label fx:id="incomeLabel" text="Rp 0" styleClass="hero-card-value" />
-            <Label text="Dari pembayaran verified" styleClass="hero-card-small" />
-        </VBox>
-    </HBox>
-
-    <!-- Stats Grid -->
-    <GridPane hgap="18" vgap="18" styleClass="stats-grid">
-
-        <HBox styleClass="stat-card-modern">
-            <VBox>
-                <Label text="Total Member" styleClass="stat-label" />
-                <Label fx:id="totalMemberLabel" text="0" styleClass="stat-value" />
-                <Label text="Semua akun member" styleClass="stat-meta" />
-            </VBox>
-            <Label text="👥" styleClass="stat-icon" />
-        </HBox>
-
-        <HBox styleClass="stat-card-modern" GridPane.columnIndex="1">
-            <VBox>
-                <Label text="Member Aktif" styleClass="stat-label" />
-                <Label fx:id="activeMemberLabel" text="0" styleClass="stat-value" />
-                <Label text="Membership aktif" styleClass="stat-meta" />
-            </VBox>
-            <Label text="✅" styleClass="stat-icon" />
-        </HBox>
-
-        <HBox styleClass="stat-card-modern" GridPane.columnIndex="2">
-            <VBox>
-                <Label text="Pending Payment" styleClass="stat-label" />
-                <Label fx:id="pendingPaymentLabel" text="0" styleClass="stat-value" />
-                <Label text="Menunggu verifikasi" styleClass="stat-meta" />
-            </VBox>
-            <Label text="💳" styleClass="stat-icon" />
-        </HBox>
-
-        <HBox styleClass="stat-card-modern" GridPane.columnIndex="3">
-            <VBox>
-                <Label text="Workout Program" styleClass="stat-label" />
-                <Label fx:id="totalWorkoutLabel" text="0" styleClass="stat-value" />
-                <Label text="Program tersedia" styleClass="stat-meta" />
-            </VBox>
-            <Label text="🔥" styleClass="stat-icon" />
-        </HBox>
-
-    </GridPane>
-
-    <!-- Chart + Summary -->
-    <HBox styleClass="content-row">
-
-        <VBox styleClass="premium-card chart-card">
-            <Label text="Pertumbuhan Member" styleClass="section-title" />
-            <Label text="Jumlah member baru dalam 6 bulan terakhir" styleClass="section-subtitle" />
-
-            <LineChart fx:id="memberGrowthChart"
-                       legendVisible="false"
-                       createSymbols="true"
-                       animated="false"
-                       styleClass="member-chart">
-                <xAxis>
-                    <CategoryAxis side="BOTTOM" />
-                </xAxis>
-                <yAxis>
-                    <NumberAxis side="LEFT" tickUnit="5" minorTickVisible="false" />
-                </yAxis>
-            </LineChart>
-        </VBox>
-
-        <VBox styleClass="premium-card summary-card">
-            <Label text="Ringkasan Operasional" styleClass="section-title" />
-            <VBox fx:id="metricList" styleClass="metric-list" />
-        </VBox>
-
-    </HBox>
-
-</VBox>
+</BorderPane>
