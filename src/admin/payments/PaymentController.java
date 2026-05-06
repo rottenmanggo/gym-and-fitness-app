@@ -3,12 +3,22 @@ package admin.payments;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import shared.SceneManager;
+import config.Database;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import shared.SceneManager;
+import shared.Session;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -43,7 +53,7 @@ public class PaymentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadDummyData();
+        loadPaymentData();
         setupColumns();
 
         filteredList = new FilteredList<>(paymentList, p -> true);
@@ -57,6 +67,68 @@ public class PaymentController implements Initializable {
         }));
 
         paymentTable.setItems(filteredList);
+    }
+
+    private void loadPaymentData() {
+        paymentList.clear();
+
+        try {
+            Connection conn = Database.getConnection();
+
+            String query = """
+                    SELECT p.payment_id, p.amount, p.payment_date, p.status,
+                        u.name
+                    FROM payments p
+                    JOIN memberships m ON p.membership_id = m.membership_id
+                    JOIN users u ON m.user_id = u.user_id
+                    """;
+
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                String invoice = "INV-" + rs.getInt("payment_id");
+                String nama = rs.getString("name");
+                double nominal = rs.getDouble("amount");
+
+                String metode = "Transfer";
+
+                String dbStatus = rs.getString("status");
+
+                Payment.Status status;
+
+                switch (dbStatus.toLowerCase()) {
+                    case "verified":
+                        status = Payment.Status.PAID;
+                        break;
+
+                    case "pending":
+                        status = Payment.Status.PENDING;
+                        break;
+
+                    default:
+                        status = Payment.Status.FAILED;
+                        break;
+                }
+
+                LocalDate tanggal = rs.getTimestamp("payment_date")
+                        .toLocalDateTime()
+                        .toLocalDate();
+
+                paymentList.add(new Payment(
+                        invoice,
+                        nama,
+                        nominal,
+                        metode,
+                        status,
+                        tanggal,
+                        "M001"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // ─── Dummy Data ──────────────────────────────────────────────
@@ -241,4 +313,38 @@ public class PaymentController implements Initializable {
         statusInfo.setText(text);
         statusInfo.setStyle("-fx-text-fill: " + color + "; -fx-font-weight: bold;");
     }
+
+    @FXML
+    private void openDashboard(ActionEvent event) {
+        SceneManager.changeScene(
+                (Node) event.getSource(),
+                "/admin/dashboard/Dashboard.fxml",
+                "Dashboard",
+                1280,
+                760);
+    }
+
+    @FXML
+    private void openMembers(ActionEvent event) {
+        SceneManager.changeScene(
+                (Node) event.getSource(),
+                "/admin/member/Member.fxml",
+                "Members",
+                1280,
+                760);
+    }
+
+    @FXML
+    private void handleLogout(ActionEvent event) {
+        Session.clear();
+
+        SceneManager.changeScene(
+                (Node) event.getSource(),
+                "/auth/Login.fxml",
+                "Login",
+                1100,
+                720);
+    }
+    
 }
+
