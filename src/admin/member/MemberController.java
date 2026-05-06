@@ -56,7 +56,6 @@ public class MemberController {
         setupTable();
 
         memberTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
         nameColumn.setPrefWidth(180);
         emailColumn.setPrefWidth(220);
         phoneColumn.setPrefWidth(140);
@@ -64,7 +63,6 @@ public class MemberController {
         joinDateColumn.setPrefWidth(130);
         statusColumn.setPrefWidth(120);
         actionColumn.setPrefWidth(160);
-
         loadMembers();
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> handleSearch());
@@ -111,7 +109,6 @@ public class MemberController {
                 }
 
                 badge.setAlignment(Pos.CENTER);
-
                 setText(null);
                 setGraphic(badge);
             }
@@ -246,9 +243,8 @@ public class MemberController {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Konfirmasi Hapus");
         confirm.setHeaderText("Hapus member?");
-        confirm.setContentText(
-                "Data member \"" + member.getName()
-                        + "\" akan dihapus beserta membership, payment, check-in, progress, dan notifikasi.");
+        confirm.setContentText("Data member \"" + member.getName()
+                + "\" akan dihapus beserta membership, payment, check-in, progress, dan notifikasi.");
 
         Optional<ButtonType> result = confirm.showAndWait();
 

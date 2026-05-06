@@ -1,289 +1,96 @@
-package admin.member;
+<?xml version="1.0" encoding="UTF-8"?>
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-import java.io.IOException;
-import java.util.Optional;
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="admin.member.MemberController"
+      stylesheets="@member.css"
+      styleClass="member-root"
+      spacing="18">
 
-public class MemberController {
+    <HBox styleClass="member-hero">
+        <VBox spacing="8" HBox.hgrow="ALWAYS">
+            <Label text="👥 MEMBER MANAGEMENT" styleClass="banner-pill" />
+            <Label text="Kelola Data Member" styleClass="hero-title" />
+            <Label text="Tambah, ubah, hapus, dan pantau status membership seluruh member gym."
+                   wrapText="true"
+                   styleClass="hero-desc" />
+        </VBox>
 
-    @FXML private Label statTotalMember;
-    @FXML private Label statActiveMember;
-    @FXML private Label statPendingMember;
-    @FXML private Label statExpiredMember;
-    @FXML private Label totalDataLabel;
+        <Button text="+ Tambah Member"
+                onAction="#openAddMember"
+                styleClass="primary-btn" />
+    </HBox>
 
-    @FXML private TextField searchField;
+    <HBox spacing="16">
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+            <Label text="Total Member" styleClass="stat-label" />
+            <Label fx:id="statTotalMember" text="0" styleClass="stat-value" />
+            <Label text="Semua akun member" styleClass="stat-meta" />
+        </VBox>
 
-    @FXML private TableView<Member> memberTable;
-    @FXML private TableColumn<Member, String> nameColumn;
-    @FXML private TableColumn<Member, String> emailColumn;
-    @FXML private TableColumn<Member, String> phoneColumn;
-    @FXML private TableColumn<Member, String> membershipColumn;
-    @FXML private TableColumn<Member, String> joinDateColumn;
-    @FXML private TableColumn<Member, String> statusColumn;
-    @FXML private TableColumn<Member, Void> actionColumn;
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+            <Label text="Member Aktif" styleClass="stat-label" />
+            <Label fx:id="statActiveMember" text="0" styleClass="stat-value" />
+            <Label text="Membership aktif" styleClass="stat-meta" />
+        </VBox>
 
-    private final MemberService memberService = new MemberService();
-    private ObservableList<Member> allMembers;
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+            <Label text="Pending" styleClass="stat-label" />
+            <Label fx:id="statPendingMember" text="0" styleClass="stat-value" />
+            <Label text="Menunggu pembayaran" styleClass="stat-meta" />
+        </VBox>
 
-    @FXML
-    public void initialize() {
-        setupTable();
+        <VBox styleClass="stat-card" HBox.hgrow="ALWAYS">
+            <Label text="Expired" styleClass="stat-label" />
+            <Label fx:id="statExpiredMember" text="0" styleClass="stat-value" />
+            <Label text="Membership berakhir" styleClass="stat-meta" />
+        </VBox>
+    </HBox>
 
-        memberTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    <VBox styleClass="table-card" spacing="16" VBox.vgrow="ALWAYS">
 
-        nameColumn.setPrefWidth(180);
-        emailColumn.setPrefWidth(220);
-        phoneColumn.setPrefWidth(140);
-        membershipColumn.setPrefWidth(130);
-        joinDateColumn.setPrefWidth(130);
-        statusColumn.setPrefWidth(120);
-        actionColumn.setPrefWidth(160);
+        <HBox styleClass="table-header">
+            <HBox alignment="CENTER_LEFT" spacing="14">
+                <Label text="Daftar Member" styleClass="section-title" />
+                <Label fx:id="totalDataLabel"
+                       text="0 data"
+                       styleClass="data-count" />
+            </HBox>
 
-        loadMembers();
+            <Region HBox.hgrow="ALWAYS" />
 
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> handleSearch());
-    }
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <TextField fx:id="searchField"
+                           promptText="Cari nama, email, paket, status..."
+                           styleClass="search-input" />
 
-    private void setupTable() {
-        nameColumn.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getName())));
-        emailColumn.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getEmail())));
-        phoneColumn.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getPhone())));
-        membershipColumn.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getMembership())));
-        joinDateColumn.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getJoinDate())));
-        statusColumn.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getStatus())));
+                <Button text="Reset"
+                        onAction="#handleReset"
+                        styleClass="light-btn" />
+            </HBox>
+        </HBox>
 
-        statusColumn.setCellFactory(column -> new TableCell<>() {
-            @Override
-            protected void updateItem(String status, boolean empty) {
-                super.updateItem(status, empty);
-
-                if (empty || status == null || status.isBlank()) {
-                    setText(null);
-                    setGraphic(null);
-                    return;
-                }
-
-                Label badge = new Label();
-
-                switch (status.toLowerCase()) {
-                    case "aktif" -> {
-                        badge.setText("Aktif");
-                        badge.getStyleClass().add("status-active");
-                    }
-                    case "pending" -> {
-                        badge.setText("Pending");
-                        badge.getStyleClass().add("status-pending");
-                    }
-                    case "expired" -> {
-                        badge.setText("Expired");
-                        badge.getStyleClass().add("status-expired");
-                    }
-                    default -> {
-                        badge.setText(status);
-                        badge.getStyleClass().add("status-default");
-                    }
-                }
-
-                badge.setAlignment(Pos.CENTER);
-
-                setText(null);
-                setGraphic(badge);
-            }
-        });
-
-        actionColumn.setCellFactory(column -> new TableCell<>() {
-            private final Button editButton = new Button("Edit");
-            private final Button deleteButton = new Button("Hapus");
-            private final HBox box = new HBox(8, editButton, deleteButton);
-
-            {
-                editButton.getStyleClass().add("table-edit-btn");
-                deleteButton.getStyleClass().add("table-delete-btn");
-                box.setAlignment(Pos.CENTER_LEFT);
-
-                editButton.setOnAction(event -> {
-                    Member member = getTableView().getItems().get(getIndex());
-                    openEditMember(member);
-                });
-
-                deleteButton.setOnAction(event -> {
-                    Member member = getTableView().getItems().get(getIndex());
-                    deleteMember(member);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(box);
-                }
-            }
-        });
-    }
-
-    private void loadMembers() {
-        allMembers = memberService.getAllMembers();
-        memberTable.setItems(allMembers);
-        totalDataLabel.setText(allMembers.size() + " data");
-        updateStats(allMembers);
-    }
-
-    private void handleSearch() {
-        String keyword = searchField.getText() == null
-                ? ""
-                : searchField.getText().toLowerCase().trim();
-
-        if (keyword.isEmpty()) {
-            memberTable.setItems(allMembers);
-            totalDataLabel.setText(allMembers.size() + " data");
-            updateStats(allMembers);
-            return;
-        }
-
-        ObservableList<Member> filtered = allMembers.filtered(member ->
-                safe(member.getName()).toLowerCase().contains(keyword)
-                        || safe(member.getEmail()).toLowerCase().contains(keyword)
-                        || safe(member.getPhone()).toLowerCase().contains(keyword)
-                        || safe(member.getMembership()).toLowerCase().contains(keyword)
-                        || safe(member.getJoinDate()).toLowerCase().contains(keyword)
-                        || safe(member.getStatus()).toLowerCase().contains(keyword)
-        );
-
-        memberTable.setItems(filtered);
-        totalDataLabel.setText(filtered.size() + " data");
-        updateStats(filtered);
-    }
-
-    @FXML
-    private void handleReset() {
-        searchField.clear();
-        memberTable.setItems(allMembers);
-        totalDataLabel.setText(allMembers.size() + " data");
-        updateStats(allMembers);
-    }
-
-    @FXML
-    private void openAddMember() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddMember.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = new Stage();
-            stage.setTitle("Tambah Member");
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-
-            loadMembers();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Gagal", "Form tambah member tidak bisa dibuka.");
-        }
-    }
-
-    private void openEditMember(Member member) {
-        if (member == null) {
-            showAlert(Alert.AlertType.WARNING, "Pilih Member", "Pilih member yang ingin diedit.");
-            return;
-        }
-
-        try {
-            EditMemberController.setSelectedMember(member);
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditMember.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = new Stage();
-            stage.setTitle("Edit Member");
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-
-            loadMembers();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Gagal", "Form edit member tidak bisa dibuka.");
-        }
-    }
-
-    private void deleteMember(Member member) {
-        if (member == null) {
-            showAlert(Alert.AlertType.WARNING, "Pilih Member", "Pilih member yang ingin dihapus.");
-            return;
-        }
-
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Konfirmasi Hapus");
-        confirm.setHeaderText("Hapus member?");
-        confirm.setContentText(
-                "Data member \"" + member.getName() + "\" akan dihapus beserta membership, payment, check-in, progress, dan notifikasi."
-        );
-
-        Optional<ButtonType> result = confirm.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            boolean success = memberService.deleteMember(member);
-
-            if (success) {
-                showAlert(Alert.AlertType.INFORMATION, "Berhasil", "Member berhasil dihapus.");
-                loadMembers();
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Gagal", "Member gagal dihapus.");
-            }
-        }
-    }
-
-    private void updateStats(ObservableList<Member> members) {
-        int total = members.size();
-        int aktif = 0;
-        int pending = 0;
-        int expired = 0;
-
-        for (Member member : members) {
-            String status = safe(member.getStatus()).toLowerCase();
-
-            if (status.equals("aktif")) {
-                aktif++;
-            } else if (status.equals("pending")) {
-                pending++;
-            } else if (status.equals("expired")) {
-                expired++;
-            }
-        }
-
-        statTotalMember.setText(String.valueOf(total));
-        statActiveMember.setText(String.valueOf(aktif));
-        statPendingMember.setText(String.valueOf(pending));
-        statExpiredMember.setText(String.valueOf(expired));
-    }
-
-    private String safe(String value) {
-        return value == null ? "" : value;
-    }
-
-    private void showAlert(Alert.AlertType type, String title, String content) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-}
+        <TableView fx:id="memberTable"
+                   prefHeight="520"
+                   styleClass="member-table"
+                   VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="nameColumn" text="Nama" prefWidth="190" />
+                <TableColumn fx:id="emailColumn" text="Email" prefWidth="230" />
+                <TableColumn fx:id="phoneColumn" text="No HP" prefWidth="150" />
+                <TableColumn fx:id="membershipColumn" text="Paket" prefWidth="150" />
+                <TableColumn fx:id="joinDateColumn" text="Join Date" prefWidth="140" />
+                <TableColumn fx:id="statusColumn" text="Status" prefWidth="130" />
+                <TableColumn fx:id="actionColumn" text="Action" prefWidth="170" />
+            </columns>
+        </TableView>
+    </VBox>
+</VBox>
