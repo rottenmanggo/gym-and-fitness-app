@@ -4,6 +4,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 
 <StackPane xmlns:fx="http://javafx.com/fxml"
            fx:controller="auth.LoginController"
@@ -12,10 +14,21 @@
            prefHeight="720"
            styleClass="auth-page">
 
-    <VBox styleClass="auth-card" spacing="16" alignment="CENTER">
+    <VBox styleClass="auth-card"
+      spacing="16"
+      alignment="CENTER"
+      maxWidth="460"
+      maxHeight="520">
 
-        <!-- Logo pakai emoji -->
-        <Label text="🏋" styleClass="auth-logo"/>
+        <!-- Logo -->
+<ImageView fitWidth="86"
+           fitHeight="86"   
+           preserveRatio="true"
+           styleClass="auth-logo-img">
+    <image>
+        <Image url="@../assets/image/logo-gymbrut.png"/>
+    </image>
+</ImageView>
 
         <!-- Judul & subtitle -->
         <Label text="GYMBRUT" styleClass="auth-title"/>
@@ -59,8 +72,8 @@
         </VBox>
 
         <!-- Link register -->
-        <Hyperlink text="Belum punya akun? Register sekarang"
-                   onAction="#handleRegisterLink"
-                   styleClass="auth-link"/>
+        <Button text="Belum punya akun? Register sekarang"
+                onAction="#handleRegisterLink"
+                styleClass="auth-link-btn"/>
     </VBox>
 </StackPane>

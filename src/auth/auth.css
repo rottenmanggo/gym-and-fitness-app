@@ -15,7 +15,6 @@
   -fx-alignment: center;
   -fx-transition: all 0.3s ease;
 }
-
 .auth-card {
   -fx-max-width: 460px;
   -fx-background-color: rgba(255, 255, 255, 0.98);
@@ -27,9 +26,6 @@
   -fx-spacing: 16px;
   -fx-alignment: center;
   -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.1), 60, 0, 0, 20);
-  -fx-transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
 }
 
 .auth-card:hover {
@@ -159,4 +155,22 @@
 .auth-link:hover {
   -fx-text-fill: #ff7a00;
   -fx-underline: true;
+}
+
+.auth-link-btn {
+  -fx-text-fill: #e86600;
+  -fx-font-size: 14px;
+  -fx-font-weight: 800;
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-padding: 5px 10px;
+  -fx-cursor: hand;
+}
+
+.auth-link-btn:hover {
+  -fx-text-fill: #ff7a00;
+}
+
+.auth-link-btn:pressed {
+  -fx-opacity: 0.8;
 }

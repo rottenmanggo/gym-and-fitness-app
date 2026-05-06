@@ -1,49 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.VBox?>
+
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="auth.RegisterController"
-            stylesheets="@../assets/css/auth.css"
-            prefWidth="550" prefHeight="500">
+<StackPane xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="auth.RegisterController"
+           stylesheets="@../assets/css/auth.css"
+           prefWidth="1100"
+           prefHeight="720"
+           styleClass="auth-page">
 
-    <children>
-        <VBox alignment="CENTER" spacing="15" layoutX="80" layoutY="20">
-            <!-- Logo -->
-            <ImageView fitWidth="120" fitHeight="120" pickOnBounds="true" preserveRatio="true">
+    <VBox alignment="CENTER"
+          spacing="12"
+          maxWidth="480"
+          styleClass="auth-card">
+
+        <!-- Logo -->
+        <StackPane styleClass="logo-wrapper">
+            <ImageView fitWidth="72" fitHeight="72" preserveRatio="true">
                 <image>
                     <Image url="@../assets/img/logo-g.png"/>
                 </image>
             </ImageView>
+        </StackPane>
 
-            <!-- Judul -->
-            <Label text="Gym &amp; Fitness Register" styleClass="auth-title"/>
+        <!-- Title -->
+        <Label text="Create Account" styleClass="auth-title"/>
+        <Label text="Daftar akun member Gym &amp; Fitness" styleClass="auth-subtitle"/>
 
-            <!-- Form -->
-            <GridPane hgap="10" vgap="10">
-                <padding><Insets top="10" bottom="10" left="0" right="0"/></padding>
+        <!-- Form -->
+        <GridPane hgap="12" vgap="10" maxWidth="390">
+            <padding>
+                <Insets top="12" right="0" bottom="8" left="0"/>
+            </padding>
 
-                <TextField fx:id="nameField" promptText="Nama Lengkap" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="auth-input"/>
-                <TextField fx:id="emailField" promptText="Email" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="auth-input"/>
-                <PasswordField fx:id="passwordField" promptText="Password" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="auth-input"/>
-                <TextField fx:id="phoneField" promptText="No HP" GridPane.rowIndex="3" GridPane.columnIndex="0" styleClass="auth-input"/>
-                <ComboBox fx:id="genderBox" promptText="Gender" GridPane.rowIndex="4" GridPane.columnIndex="0" styleClass="auth-input"/>
-                <TextField fx:id="ageField" promptText="Umur" GridPane.rowIndex="5" GridPane.columnIndex="0" styleClass="auth-input"/>
-                <TextField fx:id="heightField" promptText="Tinggi (cm)" GridPane.rowIndex="6" GridPane.columnIndex="0" styleClass="auth-input"/>
-                <TextField fx:id="weightField" promptText="Berat (kg)" GridPane.rowIndex="7" GridPane.columnIndex="0" styleClass="auth-input"/>
-                <TextField fx:id="targetField" promptText="Target Fitness" GridPane.rowIndex="8" GridPane.columnIndex="0" styleClass="auth-input"/>
+            <TextField fx:id="nameField"
+                       promptText="Nama Lengkap"
+                       GridPane.rowIndex="0"
+                       GridPane.columnIndex="0"
+                       GridPane.columnSpan="2"
+                       styleClass="auth-input"/>
 
-                <Button text="Register" onAction="#handleRegister" GridPane.rowIndex="9" GridPane.columnIndex="0" styleClass="auth-btn"/>
-                <Label fx:id="messageLabel" GridPane.rowIndex="10" GridPane.columnIndex="0" styleClass="auth-message"/>
-            </GridPane>
+            <TextField fx:id="emailField"
+                       promptText="Email"
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="0"
+                       GridPane.columnSpan="2"
+                       styleClass="auth-input"/>
 
-            <Hyperlink text="Sudah punya akun? Login" onAction="#goToLogin" styleClass="auth-link"/>
-        </VBox>
-    </children>
-</AnchorPane>
+            <PasswordField fx:id="passwordField"
+                           promptText="Password"
+                           GridPane.rowIndex="2"
+                           GridPane.columnIndex="0"
+                           GridPane.columnSpan="2"
+                           styleClass="auth-input"/>
+
+            <TextField fx:id="phoneField"
+                       promptText="No HP"
+                       GridPane.rowIndex="3"
+                       GridPane.columnIndex="0"
+                       GridPane.columnSpan="2"
+                       styleClass="auth-input"/>
+
+            <ComboBox fx:id="genderBox"
+                      promptText="Gender"
+                      GridPane.rowIndex="4"
+                      GridPane.columnIndex="0"
+                      styleClass="auth-input"
+                      prefWidth="190"/>
+
+            <TextField fx:id="ageField"
+                       promptText="Umur"
+                       GridPane.rowIndex="4"
+                       GridPane.columnIndex="1"
+                       styleClass="auth-input"
+                       prefWidth="190"/>
+
+            <TextField fx:id="heightField"
+                       promptText="Tinggi (cm)"
+                       GridPane.rowIndex="5"
+                       GridPane.columnIndex="0"
+                       styleClass="auth-input"
+                       prefWidth="190"/>
+
+            <TextField fx:id="weightField"
+                       promptText="Berat (kg)"
+                       GridPane.rowIndex="5"
+                       GridPane.columnIndex="1"
+                       styleClass="auth-input"
+                       prefWidth="190"/>
+
+            <TextField fx:id="targetField"
+                       promptText="Target Fitness"
+                       GridPane.rowIndex="6"
+                       GridPane.columnIndex="0"
+                       GridPane.columnSpan="2"
+                       styleClass="auth-input"/>
+
+            <Button text="Register"
+                    onAction="#handleRegister"
+                    GridPane.rowIndex="7"
+                    GridPane.columnIndex="0"
+                    GridPane.columnSpan="2"
+                    maxWidth="Infinity"
+                    prefHeight="46"
+                    styleClass="auth-btn"/>
+
+            <Label fx:id="messageLabel"
+                   GridPane.rowIndex="8"
+                   GridPane.columnIndex="0"
+                   GridPane.columnSpan="2"
+                   wrapText="true"
+                   styleClass="auth-message"/>
+        </GridPane>
+
+        <Button text="Sudah punya akun? Login"
+                onAction="#goToLogin"
+                styleClass="auth-link-btn"/>
+    </VBox>
+</StackPane>

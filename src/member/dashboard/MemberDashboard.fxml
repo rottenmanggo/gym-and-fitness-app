@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="member.dashboard.MemberDashboardController"
+            stylesheets="@../../assets/css/theme.css,@../../assets/css/sidebar.css"
+            styleClass="dashboard-page">
+
+    <!-- Left Sidebar -->
+    <left>
+        <VBox styleClass="sidebar-nav" spacing="20">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="GYMBRUT" styleClass="brand-title"/>
+            <Label text="Member Area" styleClass="brand-subtitle"/>
+
+            <Separator/>
+
+            <Button text="Dashboard" styleClass="nav-btn-active" maxWidth="Infinity"/>
+            <Button text="Jadwal Latihan" styleClass="nav-btn" maxWidth="Infinity"/>
+            <Button text="Membership" styleClass="nav-btn" maxWidth="Infinity"/>
+            <Button text="Progress" styleClass="nav-btn" maxWidth="Infinity"/>
+            <Button text="Logout" onAction="#handleLogout" styleClass="logout-btn" maxWidth="Infinity"/>
+        </VBox>
+    </left>
+
+    <!-- Content -->
+    <center>
+        <VBox spacing="22" styleClass="content">
+            <padding>
+                <Insets top="32" right="36" bottom="32" left="36"/>
+            </padding>
+
+            <HBox alignment="CENTER_LEFT">
+                <VBox spacing="4">
+                    <Label text="Halo, Member 👋" styleClass="page-title"/>
+                    <Label text="Selamat datang di dashboard GYMBRUT" styleClass="page-subtitle"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="18">
+                <VBox styleClass="stat-card" spacing="8" HBox.hgrow="ALWAYS">
+                    <Label text="Status Membership" styleClass="stat-label"/>
+                    <Label text="Aktif" styleClass="stat-value"/>
+                    <Label text="Berlaku sampai 30 hari lagi" styleClass="stat-desc"/>
+                </VBox>
+
+                <VBox styleClass="stat-card" spacing="8" HBox.hgrow="ALWAYS">
+                    <Label text="Kunjungan Bulan Ini" styleClass="stat-label"/>
+                    <Label text="12x" styleClass="stat-value"/>
+                    <Label text="Target 20x kunjungan" styleClass="stat-desc"/>
+                </VBox>
+
+                <VBox styleClass="stat-card" spacing="8" HBox.hgrow="ALWAYS">
+                    <Label text="Kelas Terjadwal" styleClass="stat-label"/>
+                    <Label text="3" styleClass="stat-value"/>
+                    <Label text="Minggu ini" styleClass="stat-desc"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="18" VBox.vgrow="ALWAYS">
+                <VBox styleClass="panel-card" spacing="14" HBox.hgrow="ALWAYS">
+                    <Label text="Jadwal Latihan Hari Ini" styleClass="section-title"/>
+                    <Label text="• 08:00 - Cardio Session" styleClass="list-text"/>
+                    <Label text="• 16:00 - Strength Training" styleClass="list-text"/>
+                    <Label text="• 19:00 - Yoga Class" styleClass="list-text"/>
+                </VBox>
+
+                <VBox styleClass="panel-card" spacing="14" HBox.hgrow="ALWAYS">
+                    <Label text="Progress Singkat" styleClass="section-title"/>
+                    <Label text="Berat badan: 68 kg" styleClass="list-text"/>
+                    <Label text="Kalori terbakar: 4.250 kcal" styleClass="list-text"/>
+                    <Label text="Durasi latihan: 14 jam" styleClass="list-text"/>
+                    <Button text="Lihat Detail" styleClass="small-orange-btn"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

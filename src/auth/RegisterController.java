@@ -1,6 +1,7 @@
 package auth;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -45,6 +46,28 @@ public class RegisterController {
             SceneManager.changeScene(emailField, "/auth/Login.fxml", "Login", 1100, 720);
         } else {
             showAlert("Register gagal!", "danger");
+        }
+    }
+
+    @FXML
+    private void goToLogin() {
+        try {
+            System.out.println("Go to Login clicked");
+            Node nodeToUse = emailField != null ? emailField : alertLabel;
+            if (nodeToUse == null) {
+                System.err.println("No valid node found for scene change");
+                return;
+            }
+            SceneManager.changeScene(
+                    nodeToUse,
+                    "/auth/Login.fxml",
+                    "Login",
+                    1100,
+                    720);
+            System.out.println("Login scene change initiated");
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Gagal membuka halaman login: " + e.getMessage(), "danger");
         }
     }
 
