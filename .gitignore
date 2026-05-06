@@ -1,0 +1,21 @@
+# Abaikan folder output kompilasi Java standar
+bin/
+out/
+
+# Abaikan folder build jika menggunakan Maven atau Gradle
+target/
+build/
+
+# Abaikan file metadata IDE (IntelliJ, Eclipse, VS Code)
+.idea/
+*.iml
+.settings/
+.project
+.classpath
+.factorypath
+.vscode/
+
+# Abaikan file sistem dan log
+*.log
+.DS_Store
+Thumbs.db

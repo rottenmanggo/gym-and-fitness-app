@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -19,6 +20,7 @@
         <!-- Judul & subtitle -->
         <Label text="GYMBRUT" styleClass="auth-title"/>
         <Label text="Login ke sistem fitness &amp; gym management"
+        alignment="CENTER"
                wrapText="true"
                maxWidth="380"
                styleClass="auth-subtitle"/>
@@ -34,14 +36,20 @@
 
         <!-- Form -->
         <VBox styleClass="auth-form" spacing="12" alignment="CENTER">
-            <TextField fx:id="emailField"
-                       promptText="Masukkan email"
-                       styleClass="form-control"
-                       maxWidth="300"/>
-            <PasswordField fx:id="passwordField"
-                           promptText="Masukkan password"
+            <HBox alignment="CENTER_LEFT" spacing="10" maxWidth="320">
+                <Label text="📧" styleClass="field-icon"/>
+                <TextField fx:id="emailField"
+                           promptText="Masukkan email"
                            styleClass="form-control"
-                           maxWidth="300"/>
+                           prefWidth="280"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10" maxWidth="320">
+                <Label text="🔒" styleClass="field-icon"/>
+                <PasswordField fx:id="passwordField"
+                               promptText="Masukkan password"
+                               styleClass="form-control"
+                               prefWidth="280"/>
+            </HBox>
 
             <Button text="Login"
                     onAction="#handleLogin"
