@@ -4,17 +4,34 @@ import config.Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import shared.Session;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import java.awt.Desktop;
 import java.net.URI;
 import java.net.URL;
 import java.sql.*;
+
+import admin.workout.Workout;
+import admin.workout.WorkoutStep;
+import admin.workout.DetailWorkoutController;
 
 public class MemberWorkoutsController {
 
@@ -162,8 +179,7 @@ public class MemberWorkoutsController {
                 """;
 
         try (
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                ResultSet rs = stmt.executeQuery()) {
+                PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 categories.add(rs.getString("category"));
             }
@@ -184,8 +200,7 @@ public class MemberWorkoutsController {
 
     private int getCount(Connection conn, String sql) {
         try (
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                ResultSet rs = stmt.executeQuery()) {
+                PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
             if (rs.next()) {
                 return rs.getInt("total");
             }
@@ -216,8 +231,7 @@ public class MemberWorkoutsController {
                 """;
 
         try (
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                ResultSet rs = stmt.executeQuery()) {
+                PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 allWorkouts.add(new WorkoutItem(
                         rs.getInt("workout_id"),
@@ -339,8 +353,8 @@ public class MemberWorkoutsController {
 
         Label equipment = new Label(
                 workout.equipment == null || workout.equipment.isBlank()
-                        ? "Tanpa equipment khusus"
-                        : workout.equipment);
+                ? "Tanpa equipment khusus"
+                : workout.equipment);
         equipment.setWrapText(true);
         equipment.getStyleClass().add("section-subtitle");
 
@@ -362,8 +376,8 @@ public class MemberWorkoutsController {
 
         Label tutorial = new Label(
                 workout.tutorial == null || workout.tutorial.isBlank()
-                        ? "Belum ada tutorial untuk workout ini."
-                        : workout.tutorial);
+                ? "Belum ada tutorial untuk workout ini."
+                : workout.tutorial);
         tutorial.setWrapText(true);
         tutorial.getStyleClass().add("text-soft");
 
@@ -452,17 +466,88 @@ public class MemberWorkoutsController {
         return row;
     }
 
-    private void showDetail(WorkoutItem workout) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Detail Workout");
-        alert.setHeaderText(workout.title);
-        alert.setContentText(
-                "Kategori: " + safe(workout.category) + "\n"
-                        + "Equipment: " + safe(workout.equipment) + "\n"
-                        + "Set: " + workout.setsCount + "\n"
-                        + "Repetisi / Durasi: " + safe(workout.repsCount) + "\n\n"
-                        + "Tutorial:\n" + safe(workout.tutorial));
-        alert.showAndWait();
+    private void showDetail(WorkoutItem item) {
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource(
+                            "/admin/workout/DetailWorkout.fxml"
+                    )
+            );
+
+            Parent root = loader.load();
+
+            DetailWorkoutController controller
+                    = loader.getController();
+
+            // convert WorkoutItem -> Workout
+            Workout workout = new Workout(
+                    item.workoutId,
+                    item.category,
+                    item.title,
+                    item.equipment,
+                    item.tutorial,
+                    item.youtubeUrl,
+                    item.setsCount,
+                    item.repsCount,
+                    item.imageFile
+            );
+
+            // load step dari database
+            workout.setSteps(loadWorkoutSteps(item.workoutId));
+
+            controller.setData(workout);
+
+            Stage stage = new Stage();
+
+            stage.setTitle("Detail Workout");
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            stage.setScene(new Scene(root));
+
+            stage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private List<WorkoutStep> loadWorkoutSteps(int workoutId) {
+
+        List<WorkoutStep> steps = new ArrayList<>();
+
+        String sql = """
+        SELECT *
+        FROM workout_steps
+        WHERE workout_id = ?
+        ORDER BY step_order ASC
+    """;
+
+        try (
+                Connection conn = Database.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, workoutId);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                steps.add(new WorkoutStep(
+                        rs.getInt("step_id"),
+                        rs.getInt("workout_id"),
+                        rs.getInt("step_order"),
+                        rs.getString("instruction"),
+                        rs.getString("duration")
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return steps;
     }
 
     private void openYoutube(String url) {
@@ -517,6 +602,7 @@ public class MemberWorkoutsController {
     }
 
     private static class WorkoutItem {
+
         int workoutId;
         String category;
         String title;

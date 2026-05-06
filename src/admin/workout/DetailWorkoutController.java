@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.awt.Desktop;
 import java.net.URI;
@@ -17,7 +19,7 @@ public class DetailWorkoutController {
     @FXML
     private Label categoryBadge;
     @FXML
-    private Label imageLabel;
+    private ImageView imgWorkout;
     @FXML
     private Label descriptionLabel;
     @FXML
@@ -37,9 +39,25 @@ public class DetailWorkoutController {
         titleLabel.setText(workout.getTitle());
         metaLabel.setText(workout.getMetaInfo());
         categoryBadge.setText(workout.getCategory());
-        imageLabel.setText(workout.getImagePath() == null || workout.getImagePath().isBlank()
-                ? "Tidak ada gambar"
-                : workout.getImagePath());
+
+        if (workout.getImagePath() != null
+                && !workout.getImagePath().isBlank()) {
+
+            try {
+
+                Image image = new Image(
+                        getClass().getResourceAsStream(
+                                "/assets/image/" + workout.getImagePath()
+                        )
+                );
+
+                imgWorkout.setImage(image);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         descriptionLabel.setText(workout.getDescriptionText());
 
         videoButton.setDisable(workout.getVideoUrl() == null || workout.getVideoUrl().isBlank());

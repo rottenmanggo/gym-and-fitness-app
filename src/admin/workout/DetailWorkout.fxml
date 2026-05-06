@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
 
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="admin.workout.DetailWorkoutController"
@@ -16,9 +17,10 @@
 
         <VBox spacing="16" HBox.hgrow="ALWAYS">
             <VBox styleClass="detail-image-card" alignment="CENTER">
-                <Label fx:id="imageLabel"
-                       text="Gambar Workout"
-                       styleClass="image-placeholder-text"/>
+                <ImageView fx:id="imgWorkout"
+                fitWidth="520"
+                fitHeight="240"
+                preserveRatio="false"/>
             </VBox>
 
             <VBox styleClass="detail-card" spacing="10">
