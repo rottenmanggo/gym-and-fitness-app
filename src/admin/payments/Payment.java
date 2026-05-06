@@ -13,20 +13,21 @@ public class Payment {
     private final StringProperty invoice;
     private final StringProperty namaMember;
     private final DoubleProperty nominal;
-    private final StringProperty metode;
+    private final StringProperty paket;
     private final ObjectProperty<Status> status;
     private final ObjectProperty<LocalDate> tanggal;
-    private final StringProperty membershipId;
+    private final StringProperty proofFile;  
 
-    public Payment(String invoice, String namaMember, double nominal, String metode,
-            Status status, LocalDate tanggal, String membershipId) {
+
+    public Payment(String invoice, String namaMember, double nominal, String paket,
+            Status status, LocalDate tanggal, String proofFile) {
         this.invoice = new SimpleStringProperty(invoice);
         this.namaMember = new SimpleStringProperty(namaMember);
         this.nominal = new SimpleDoubleProperty(nominal);
-        this.metode = new SimpleStringProperty(metode);
+        this.paket = new SimpleStringProperty(paket);
         this.status = new SimpleObjectProperty<>(status);
         this.tanggal = new SimpleObjectProperty<>(tanggal);
-        this.membershipId = new SimpleStringProperty(membershipId);
+        this.proofFile = new SimpleStringProperty(proofFile);
     }
 
     // --- Property getters ---
@@ -42,8 +43,8 @@ public class Payment {
         return nominal;
     }
 
-    public StringProperty metodeProperty() {
-        return metode;
+    public StringProperty paketProperty() {
+        return paket;
     }
 
     public ObjectProperty<Status> statusProperty() {
@@ -54,8 +55,8 @@ public class Payment {
         return tanggal;
     }
 
-    public StringProperty membershipIdProperty() {
-        return membershipId;
+    public StringProperty proofFileProperty() {
+        return proofFile;
     }
 
     // --- Plain getters ---
@@ -71,8 +72,8 @@ public class Payment {
         return nominal.get();
     }
 
-    public String getMetode() {
-        return metode.get();
+    public String getPaket() {
+        return paket.get();
     }
 
     public Status getStatus() {
@@ -83,8 +84,8 @@ public class Payment {
         return tanggal.get();
     }
 
-    public String getMembershipId() {
-        return membershipId.get();
+    public String getProofFile() {
+        return proofFile.get();
     }
 
     // --- Setter ---

@@ -15,10 +15,10 @@ import config.Database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import shared.SceneManager;
 import shared.Session;
+import java.io.File;
+import java.awt.Desktop;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -38,7 +38,11 @@ public class PaymentController implements Initializable {
     @FXML
     private TableColumn<Payment, Double> colNominal;
     @FXML
-    private TableColumn<Payment, String> colMetode;
+    private TableColumn<Payment, String> colPaket;
+    @FXML
+    private TableColumn<Payment, String> colBukti;
+    @FXML
+    private TableColumn<Payment, Void> colAksi;
     @FXML
     private TableColumn<Payment, Status> colStatus;
     @FXML
@@ -63,7 +67,7 @@ public class PaymentController implements Initializable {
             String lower = newVal.toLowerCase();
             return p.getInvoice().toLowerCase().contains(lower)
                     || p.getNamaMember().toLowerCase().contains(lower)
-                    || p.getMetode().toLowerCase().contains(lower);
+                    || p.getPaket().toLowerCase().contains(lower);
         }));
 
         paymentTable.setItems(filteredList);
@@ -76,11 +80,18 @@ public class PaymentController implements Initializable {
             Connection conn = Database.getConnection();
 
             String query = """
-                    SELECT p.payment_id, p.amount, p.payment_date, p.status,
-                        u.name
+                    SELECT 
+                        p.payment_id,
+                        p.amount,
+                        p.payment_date,
+                        p.status,
+                        p.proof_file,
+                        u.name,
+                        pkg.package_name AS package_name
                     FROM payments p
                     JOIN memberships m ON p.membership_id = m.membership_id
                     JOIN users u ON m.user_id = u.user_id
+                    JOIN membership_packages pkg ON m.package_id = pkg.package_id
                     """;
 
             PreparedStatement ps = conn.prepareStatement(query);
@@ -92,7 +103,8 @@ public class PaymentController implements Initializable {
                 String nama = rs.getString("name");
                 double nominal = rs.getDouble("amount");
 
-                String metode = "Transfer";
+                String paket = rs.getString("package_name");
+                String bukti = rs.getString("proof_file");
 
                 String dbStatus = rs.getString("status");
 
@@ -117,16 +129,17 @@ public class PaymentController implements Initializable {
                         .toLocalDate();
 
                 paymentList.add(new Payment(
-                        invoice,
-                        nama,
-                        nominal,
-                        metode,
-                        status,
-                        tanggal,
-                        "M001"));
+                    invoice,
+                    nama,
+                    nominal,
+                    paket,
+                    status,
+                    tanggal,
+                    bukti));
             }
 
         } catch (Exception e) {
+            System.out.println("ERROR LOAD PAYMENT:");
             e.printStackTrace();
         }
     }
@@ -160,6 +173,8 @@ public class PaymentController implements Initializable {
                 super.updateItem(item, empty);
                 setText(empty || item == null ? null : item);
                 setStyle(empty ? "" : "-fx-font-weight: bold; -fx-text-fill: #1a1a2e;");
+
+                
             }
         });
 
@@ -176,8 +191,8 @@ public class PaymentController implements Initializable {
             }
         });
 
-        // Metode
-        colMetode.setCellValueFactory(new PropertyValueFactory<>("metode"));
+        // Paket
+        colPaket.setCellValueFactory(new PropertyValueFactory<>("paket"));
 
         // Status — badge berwarna
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -190,7 +205,13 @@ public class PaymentController implements Initializable {
                     return;
                 }
 
-                Label badge = new Label(item.name());
+                String statusText = switch (item) {
+                    case PAID -> "Verified";
+                    case PENDING -> "Pending";
+                    case FAILED -> "Rejected";
+                };
+
+                Label badge = new Label(statusText);
                 badge.setAlignment(Pos.CENTER);
                 badge.setMinWidth(72);
                 badge.setStyle(
@@ -220,6 +241,109 @@ public class PaymentController implements Initializable {
             protected void updateItem(LocalDate item, boolean empty) {
                 super.updateItem(item, empty);
                 setText(empty || item == null ? null : item.format(fmt));
+            }
+        });
+
+        // Bukti
+        colBukti.setCellValueFactory(new PropertyValueFactory<>("proofFile"));
+        colBukti.setCellFactory(col -> new TableCell<Payment, String>() {
+
+            private final Button btnLihat = new Button("Lihat");
+
+            {
+                btnLihat.getStyleClass().add("btn-lihat");
+
+                btnLihat.setOnAction(e -> {
+                    Payment payment = getTableView().getItems().get(getIndex());
+
+                    if (payment.getProofFile() == null || payment.getProofFile().isBlank()) {
+                        showWarn("File bukti tidak tersedia.");
+                        return;
+                    }
+
+                    try {
+
+                        File file = new File(payment.getProofFile());
+
+                        if (file.exists()) {
+                            Desktop.getDesktop().open(file);
+                        } else {
+                            showWarn("File bukti tidak ditemukan.");
+                        }
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        showWarn("Gagal membuka file bukti.");
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    Payment payment = getTableView().getItems().get(getIndex());
+
+                    if (payment.getProofFile() == null || payment.getProofFile().equalsIgnoreCase("null")) {
+                        setGraphic(new Label("-"));
+                    } else {
+                        setGraphic(btnLihat);
+                    }
+                }
+            }
+        });
+
+        colAksi.setCellFactory(col -> new TableCell<Payment, Void>() {
+
+            private final Button btnVerify = new Button("Verify");
+            private final Button btnReject = new Button("Reject");
+
+            private final HBox pane = new HBox(10, btnVerify, btnReject);
+
+            {
+                btnVerify.getStyleClass().add("btn-verify-row");
+                btnReject.getStyleClass().add("btn-reject-row");
+
+                pane.setAlignment(Pos.CENTER_LEFT);
+
+                btnVerify.setOnAction(e -> {
+                    Payment payment = getTableView().getItems().get(getIndex());
+
+                    payment.setStatus(Status.PAID);
+                    paymentTable.refresh();
+
+                    setInfo("✓ " + payment.getInvoice() + " berhasil diverifikasi.", "#16a34a");
+                });
+
+                btnReject.setOnAction(e -> {
+                    Payment payment = getTableView().getItems().get(getIndex());
+
+                    payment.setStatus(Status.FAILED);
+                    paymentTable.refresh();
+
+                    setInfo("✗ " + payment.getInvoice() + " berhasil ditolak.", "#dc2626");
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                    return;
+                }
+
+                Payment payment = getTableView().getItems().get(getIndex());
+
+                if (payment.getStatus() == Status.PENDING) {
+                    setGraphic(pane);
+                } else {
+                    setGraphic(new Label("Selesai"));
+                }
             }
         });
     }

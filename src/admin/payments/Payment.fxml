@@ -61,38 +61,66 @@
                 </HBox>
 
                 <!-- CONTENT -->
-                <VBox spacing="20" styleClass="content-body" VBox.vgrow="ALWAYS">
+                <VBox spacing="24"
+                    styleClass="content-body"
+                    VBox.vgrow="ALWAYS">
 
-                    <!-- SECTION HEADER -->
-                    <HBox alignment="CENTER_LEFT" spacing="12">
-                        <VBox spacing="4" HBox.hgrow="ALWAYS">
-                            <Label text="Riwayat Pembayaran" styleClass="section-title"/>
-                            <Label text="Semua transaksi member dalam satu tabel yang rapi." styleClass="section-sub"/>
-                        </VBox>
-                        <Button text="⬇  Export" styleClass="btn-export" onAction="#handleExport"/>
-                    </HBox>
+                    <VBox styleClass="payment-card" spacing="22">
 
-                    <!-- ACTION BUTTONS -->
-                    <HBox spacing="12" alignment="CENTER_LEFT">
-                        <Button text="✓  Approve" styleClass="btn-approve" onAction="#handleApprove"/>
-                        <Button text="✗  Reject"  styleClass="btn-reject"  onAction="#handleReject"/>
-                        <Label fx:id="statusInfo" styleClass="status-info" text=""/>
-                    </HBox>
+                        <!-- SECTION HEADER -->
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                <Label text="Data Pembayaran" styleClass="section-title"/>
+                                <Label text="Approve atau reject pembayaran member." styleClass="section-sub"/>
+                            </VBox>
+                        </HBox>
 
-                    <!-- TABLE -->
-                    <TableView fx:id="paymentTable" VBox.vgrow="ALWAYS" styleClass="payment-table">
-                        <columns>
-                            <TableColumn fx:id="colInvoice" text="INVOICE"      prefWidth="130"/>
-                            <TableColumn fx:id="colNama"    text="NAMA MEMBER"  prefWidth="200"/>
-                            <TableColumn fx:id="colNominal" text="NOMINAL"      prefWidth="140"/>
-                            <TableColumn fx:id="colMetode"  text="METODE"       prefWidth="150"/>
-                            <TableColumn fx:id="colStatus"  text="STATUS"       prefWidth="120"/>
-                            <TableColumn fx:id="colTanggal" text="TANGGAL"      prefWidth="140"/>
-                        </columns>
-                        <placeholder>
-                            <Label text="Belum ada data pembayaran." styleClass="empty-label"/>
-                        </placeholder>
-                    </TableView>
+                        <!-- TABLE -->
+                        <Label fx:id="statusInfo"
+                                text=""
+                                styleClass="status-info"/>
+                        <TableView fx:id="paymentTable" VBox.vgrow="ALWAYS" styleClass="payment-table">
+                            <columns>
+
+                                <TableColumn fx:id="colInvoice"
+                                            text="INVOICE"
+                                            prefWidth="160"/>
+
+                                <TableColumn fx:id="colNama"
+                                            text="MEMBER"
+                                            prefWidth="250"/>
+
+                                <TableColumn fx:id="colPaket"
+                                            text="PAKET"
+                                            prefWidth="150"/>
+
+                                <TableColumn fx:id="colNominal"
+                                            text="NOMINAL"
+                                            prefWidth="180"/>
+
+                                <TableColumn fx:id="colStatus"
+                                            text="STATUS"
+                                            prefWidth="160"/>
+
+                                <TableColumn fx:id="colTanggal"
+                                            text="TANGGAL"
+                                            prefWidth="180"/>
+
+                                <TableColumn fx:id="colBukti"
+                                            text="BUKTI"
+                                            prefWidth="130"/>
+
+                                <TableColumn fx:id="colAksi"
+                                            text="AKSI"
+                                            prefWidth="220"/>
+
+                            </columns>
+                            <placeholder>
+                                <Label text="Belum ada data pembayaran." styleClass="empty-label"/>
+                            </placeholder>
+                        </TableView>
+
+                    </VBox>
 
                 </VBox>
         </VBox>
