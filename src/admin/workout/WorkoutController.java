@@ -22,8 +22,10 @@ import java.util.ResourceBundle;
 
 public class WorkoutController implements Initializable {
 
-    @FXML private GridPane  cardGrid;
-    @FXML private TextField searchField;
+    @FXML
+    private GridPane cardGrid;
+    @FXML
+    private TextField searchField;
 
     private final WorkoutService service = new WorkoutService();
     private final ObservableList<Workout> workoutList = FXCollections.observableArrayList();
@@ -36,11 +38,13 @@ public class WorkoutController implements Initializable {
 
         searchField.textProperty().addListener((obs, o, newVal) -> {
             filteredList.setPredicate(w -> {
-                if (newVal == null || newVal.isBlank()) return true;
+                if (newVal == null || newVal.isBlank()) {
+                    return true;
+                }
                 String lower = newVal.toLowerCase();
                 return w.getTitle().toLowerCase().contains(lower)
-                    || w.getCategory().toLowerCase().contains(lower)
-                    || w.getEquipment().toLowerCase().contains(lower);
+                        || w.getCategory().toLowerCase().contains(lower)
+                        || (w.getEquipment() != null && w.getEquipment().toLowerCase().contains(lower));
             });
             renderCards();
         });
@@ -66,7 +70,10 @@ public class WorkoutController implements Initializable {
         for (Workout w : filteredList) {
             cardGrid.add(buildCard(w), col, row);
             col++;
-            if (col > 1) { col = 0; row++; }
+            if (col > 1) {
+                col = 0;
+                row++;
+            }
         }
     }
 
@@ -136,7 +143,7 @@ public class WorkoutController implements Initializable {
     public void handleTambah() {
         try {
             FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/admin/workout/AddWorkout.fxml"));
+                    getClass().getResource("/admin/workout/AddWorkout.fxml"));
             Parent root = loader.load();
 
             AddWorkoutController ctrl = loader.getController();
@@ -158,7 +165,7 @@ public class WorkoutController implements Initializable {
     private void openDetail(Workout w) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/admin/workout/DetailWorkout.fxml"));
+                    getClass().getResource("/admin/workout/DetailWorkout.fxml"));
             Parent root = loader.load();
 
             DetailWorkoutController ctrl = loader.getController();
@@ -181,7 +188,7 @@ public class WorkoutController implements Initializable {
     private void openEdit(Workout w) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/admin/workout/EditWorkout.fxml"));
+                    getClass().getResource("/admin/workout/EditWorkout.fxml"));
             Parent root = loader.load();
 
             EditWorkoutController ctrl = loader.getController();
@@ -220,8 +227,11 @@ public class WorkoutController implements Initializable {
         confirm.showAndWait().ifPresent(btn -> {
             if (btn == ButtonType.OK) {
                 boolean ok = service.delete(w.getWorkoutId());
-                if (ok) refreshData();
-                else showAlert(Alert.AlertType.ERROR, "Gagal menghapus workout.");
+                if (ok) {
+                    refreshData(); 
+                }else {
+                    showAlert(Alert.AlertType.ERROR, "Gagal menghapus workout.");
+                }
             }
         });
     }

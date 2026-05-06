@@ -97,6 +97,26 @@ public class DashboardController {
     }
 
     @FXML
+    private void openMemberships (ActionEvent event) {
+        SceneManager.changeScene(
+                (Node) event.getSource(),
+                "/admin/membership/Membership.fxml",
+                "GYMBRUT - Data Membership",
+                1280,
+                760);
+    }
+
+    @FXML
+    private void openWorkouts(ActionEvent event) {
+        SceneManager.changeScene(
+                (Node) event.getSource(),
+                "/admin/workout/Workout.fxml",
+                "GYMBRUT - Data Workout",
+                1280,
+                760);
+    }
+
+    @FXML
     private void openPayments(ActionEvent event) {
         SceneManager.changeScene(
                 (Node) event.getSource(),
