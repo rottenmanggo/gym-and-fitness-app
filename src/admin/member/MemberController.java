@@ -219,10 +219,28 @@ public class MemberController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("AddMember.fxml"));
             Parent root = loader.load();
 
+            ScrollPane scrollPane = new ScrollPane(root);
+            scrollPane.setFitToWidth(true);
+            scrollPane.setFitToHeight(false);
+            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollPane.setPannable(true);
+            scrollPane.setStyle("""
+                    -fx-background-color: #f5f7fb;
+                    -fx-background: #f5f7fb;
+                    -fx-border-color: transparent;
+                    """);
+
             Stage stage = new Stage();
             stage.setTitle("Tambah Member");
-            stage.setScene(new Scene(root));
+
+            Scene scene = new Scene(scrollPane, 500, 620);
+            stage.setScene(scene);
+
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
             stage.showAndWait();
 
             loadMembers();
@@ -245,10 +263,28 @@ public class MemberController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("EditMember.fxml"));
             Parent root = loader.load();
 
+            ScrollPane scrollPane = new ScrollPane(root);
+            scrollPane.setFitToWidth(true);
+            scrollPane.setFitToHeight(false);
+            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            scrollPane.setPannable(true);
+            scrollPane.setStyle("""
+                    -fx-background-color: #f5f7fb;
+                    -fx-background: #f5f7fb;
+                    -fx-border-color: transparent;
+                    """);
+
             Stage stage = new Stage();
             stage.setTitle("Edit Member");
-            stage.setScene(new Scene(root));
+
+            Scene scene = new Scene(scrollPane, 500, 620);
+            stage.setScene(scene);
+
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
             stage.showAndWait();
 
             loadMembers();
