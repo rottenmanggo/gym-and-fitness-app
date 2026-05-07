@@ -21,6 +21,11 @@ build/
 *.log
 .DS_Store
 Thumbs.db
+<<<<<<< HEAD
 .vscode/launch.json
 gym-and-fitness-app/uploads/payments/payment_16_1778120326317.jpg
 .vscode/settings.json
+=======
+.vscode/settings.json
+.vscode/launch.json
+>>>>>>> 62cd6ae52956a328dd82a1a458c13fc6775833ef
