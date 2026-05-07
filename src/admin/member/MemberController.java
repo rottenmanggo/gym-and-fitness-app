@@ -69,6 +69,7 @@ public class MemberController {
     }
 
     private void setupTable() {
+
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getName())));
         emailColumn.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getEmail())));
         phoneColumn.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getPhone())));
@@ -122,7 +123,15 @@ public class MemberController {
             {
                 editButton.getStyleClass().add("table-edit-btn");
                 deleteButton.getStyleClass().add("table-delete-btn");
-                box.setAlignment(Pos.CENTER_LEFT);
+
+                editButton.setMinWidth(58);
+                editButton.setPrefWidth(58);
+
+                deleteButton.setMinWidth(70);
+                deleteButton.setPrefWidth(70);
+
+                box.setAlignment(Pos.CENTER);
+                box.setPrefWidth(140);
 
                 editButton.setOnAction(event -> {
                     Member member = getTableView().getItems().get(getIndex());
@@ -142,6 +151,7 @@ public class MemberController {
                 if (empty) {
                     setGraphic(null);
                 } else {
+                    setText(null);
                     setGraphic(box);
                 }
             }
