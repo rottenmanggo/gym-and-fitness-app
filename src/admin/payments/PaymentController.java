@@ -12,8 +12,6 @@ import javafx.scene.layout.HBox;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -396,99 +394,65 @@ public class PaymentController {
     }
 
     private boolean openFile(File file) {
-        System.out.println("Mencoba membuka file: " + file.getAbsolutePath());
+
         try {
-            if (Desktop.isDesktopSupported()) {
-                Desktop desktop = Desktop.getDesktop();
-                if (desktop.isSupported(Desktop.Action.OPEN)) {
-                    System.out.println("Menggunakan Desktop.open()");
-                    desktop.open(file);
-                    return true;
-                }
-            }
+
+            String absolutePath = file.getAbsolutePath();
+
+            System.out.println("Membuka file:");
+            System.out.println(absolutePath);
 
             if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                String filePath = file.getAbsolutePath();
-                try {
-                    System.out.println("Menggunakan cmd start: " + filePath);
-                    new ProcessBuilder("cmd", "/c", "start", "", filePath).start();
-                    return true;
-                } catch (IOException e) {
-                    System.out.println("cmd start gagal: " + e.getMessage());
-                }
 
-                try {
-                    System.out.println("Menggunakan explorer.exe: " + filePath);
-                    new ProcessBuilder("explorer.exe", filePath).start();
-                    return true;
-                } catch (IOException e) {
-                    System.out.println("explorer.exe gagal: " + e.getMessage());
-                }
+                Runtime.getRuntime().exec(
+                        new String[]{
+                                "rundll32",
+                                "url.dll,FileProtocolHandler",
+                                absolutePath
+                        });
 
-                try {
-                    System.out.println("Menggunakan rundll32: " + filePath);
-                    new ProcessBuilder("cmd", "/c", "rundll32", "url.dll,FileProtocolHandler", filePath).start();
-                    return true;
-                } catch (IOException e) {
-                    System.out.println("rundll32 gagal: " + e.getMessage());
-                }
+                return true;
             }
 
-            System.out.println("Semua metode pembukaan file gagal");
+            if (Desktop.isDesktopSupported()) {
+
+                Desktop.getDesktop().open(file);
+
+                return true;
+            }
+
             return false;
-        } catch (UnsupportedOperationException e) {
-            System.out.println("Desktop tidak didukung: " + e.getMessage());
+
+        } catch (Exception e) {
+
+            System.out.println("ERROR OPEN FILE:");
             e.printStackTrace();
+
             return false;
         }
     }
 
     private File findPaymentProofFile(String proofFile) {
-        String cleanFile = proofFile.trim();
-        System.out.println("Mencari file bukti: " + cleanFile);
 
-        // Kalau database menyimpan path, ambil nama filenya saja.
+        if (proofFile == null || proofFile.isBlank()) {
+            return null;
+        }
+
+        String cleanFile = proofFile.trim();
+
         cleanFile = cleanFile.replace("\\", "/");
+
         if (cleanFile.contains("/")) {
             cleanFile = cleanFile.substring(cleanFile.lastIndexOf("/") + 1);
         }
 
-        System.out.println("Nama file bersih: " + cleanFile);
+        File file = new File("uploads/payments/" + cleanFile);
 
-        Path currentDir = Path.of(System.getProperty("user.dir"));
-        Path parentDir = currentDir.getParent();
+        System.out.println("PATH FILE:");
+        System.out.println(file.getAbsolutePath());
+        System.out.println("EXISTS: " + file.exists());
 
-        System.out.println("Current dir: " + currentDir);
-        System.out.println("Parent dir: " + parentDir);
-
-        Path[] possiblePaths = {
-                currentDir.resolve("uploads/payments").resolve(cleanFile),
-                currentDir.resolve("gym-and-fitness-app/uploads/payments").resolve(cleanFile),
-                currentDir.resolve("src/uploads/payments").resolve(cleanFile),
-                currentDir.resolve("src/gym-and-fitness-app/uploads/payments").resolve(cleanFile),
-                parentDir == null ? null : parentDir.resolve("uploads/payments").resolve(cleanFile),
-                parentDir == null ? null : parentDir.resolve("gym-and-fitness-app/uploads/payments").resolve(cleanFile),
-                parentDir == null ? null : parentDir.resolve("src/uploads/payments").resolve(cleanFile),
-                parentDir == null ? null
-                        : parentDir.resolve("src/gym-and-fitness-app/uploads/payments").resolve(cleanFile)
-        };
-
-        for (Path path : possiblePaths) {
-            if (path == null) {
-                continue;
-            }
-
-            File file = path.toFile();
-            System.out.println("Cek bukti pembayaran: " + file.getAbsolutePath() + " - exists: " + Files.exists(path));
-
-            if (Files.exists(path)) {
-                System.out.println("File ditemukan: " + file.getAbsolutePath());
-                return file;
-            }
-        }
-
-        System.out.println("File tidak ditemukan di semua lokasi");
-        return null;
+        return file.exists() ? file : null;
     }
 
     private void updateTotalLabel(int total) {
