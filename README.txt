@@ -1,4 +1,4 @@
-GYMBRUT - NetBeans Java Swing Starter Project
+GYMBRUT - KELOMPOK 1
 
 Isi ZIP:
 - src/ : source code Java Swing
