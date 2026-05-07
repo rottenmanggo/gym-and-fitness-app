@@ -24,7 +24,7 @@
                    preserveRatio="true"
                    styleClass="sidebar-logo-img">
             <image>
-                <Image url="@../assets/img/logo-g.png" />
+                <Image url="@../assets/image/logo-gymbrut.png" />
             </image>
         </ImageView>
         <VBox>

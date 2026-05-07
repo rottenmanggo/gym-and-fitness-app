@@ -56,19 +56,32 @@ public class MemberController {
         setupTable();
 
         memberTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        nameColumn.setPrefWidth(180);
-        emailColumn.setPrefWidth(220);
-        phoneColumn.setPrefWidth(140);
-        membershipColumn.setPrefWidth(130);
-        joinDateColumn.setPrefWidth(130);
-        statusColumn.setPrefWidth(120);
-        actionColumn.setPrefWidth(160);
+
+        nameColumn.setPrefWidth(130);
+        emailColumn.setPrefWidth(200);
+        phoneColumn.setPrefWidth(135);
+        membershipColumn.setPrefWidth(100);
+        joinDateColumn.setPrefWidth(120);
+        statusColumn.setPrefWidth(105);
+        actionColumn.setPrefWidth(140);
+
+        nameColumn.setMinWidth(90);
+        emailColumn.setMinWidth(150);
+        phoneColumn.setMinWidth(115);
+        membershipColumn.setMinWidth(85);
+        joinDateColumn.setMinWidth(105);
+        statusColumn.setMinWidth(90);
+        actionColumn.setMinWidth(130);
+
+        actionColumn.setResizable(false);
+
         loadMembers();
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> handleSearch());
     }
 
     private void setupTable() {
+
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getName())));
         emailColumn.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getEmail())));
         phoneColumn.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getPhone())));
@@ -122,7 +135,17 @@ public class MemberController {
             {
                 editButton.getStyleClass().add("table-edit-btn");
                 deleteButton.getStyleClass().add("table-delete-btn");
-                box.setAlignment(Pos.CENTER_LEFT);
+
+                editButton.setMinWidth(50);
+                editButton.setPrefWidth(50);
+
+                deleteButton.setMinWidth(66);
+                deleteButton.setPrefWidth(66);
+
+                box.setAlignment(Pos.CENTER);
+                box.setSpacing(6);
+                box.setMinWidth(130);
+                box.setPrefWidth(130);
 
                 editButton.setOnAction(event -> {
                     Member member = getTableView().getItems().get(getIndex());
@@ -140,8 +163,10 @@ public class MemberController {
                 super.updateItem(item, empty);
 
                 if (empty) {
+                    setText(null);
                     setGraphic(null);
                 } else {
+                    setText(null);
                     setGraphic(box);
                 }
             }

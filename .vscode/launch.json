@@ -6,7 +6,11 @@
       "name": "Run Main",
       "request": "launch",
       "mainClass": "app.Main",
-      "vmArgs": "--module-path \"C:\\javafx-sdk-21.0.11\\lib\" --add-modules javafx.controls,javafx.fxml"
+<<<<<<< HEAD
+      "vmArgs": "--module-path \"D:\\APPS\\javafx-sdk-25.0.3\\lib\" --add-modules javafx.controls,javafx.fxml"
+=======
+      "vmArgs": "--module-path \"C:\\Users\\zaifd\\OneDrive\\Dokumen\\openjfx-26.0.1_windows-x64_bin-sdk\\javafx-sdk-26.0.1\\lib\" --add-modules javafx.controls,javafx.fxml"
+>>>>>>> 62cd6ae52956a328dd82a1a458c13fc6775833ef
     }
   ]
 }
