@@ -56,7 +56,7 @@
   -fx-border-radius: 22;
   -fx-border-color: #e5e7eb;
   -fx-border-width: 1;
-  -fx-padding: 22;
+  -fx-padding: 24;
   -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.08), 18, 0.12, 0, 8);
 }
 
@@ -106,9 +106,7 @@
 }
 
 /* BUTTON */
-.light-btn,
-.table-soft-btn,
-.table-danger-btn {
+.light-btn{
   -fx-background-radius: 999;
   -fx-border-radius: 999;
   -fx-font-weight: 900;
@@ -134,8 +132,12 @@
   -fx-border-color: #fed7aa;
   -fx-border-width: 1;
   -fx-text-fill: #f97316;
-  -fx-padding: 7 14;
-  -fx-font-size: 12;
+  -fx-border-radius: 999;
+  -fx-background-radius: 999;
+  -fx-padding: 6 6;
+  -fx-font-size: 12px;
+  -fx-font-weight: 700;
+  -fx-cursor: hand;
 }
 
 .table-soft-btn:hover {
@@ -147,8 +149,12 @@
   -fx-border-color: #fda4af;
   -fx-border-width: 1;
   -fx-text-fill: #e11d48;
-  -fx-padding: 7 14;
-  -fx-font-size: 12;
+  -fx-border-radius: 999;
+  -fx-background-radius: 999;
+  -fx-padding: 6 6;
+  -fx-font-size: 12px;
+  -fx-font-weight: 700;
+  -fx-cursor: hand;
 }
 
 .table-danger-btn:hover {
@@ -204,7 +210,7 @@
   -fx-alignment: CENTER-LEFT;
   -fx-text-alignment: left;
   -fx-max-width: Infinity;
-  -fx-padding: 0 0 0 12;
+  -fx-padding: 0 0 0 8;
 }
 
 .payment-table .table-row-cell {
@@ -232,7 +238,7 @@
   -fx-font-size: 13;
   -fx-text-fill: #334155;
   -fx-alignment: CENTER-LEFT;
-  -fx-padding: 0 12;
+  -fx-padding: 0 8;
 }
 
 /* CELL TEXT */
@@ -262,10 +268,10 @@
 /* BADGE STATUS */
 .status-badge {
   -fx-background-radius: 999;
-  -fx-padding: 6 16;
+  -fx-padding: 6 10;
   -fx-font-size: 12;
   -fx-font-weight: 900;
-  -fx-min-width: 86;
+  -fx-min-width: 78;
   -fx-alignment: center;
 }
 

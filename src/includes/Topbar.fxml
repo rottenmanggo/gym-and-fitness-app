@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 
 <!--
   Topbar.fxml - Komponen topbar global.
@@ -14,43 +15,56 @@
   Dapat di-include di dalam layout utama.
 -->
 <HBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="includes.TopbarController"
-      styleClass="topbar"
-      alignment="CENTER_LEFT"
-      spacing="16">
+    fx:controller="includes.TopbarController"
+    styleClass="topbar"
+    alignment="CENTER_LEFT"
+    spacing="16">
 
     <!-- Left: Title & Subtitle -->
     <VBox spacing="4">
         <Label fx:id="pageTitle" text="Dashboard" styleClass="topbar-title" />
-        <Label fx:id="pageSubtitle" text="Ringkasan operasional GYMBRUT" styleClass="topbar-subtitle" />
+        <Label fx:id="pageSubtitle" text="Ringkasan operasional GYMBRUT"
+            styleClass="topbar-subtitle" />
     </VBox>
 
     <!-- Spacer -->
     <Region HBox.hgrow="ALWAYS" />
 
     <!-- Right Section -->
-    <HBox styleClass="topbar-right" spacing="12" alignment="CENTER_RIGHT">
-
-        <!-- Search -->
-        <TextField fx:id="searchField"
-                   promptText="🔍  Cari..."
-                   styleClass="topbar-search" />
-
-        <!-- Notification Button -->
-        <Button fx:id="notifButton"
+    <HBox styleClass="topbar-right" alignment="CENTER_RIGHT" spacing="12">
+        <StackPane>
+            <Button fx:id="notifButton"
                 text="🔔"
                 onAction="#handleNotification"
                 styleClass="notif-btn" />
 
-        <!-- User Info -->
-        <HBox styleClass="topbar-user-box" spacing="10" alignment="CENTER">
-            <Label fx:id="userAvatar" text="A" styleClass="topbar-user-avatar" />
-            <VBox spacing="2">
-                <Label fx:id="usernameLabel" text="Admin" styleClass="topbar-username" />
-                <Label fx:id="roleLabel" text="Administrator" styleClass="topbar-role" />
+            <Label fx:id="notifBadge"
+                text="3"
+                visible="false"
+                managed="false"
+                StackPane.alignment="TOP_RIGHT"
+                styleClass="notif-badge" />
+        </StackPane>
+
+        <HBox fx:id="profileButton"
+            styleClass="topbar-user-box"
+            spacing="10"
+            alignment="CENTER"
+            onMouseClicked="#handleProfileClick">
+            <Label fx:id="userAvatar"
+                text="A"
+                styleClass="topbar-user-avatar" />
+
+            <VBox spacing="2" minWidth="76" prefWidth="92">
+                <Label fx:id="usernameLabel"
+                    text="Admin"
+                    styleClass="topbar-username" />
+
+                <Label fx:id="roleLabel"
+                    text="Member"
+                    styleClass="topbar-role" />
             </VBox>
         </HBox>
-
     </HBox>
 
 </HBox>

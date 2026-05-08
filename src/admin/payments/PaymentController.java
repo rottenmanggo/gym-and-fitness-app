@@ -63,6 +63,27 @@ public class PaymentController {
     private void setupTable() {
         paymentTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
+        colInvoice.setPrefWidth(120);
+        colNama.setPrefWidth(200);
+        colPaket.setPrefWidth(110);
+        colNominal.setPrefWidth(115);
+        colStatus.setPrefWidth(110);
+        colTanggal.setPrefWidth(125);
+        colBukti.setPrefWidth(90);
+        colAksi.setPrefWidth(160);
+
+        colInvoice.setMinWidth(95);
+        colNama.setMinWidth(160);
+        colPaket.setMinWidth(90);
+        colNominal.setMinWidth(95);
+        colStatus.setMinWidth(95);
+        colTanggal.setMinWidth(105);
+        colBukti.setMinWidth(75);
+        colAksi.setMinWidth(145);
+
+        colAksi.setText("Aksi");
+        colAksi.setResizable(false);
+
         colInvoice.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getInvoice()));
         colPaket.setCellValueFactory(data -> new SimpleStringProperty(safe(data.getValue().getPackageName())));
         colNominal.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAmountFormatted()));
@@ -130,6 +151,9 @@ public class PaymentController {
 
                 Label badge = new Label(capitalize(status));
                 badge.getStyleClass().add("status-badge");
+                badge.setMinWidth(82);
+                badge.setPrefWidth(82);
+                badge.setAlignment(Pos.CENTER);
 
                 switch (status.toLowerCase()) {
                     case "verified" -> badge.getStyleClass().add("status-verified");
@@ -147,27 +171,23 @@ public class PaymentController {
 
         colBukti.setCellFactory(column -> new TableCell<>() {
             private final Button lihatButton = new Button("Lihat");
-            private Payment currentPayment;
 
             {
                 lihatButton.getStyleClass().add("table-soft-btn");
+
+                lihatButton.setMinWidth(64);
+                lihatButton.setPrefWidth(64);
+                lihatButton.setMaxWidth(64);
+
                 lihatButton.setOnAction(event -> {
-                    System.out.println("Tombol Lihat diklik, currentPayment: "
-                            + (currentPayment != null ? currentPayment.getInvoice() : "null"));
-                    if (currentPayment != null) {
-                        openProofFile(currentPayment);
-                    } else {
-                        showAlert(Alert.AlertType.WARNING, "Error",
-                                "Data pembayaran tidak tersedia. Silakan refresh halaman.");
-                    }
+                    Payment payment = getTableView().getItems().get(getIndex());
+                    openProofFile(payment);
                 });
             }
 
             @Override
             protected void updateItem(String proofFile, boolean empty) {
                 super.updateItem(proofFile, empty);
-                System.out.println("updateItem colBukti dipanggil - empty: " + empty + ", proofFile: " + proofFile);
-                currentPayment = null;
 
                 if (empty) {
                     setText(null);
@@ -176,16 +196,9 @@ public class PaymentController {
                 }
 
                 if (proofFile == null || proofFile.isBlank() || proofFile.equalsIgnoreCase("null")) {
-                    Label dash = new Label("-");
-                    dash.getStyleClass().add("text-soft");
-                    setText(null);
-                    setGraphic(dash);
+                    setText("-");
+                    setGraphic(null);
                 } else {
-                    if (getTableRow() != null) {
-                        currentPayment = getTableRow().getItem();
-                        System.out.println("Set currentPayment untuk bukti: "
-                                + (currentPayment != null ? currentPayment.getInvoice() : "null"));
-                    }
                     setText(null);
                     setGraphic(lihatButton);
                 }
@@ -202,7 +215,16 @@ public class PaymentController {
                 verifyButton.getStyleClass().add("table-soft-btn");
                 rejectButton.getStyleClass().add("table-danger-btn");
 
-                actionBox.setAlignment(Pos.CENTER_LEFT);
+                verifyButton.setMinWidth(58);
+                verifyButton.setPrefWidth(58);
+
+                rejectButton.setMinWidth(58);
+                rejectButton.setPrefWidth(58);
+
+                actionBox.setSpacing(6);
+                actionBox.setAlignment(Pos.CENTER);
+                actionBox.setMinWidth(125);
+                actionBox.setPrefWidth(125);
 
                 verifyButton.setOnAction(event -> {
                     if (currentPayment != null) {
@@ -238,6 +260,10 @@ public class PaymentController {
                 } else {
                     Label done = new Label("Selesai");
                     done.getStyleClass().add("text-soft");
+                    done.setMinWidth(70);
+                    done.setPrefWidth(70);
+                    done.setAlignment(Pos.CENTER);
+
                     setText(null);
                     setGraphic(done);
                 }
@@ -405,7 +431,7 @@ public class PaymentController {
             if (System.getProperty("os.name").toLowerCase().contains("win")) {
 
                 Runtime.getRuntime().exec(
-                        new String[]{
+                        new String[] {
                                 "rundll32",
                                 "url.dll,FileProtocolHandler",
                                 absolutePath

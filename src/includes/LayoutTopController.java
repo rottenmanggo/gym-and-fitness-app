@@ -15,14 +15,15 @@ import shared.Session;
  * 1. Memuat sidebar yang sesuai berdasarkan role user (Admin/Member).
  * 2. Menampilkan Topbar dengan data user dari session (via TopbarController).
  * 3. Me-load / swap konten halaman ke contentArea secara dinamis
- *    TANPA me-reload sidebar maupun topbar.
+ * TANPA me-reload sidebar maupun topbar.
  */
 public class LayoutTopController {
 
     @FXML
     private StackPane sidebarContainer;
 
-    // fx:include auto-inject: fx:id="topbar" → topbar (Node) + topbarController (Controller)
+    // fx:include auto-inject: fx:id="topbar" → topbar (Node) + topbarController
+    // (Controller)
     @FXML
     private HBox topbar;
 
@@ -37,24 +38,28 @@ public class LayoutTopController {
 
     @FXML
     public void initialize() {
+        if (topbarController != null) {
+            topbarController.setLayoutController(this);
+        }
+
         // Tentukan role dari session, lalu load sidebar + konten default
         if (Session.isLoggedIn() && Session.getUser() != null) {
             if (Session.getUser().isAdmin()) {
                 loadSidebar("/includes/SidebarAdmin.fxml");
                 navigateTo("/admin/dashboard/Dashboard.fxml",
-                           "Dashboard Admin",
-                           "Ringkasan operasional GYMBRUT hari ini.");
+                        "Dashboard Admin",
+                        "Ringkasan operasional GYMBRUT hari ini.");
             } else {
                 loadSidebar("/includes/SidebarMember.fxml");
                 navigateTo("/member/dashboard/MemberDashboard.fxml",
-                           "Dashboard Member",
-                           "Selamat datang di GYMBRUT.");
+                        "Dashboard Member",
+                        "Selamat datang di GYMBRUT.");
             }
         }
     }
 
     // ===================================================================
-    //  NAVIGASI UTAMA — dipanggil oleh SidebarController
+    // NAVIGASI UTAMA — dipanggil oleh SidebarController
     // ===================================================================
 
     /**
@@ -76,7 +81,7 @@ public class LayoutTopController {
     }
 
     // ===================================================================
-    //  LOAD SIDEBAR
+    // LOAD SIDEBAR
     // ===================================================================
 
     /**
@@ -107,7 +112,7 @@ public class LayoutTopController {
     }
 
     // ===================================================================
-    //  LOAD CONTENT
+    // LOAD CONTENT
     // ===================================================================
 
     /**
@@ -131,7 +136,7 @@ public class LayoutTopController {
     }
 
     // ===================================================================
-    //  GETTERS (untuk akses dari luar jika diperlukan)
+    // GETTERS (untuk akses dari luar jika diperlukan)
     // ===================================================================
 
     public StackPane getSidebarContainer() {
