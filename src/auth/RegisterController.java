@@ -2,11 +2,15 @@ package auth;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import shared.SceneManager;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
+import javafx.scene.control.Alert;
 
 public class RegisterController {
 
@@ -104,10 +108,38 @@ public class RegisterController {
         boolean success = authService.register(name, email, password, phone);
 
         if (success) {
-            showAlert("Register berhasil! Silakan login.", "success");
-            SceneManager.changeScene(emailField, "/auth/Login.fxml", "Login", 1100, 720);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            alert.setTitle("Registrasi Berhasil");
+            alert.setHeaderText(null);
+
+            alert.setContentText(
+                    "Akun berhasil dibuat.\nSilakan login."
+            );
+
+            alert.showAndWait();
+
+            SceneManager.changeScene(
+                    emailField,
+                    "/auth/Login.fxml",
+                    "Login",
+                    1100,
+                    720
+            );
+
         } else {
-            showAlert("Register gagal!", "danger");
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+
+            alert.setTitle("Registrasi Gagal");
+            alert.setHeaderText(null);
+
+            alert.setContentText(
+                    "Registrasi gagal."
+            );
+
+            alert.showAndWait();
         }
     }
 
